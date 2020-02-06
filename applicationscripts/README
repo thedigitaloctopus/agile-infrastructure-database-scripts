@@ -1,0 +1,4 @@
+Any application specific requirements can be implemented here. The application type is configured as one of the first options
+of the build process on the build client. For example, the socialnetwork application you can see here corresponds to the
+BASIC_SOCIALNETWORK application choice at build time. When you choose an application type, its application specific scripts
+will be run.
