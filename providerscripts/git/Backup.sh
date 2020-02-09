@@ -103,9 +103,13 @@ fi
 /bin/rm ${HOME}/backups/${period}/*
 /bin/rm -r ${HOME}/.git
 
-
-${HOME}/providerscripts/git/DeleteRepository.sh "${APPLICATION_REPOSITORY_USERNAME}" "${APPLICATION_REPOSITORY_PASSWORD}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}" "${period}" "${BUILD_IDENTIFIER}" "${APPLICATION_REPOSITORY_PROVIDER}"
-${HOME}/providerscripts/git/CreateRepository.sh "${APPLICATION_REPOSITORY_USERNAME}" "${APPLICATION_REPOSITORY_PASSWORD}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}" "${period}" "${BUILD_IDENTIFIER}" "${APPLICATION_REPOSITORY_PROVIDER}"
+if ( [ "${period}" = "hourly" ] && [ -f ${HOME}/.ssh/DISABLEHOURLY:1 ] )
+then
+    /bin/echo "${0} `/bin/date`: Skipping repository creation because hourly backups are disabled" >> ${HOME}/logs/MonitoringLog.dat
+else
+    ${HOME}/providerscripts/git/DeleteRepository.sh "${APPLICATION_REPOSITORY_USERNAME}" "${APPLICATION_REPOSITORY_PASSWORD}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}" "${period}" "${BUILD_IDENTIFIER}" "${APPLICATION_REPOSITORY_PROVIDER}"
+    ${HOME}/providerscripts/git/CreateRepository.sh "${APPLICATION_REPOSITORY_USERNAME}" "${APPLICATION_REPOSITORY_PASSWORD}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}" "${period}" "${BUILD_IDENTIFIER}" "${APPLICATION_REPOSITORY_PROVIDER}"
+fi
 
 #Create an archive of the master db
 /usr/bin/split -b 10M -d ${websiteDB} "${WEBSITE_NAME}-db-"
@@ -129,8 +133,12 @@ fi
 
 cd ${HOME}/backups/
 
-/bin/systemd-inhibit --why="Persisting database to git repo" ${HOME}/providerscripts/git/GitPushDB.sh "." "Automated Backup" "${APPLICATION_REPOSITORY_PROVIDER}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}-db-${period}-${BUILD_IDENTIFIER}"
-
+if ( [ "${period}" = "hourly" ] && [ -f ${HOME}/.ssh/DISABLEHOURLY:1 ] )
+then
+    /bin/echo "${0} `/bin/date`: Skipping hourly backup because hourly backups are disabled" >> ${HOME}/logs/MonitoringLog.dat
+else
+    /bin/systemd-inhibit --why="Persisting database to git repo" ${HOME}/providerscripts/git/GitPushDB.sh "." "Automated Backup" "${APPLICATION_REPOSITORY_PROVIDER}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}-db-${period}-${BUILD_IDENTIFIER}"
+fi
 SUPERSAFE_DB="`/bin/ls ${HOME}/.ssh/SUPERSAFEDB:* | /usr/bin/awk -F':' '{print $NF}'`"
 DATASTORE_PROVIDER="`/bin/ls ${HOME}/.ssh/DATASTORECHOICE:* | /usr/bin/awk -F':' '{print $NF}'`"
 
