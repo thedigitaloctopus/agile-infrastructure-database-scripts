@@ -148,6 +148,7 @@ ${HOME}/installscripts/InstallUFW.sh ${BUILDOS}
 ${HOME}/installscripts/InstallSSHFS.sh ${BUILDOS}
 ${HOME}/installscripts/InstallS3FS.sh ${BUILDOS}
 ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
+${HOME}/installscripts/InstallJQ.sh ${BUILDOS}
 
 if ( [ -f ${HOME}/.ssh/ENABLEEFS:1 ] )
 then
