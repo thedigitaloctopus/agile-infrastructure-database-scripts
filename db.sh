@@ -176,6 +176,9 @@ fi
 /bin/mkdir -p ${HOME}/credentials
 /bin/chmod 700 ${HOME}/credentials
 
+#Install the tools for our particular cloudhost provider
+. ${HOME}/providerscripts/cloudhost/InstallCloudhostTools.sh
+
 #Configure git
 cd ${HOME}
 /usr/bin/git init >/dev/null
