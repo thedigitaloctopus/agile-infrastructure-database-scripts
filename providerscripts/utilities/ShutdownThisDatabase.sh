@@ -35,4 +35,6 @@ fi
 
 
 ${HOME}/providerscripts/email/SendEmail.sh "A database is being shutdown" "A database is being shutdown"
-/sbin/shutdown -h now
+
+#Note, we don't call the shutdown command here, on purpose, we just destroy the VM because we have cleaned it up as much as we need to
+
