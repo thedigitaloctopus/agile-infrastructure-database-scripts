@@ -32,6 +32,10 @@
 
 #These scripts run every 5 minutes
 /bin/echo "*/5 * * * * export HOME="${HOMEDIR}" && ${HOME}/security/MonitorFirewall.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/5 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/AuditForLowCPUStates.sh 10" >> /var/spool/cron/crontabs/root
+/bin/echo "*/5 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/AuditForLowMemoryStates.sh 90" >> /var/spool/cron/crontabs/root
+/bin/echo "*/5 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/AuditForLowDiskStates.sh 100000" >> /var/spool/cron/crontabs/root
+
 
 #These scripts run ever 10 minutes
 /bin/echo "*/10 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/EnforcePermissions.sh" >> /var/spool/cron/crontabs/root
@@ -48,10 +52,6 @@ then
     /bin/echo "8 4 1 * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'MONTHLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
     /bin/echo "8 5 1 Jan,Mar,May,Jul,Sep,Nov * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'BIMONTHLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
 fi
-
-/bin/echo "@hourly export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/AuditForLowCPUStates.sh 10" >> /var/spool/cron/crontabs/root
-/bin/echo "@hourly export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/AuditForLowMemoryStates.sh 90" >> /var/spool/cron/crontabs/root
-/bin/echo "@hourly export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/AuditForLowDiskStates.sh 100000" >> /var/spool/cron/crontabs/root
 
 /bin/echo "@daily export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/MonitorFreeDiskSpace.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "@daily export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/PerformSoftwareUpdate.sh" >> /var/spool/cron/crontabs/root
