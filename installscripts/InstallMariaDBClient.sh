@@ -44,10 +44,6 @@ then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
         /usr/bin/add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirrors.coreix.net/mariadb/repo/10.4/ubuntu bionic main'
     fi
-    if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:19.04 ] )
-    then
-        /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/10.4/ubuntu disco main'
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:20.04 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
