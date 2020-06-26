@@ -256,6 +256,8 @@ SERVER_USER_PASSWORD="`/bin/ls ${HOME}/.ssh/SERVERUSERPASSWORD:* | /usr/bin/awk 
 #This call is necessary as it primes the networking interface for some providers.
 ${HOME}/providerscripts/utilities/GetIP.sh
 
+${HOME}/utilities/Upgrade.sh ${BUILDOS}
+
 #do some finalising
 /usr/bin/touch ${HOME}/runtime/DATABASE_READY
 /bin/echo "${0} `/bin/date`: Rebooting down after build" >> ${HOME}/logs/MonitoringLog.dat
