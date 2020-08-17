@@ -58,6 +58,7 @@ then
 else
     /usr/bin/systemctl stop mariadb
     /usr/bin/mysqld_safe --skip-grant-tables --skip-networking &
+    /bin/sleep 20
     #/usr/sbin/service mysql start
     #try with no password set
     /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
