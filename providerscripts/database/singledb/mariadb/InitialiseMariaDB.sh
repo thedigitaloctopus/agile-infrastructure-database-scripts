@@ -64,6 +64,8 @@ else
     /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
     #make sure by trying with password
     /usr/bin/mysql -A -u root -p${DB_P} < ${HOME}/runtime/initialiseDB.sql
+    /usr/bin/mysqld stop
+    /usr/bin/systemctl start mariadb 
 fi
 
 if ( [ -f /etc/mysql/mariadb.conf.d/50-server.cnf ] )
