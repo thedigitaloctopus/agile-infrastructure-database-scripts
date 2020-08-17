@@ -46,6 +46,9 @@ GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" IDENTIFIED BY \"${D
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 
+
+
+
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
     /usr/bin/mysql -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
@@ -53,8 +56,9 @@ elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
 then
     /usr/bin/mysql -A -u ${DB_U} -p${DB_P} --host="127.0.0.1" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
 else
-    #make sure database has been started and is available - this is local instance under our full control
-    /usr/sbin/service mysql start
+    /usr/bin/systemctl stop mariadb
+    /usr/bin/mysqld_safe --skip-grant-tables --skip-networking &
+    #/usr/sbin/service mysql start
     #try with no password set
     /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
     #make sure by trying with password
