@@ -50,7 +50,7 @@ ipaddress="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'
 
 
 /bin/echo "use mysql;
-CREATE USER \"${DB_U}\"
+CREATE USER \"${DB_U}\";
 flush privileges;
 create database ${DB_N};
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
