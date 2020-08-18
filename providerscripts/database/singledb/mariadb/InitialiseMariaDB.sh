@@ -56,12 +56,13 @@ elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
 then
     /usr/bin/mysql -A -u ${DB_U} -p${DB_P} --host="127.0.0.1" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
 else
+
     /usr/bin/systemctl stop mariadb
     /usr/bin/mysqld_safe --skip-grant-tables --skip-networking &
     /bin/sleep 20
     #/usr/sbin/service mysql start
     #try with no password set
-   # /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
+    /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
     #make sure by trying with password
     /usr/bin/mysql -A -u root -p${DB_P} < ${HOME}/runtime/initialiseDB.sql
     
