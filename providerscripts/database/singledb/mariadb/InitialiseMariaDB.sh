@@ -36,8 +36,22 @@ ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
 DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
 ipaddress="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
 
+#/bin/echo "use mysql;
+#update user set user=\"${DB_U}\" where user='root';
+#flush privileges;
+#create database ${DB_N};
+#GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
+#GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
+#GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
+#GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
+#flush privileges;" > ${HOME}/runtime/initialiseDB.sql
+
+
+
+
 /bin/echo "use mysql;
-update user set user=\"${DB_U}\" where user='root';
+CREATE USER \"${DB_U}\"
+RENAME USER 'root'@'localhost' TO '${DB_U}';
 flush privileges;
 create database ${DB_N};
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
@@ -45,6 +59,7 @@ GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' IDENTIFIED BY \"${D
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
+
 
 
 
