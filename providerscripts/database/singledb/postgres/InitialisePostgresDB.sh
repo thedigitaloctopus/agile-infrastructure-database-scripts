@@ -57,23 +57,20 @@ then
 
     /usr/sbin/service postgresql restart
     
-    export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} template1 -c "CREATE USER ${DB_U} WITH ENCRYPTED PASSWORD '${DB_P}';"
-    export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} template1 -c "ALTER USER ${DB_U} WITH SUPERUSER;"
-    export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;"
-
+    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "CREATE USER ${DB_U} WITH ENCRYPTED PASSWORD '${DB_P}';"
+    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "ALTER USER ${DB_U} WITH SUPERUSER;"
+    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;"
     if ( [ "$?" != "0" ] )
     then   
-        /usr/bin/sudo -su postgres /usr/bin/psql -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'C.UTF-8' LC_CTYPE = 'C.UTF-8' TEMPLATE template0;"
+        /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'C.UTF-8' LC_CTYPE = 'C.UTF-8' TEMPLATE template0;"
     fi
-
-    export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} template1 -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_N} to ${DB_U};"
+    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_N} to ${DB_U};"
 
     /bin/sed -i "/${ipmask}/! s/trust/md5/g" ${postgres_config}
     /bin/sed -i "/${DB_U}/ s/md5/trust/g" ${postgres_config}
-
     /bin/rm ${postgres_pid}
-    
     /usr/sbin/service postgresql restart
+
 elif ( [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Postgres ] )
 then
     export PGPASSWORD="${DB_P}" && /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} -d template1 -c "CREATE DATABASE ${DB_N} ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';"
