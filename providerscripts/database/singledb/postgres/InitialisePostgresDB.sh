@@ -48,11 +48,11 @@ then
     
     if ( [ "${CLOUDHOST}" = "aws" ] )
     then
-        /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          trust" >> ${postgres_config}
-        /bin/echo "host       template1              ${DB_U}          0.0.0.0/0         trust" >> ${postgres_config}
+        /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          md5" >> ${postgres_config}
+        /bin/echo "host       template1            postgres          0.0.0.0/0         md5" >> ${postgres_config}
     else
-        /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          trust" >> ${postgres_config}
-        /bin/echo "host       all                  postgres           ${ipmask}/16          trust" >> ${postgres_config}
+        /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          md5" >> ${postgres_config}
+        /bin/echo "host       all                  postgres           ${ipmask}/16          md5" >> ${postgres_config}
     fi
 
     /usr/sbin/service postgresql restart
@@ -66,8 +66,8 @@ then
     fi
     /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_N} to ${DB_U};"
 
-    /bin/sed -i "/${ipmask}/! s/trust/md5/g" ${postgres_config}
-    /bin/sed -i "/${DB_U}/ s/md5/trust/g" ${postgres_config}
+    /bin/sed -i "s/trust/md5/g" ${postgres_config}
+
     /bin/rm ${postgres_pid}
     /usr/sbin/service postgresql restart
 
