@@ -26,12 +26,12 @@ CLOUDHOST="`/bin/ls ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`
 
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
 then
-    host="127.0.0.1"
+    HOST="127.0.0.1"
 elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
-    host="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
 else
-    host="`/bin/ls ${HOME}/.ssh/MYIP:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`/bin/ls ${HOME}/.ssh/MYIP:* | /usr/bin/awk -F':' '{print $NF}'`"
 fi
 
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Postgres ] )
@@ -81,5 +81,5 @@ then
     /usr/sbin/service postgresql restart
 elif ( [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Postgres ] )
 then
-    export PGPASSWORD="${DB_P}" && /usr/bin/psql -h ${host} -U ${DB_U} -p ${DB_PORT} -d template1 -c "CREATE DATABASE ${DB_N} ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';"
+    export PGPASSWORD="${DB_P}" && /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} -d template1 -c "CREATE DATABASE ${DB_N} ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';"
 fi
