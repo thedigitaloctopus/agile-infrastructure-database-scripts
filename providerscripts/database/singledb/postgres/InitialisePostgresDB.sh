@@ -49,22 +49,20 @@ then
     if ( [ "${CLOUDHOST}" = "aws" ] )
     then
         /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          md5" >> ${postgres_config}
-        /bin/echo "host       template1            postgres          0.0.0.0/0         md5" >> ${postgres_config}
     else
         /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          md5" >> ${postgres_config}
-        /bin/echo "host       all                  postgres           ${ipmask}/16          md5" >> ${postgres_config}
     fi
 
     /usr/sbin/service postgresql restart
     
-    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "CREATE USER ${DB_U} WITH ENCRYPTED PASSWORD '${DB_P}';"
-    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "ALTER USER ${DB_U} WITH SUPERUSER;"
-    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;"
+    /usr/bin/sudo -u postgres /usr/bin/psql -p ${DB_PORT} template1 -c "CREATE USER ${DB_U} WITH ENCRYPTED PASSWORD '${DB_P}';"
+    /usr/bin/sudo -u postgres /usr/bin/psql -p ${DB_PORT} template1 -c "ALTER USER ${DB_U} WITH SUPERUSER;"
+    /usr/bin/sudo -u postgres /usr/bin/psql -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;"
     if ( [ "$?" != "0" ] )
     then   
-        /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'C.UTF-8' LC_CTYPE = 'C.UTF-8' TEMPLATE template0;"
+        /usr/bin/sudo -u postgres /usr/bin/psql -p ${DB_PORT} template1 -c "CREATE DATABASE ${DB_N} WITH OWNER ${DB_U} ENCODING 'UTF8' LC_COLLATE = 'C.UTF-8' LC_CTYPE = 'C.UTF-8' TEMPLATE template0;"
     fi
-    /usr/bin/sudo -u postgres /usr/bin/psql -h ${HOST} -p ${DB_PORT} template1 -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_N} to ${DB_U};"
+    /usr/bin/sudo -u postgres /usr/bin/psql -p ${DB_PORT} template1 -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_N} to ${DB_U};"
 
     /bin/sed -i "s/trust/md5/g" ${postgres_config}
 
