@@ -46,7 +46,7 @@ then
         ipmask="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`.%.%"
         ipmask="`/bin/echo ${ipmask} | /bin/sed 's/%/0/g'`"
 
-        if ( [ "`/bin/cat ${postgres_config} | /bin/grep ${ipmask}`" = "" ] )
+        if ( [ "`/bin/cat ${postgres_config} | /bin/grep ${DB_N}`" = "" ] )
         then
             ipmask="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`"
             /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/0          trust" >> ${postgres_config}
