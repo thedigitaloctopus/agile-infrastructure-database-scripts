@@ -22,6 +22,7 @@
 
 ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
 DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
+CLOUDHOST="`/bin/ls ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`"
 
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
 then
@@ -44,8 +45,16 @@ then
     /bin/sed -i "/listen_addresses/c\        listen_addresses = '*'" ${postgres_sql_config}
     /bin/sed -i "/^port/c\        port = ${DB_PORT}" ${postgres_sql_config}
     ipmask="`/bin/echo ${ipmask} | /bin/sed 's/%/0/g'`"
-    /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          trust" >> ${postgres_config}
-    /bin/echo "host       all                  postgres           ${ipmask}/16          trust" >> ${postgres_config}
+    
+    if ( [ "${CLOUDHOST}" = "aws" ] )
+    then
+        /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          trust" >> ${postgres_config}
+        /bin/echo "host       template1              ${DB_U}          0.0.0.0/0         trust" >> ${postgres_config}
+    else
+        /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          trust" >> ${postgres_config}
+        /bin/echo "host       all                  postgres           ${ipmask}/16          trust" >> ${postgres_config}
+    fi
+
     /usr/sbin/service postgresql restart
     export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} -c "CREATE USER ${DB_U} WITH ENCRYPTED PASSWORD '${DB_P}';"
     if ( [ "$?" != "0" ] )
