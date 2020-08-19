@@ -41,7 +41,7 @@ then
     postgres_sql_config="`/usr/bin/find / -name postgresql.conf -print | /bin/grep etc`"
 
     /bin/rm ${postgres_pid}
-    /bin/sed -i 's/md5/trust/g' ${postgres_config}
+  #  /bin/sed -i 's/md5/trust/g' ${postgres_config}
     /bin/sed -i "/listen_addresses/c\        listen_addresses = '*'" ${postgres_sql_config}
     /bin/sed -i "/^port/c\        port = ${DB_PORT}" ${postgres_sql_config}
     ipmask="`/bin/echo ${ipmask} | /bin/sed 's/%/0/g'`"
