@@ -69,7 +69,10 @@ then
     export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} template1 -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_N} to ${DB_U};"
 
     /bin/sed -i "/${ipmask}/! s/trust/md5/g" ${postgres_config}
+    /bin/sed -i "/${DB_U}/ s/md5/trust/g" ${postgres_config}
+
     /bin/rm ${postgres_pid}
+    
     /usr/sbin/service postgresql restart
 elif ( [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Postgres ] )
 then
