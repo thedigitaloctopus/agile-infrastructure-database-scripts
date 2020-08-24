@@ -34,13 +34,13 @@ fi
 #The standard troop of SQL databases
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Maria ] )
 then
-    /usr/bin/mysqldump --lock-tables=false --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} > applicationDB.sql
+    /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y  --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} > applicationDB.sql
     /bin/echo "CREATE TABLE \`zzzz\` ( \`complete\` varchar(255) NOT NULL ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
 fi
 
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:MySQL ] )
 then
-    /usr/bin/mysqldump --lock-tables=false --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} > applicationDB.sql
+    /usr/bin/mysqldump --lock-tables=false --no-tablespaces -y --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} > applicationDB.sql
     /bin/echo "CREATE TABLE \`zzzz\` ( \`complete\` varchar(255) NOT NULL ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
 fi
 
