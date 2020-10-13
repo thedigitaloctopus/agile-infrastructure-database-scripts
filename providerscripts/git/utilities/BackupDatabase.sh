@@ -46,7 +46,7 @@ then
     /bin/echo "DROP TABLE IF EXISTS \`zzzz\`;" > applicationDB.sql
 
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y --host=${HOST} --port=${DB_PORT} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
-    /bin/echo "CREATE TABLE \`zzzz\` ( \`complete\` varchar(255) NOT NULL ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
+    /bin/echo "CREATE TABLE \`zzzz\` ( \`id\` int(10) unsigned NOT NULL, PRIMARY KEY (\`id\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
     ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
