@@ -40,7 +40,7 @@ then
     # We are a mysql cluster so we need to use NDB engine type the way to do this is to modify the dump file
     /bin/sed -i "s/${currentengine}/ENGINE=INNODB /g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     
-    if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] )
+    if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] )
     then
         /bin/sed -i '/SESSION.SQL_LOG_BIN/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         /bin/sed -i '/sql_require_primary_key/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
@@ -49,6 +49,8 @@ then
             /bin/sed -i '/GTID_PURGED/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
             /bin/sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         fi
+        /bin/sed -i '/^\[mysqld\]/a character-set-server = utf8mb4' /etc/mysql/my.cnf
+        /bin/sed -i '/^\[mysqld\]/a collation-server = utf8mb4_bin' /etc/mysql/my.cnf
     fi
 
     #Not sure why but sometimes installation of the application is truncated leaving only a partial set of tables installed
