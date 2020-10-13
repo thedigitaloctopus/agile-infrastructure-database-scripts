@@ -45,16 +45,8 @@ then
 
     /bin/echo "DROP TABLE IF EXISTS \`zzzz\`;" > applicationDB.sql
     
-    #add primary key to any tables which doesn't have them (digital ocean managed DBs require primary keys)
-
-    tables="`/usr/bin/mysql -u ${DB_U} -p${DB_P} ${DB_N} --host=${HOST} -P ${PORT} < ${HOME}/providerscripts/git/utilities/verifykeys.sql | /usr/bin/awk '{print $2}' | /usr/bin/tail -n +2`"
-    for table in ${tables}
-    do
-        /usr/bin/mysql -u ${DB_U} -p${DB_P} ${DB_N} --host=${HOST} -P ${PORT} -e "ALTER TABLE ${table}  ADD idxx int(5) NOT NULL; ALTER TABLE ${table} ADD PRIMARY KEY (idxx);"
-    done
-
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y --host=${HOST} --port=${DB_PORT} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
-    /bin/echo "CREATE TABLE \`zzzz\` ( \`id\` int(10) unsigned NOT NULL, PRIMARY KEY (\`id\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
+    /bin/echo "CREATE TABLE \`zzzz\` ( \`idxx\` int(10) unsigned NOT NULL, PRIMARY KEY (\`idxx\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
     ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
@@ -76,7 +68,7 @@ then
     then
         /usr/bin/sudo -su postgres /usr/bin/pg_dump -h ${HOST} -p ${DB_PORT} -d ${DB_N} > applicationDB.sql
     fi
-    /bin/echo "CREATE TABLE public.zzzz ( complete char(255) NOT NULL );" >> applicationDB.sql
+    /bin/echo "CREATE TABLE public.zzzz ( idxx serial PRIMARY KEY );" >> applicationDB.sql
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
     ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
