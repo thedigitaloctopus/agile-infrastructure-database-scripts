@@ -42,9 +42,9 @@ then
         /bin/echo "${0} `/bin/date`: Failed to backup database, it seems like the tables are not there" >> ${HOME}/logs/MonitoringLog.dat
         exit
     fi
-
-    /bin/echo "DROP TABLE IF EXISTS \`zzzz\`;" > applicationDB.sql
     
+    /bin/echo "SET SESSION sql_require_primary_key = 0;" > applicationDB.sql
+    /bin/echo "DROP TABLE IF EXISTS \`zzzz\`;" >> applicationDB.sql
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y --host=${HOST} --port=${DB_PORT} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
     /bin/echo "CREATE TABLE \`zzzz\` ( \`idxx\` int(10) unsigned NOT NULL, PRIMARY KEY (\`idxx\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
