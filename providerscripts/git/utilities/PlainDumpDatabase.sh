@@ -33,7 +33,15 @@ fi
 
 #The standard troop of SQL databases
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Maria ] )
-then
+then    
+
+    #add primary key to any tables which doesn't have them (digital ocean managed DBs require primary keys)
+    tables="`/usr/bin/mysql -u ${DB_U} -p${DB_P} ${DB_N} --host=${HOST} -P ${PORT} < ${HOME}/providerscripts/git/utilities/verifykeys.sql | /usr/bin/awk '{print $2}' | /usr/bin/tail -n +2`"
+    for table in ${tables}
+    do
+        /usr/bin/mysql -u ${DB_U} -p${DB_P} ${DB_N} --host=${HOST} -P ${PORT} -e "ALTER TABLE ${table}  ADD idxx int(5) NOT NULL; ALTER TABLE ${table} ADD PRIMARY KEY (idxx);"
+    done
+
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y  --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} > applicationDB.sql
     /bin/echo "CREATE TABLE \`zzzz\` ( \`id\` int(10) unsigned NOT NULL, PRIMARY KEY (\`id\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
 fi
