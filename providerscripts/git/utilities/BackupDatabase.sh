@@ -49,6 +49,7 @@ then
     /bin/echo "CREATE TABLE \`zzzz\` ( \`idxx\` int(10) unsigned NOT NULL, PRIMARY KEY (\`idxx\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
+    /bin/sed -i '/SESSION.SQL_LOG_BIN/d' applicationDB.sql
     ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
     /bin/sed -i "s/${ipmask}/YYYYYYYYYY/g" applicationDB.sql
     /bin/echo "${0} `/bin/date`: replaced all http with https in the SQL file" >> ${HOME}/logs/MonitoringLog.dat
