@@ -20,9 +20,10 @@
 ###################################################################################
 #set -x
 
-BUILD_IDENTIFIER="`/bin/ls ${HOME}/.ssh/BUILDIDENTIFIER:* | /usr/bin/awk -F':' '{print $NF}'`"
+WEBSITE_URL="`/bin/ls ${HOME}/.ssh/WEBSITEURL:* | /usr/bin/awk -F':' '{print $NF}'`"
+WEBSITE_NAME="`/bin/echo ${WEBSITE_URL} | /usr/bin/awk -F'.' '{print $2}'`"
 
-/bin/echo "${BUILD_IDENTIFIER}DB" > /etc/hostname
+/bin/echo "${WEBSITE_NAME}DB" > /etc/hostname
 
-/usr/bin/hostnamectl set-hostname "${BUILD_IDENTIFIER}DB"
+/usr/bin/hostnamectl set-hostname "${WEBSITE_NAME}DB"
 
