@@ -34,26 +34,14 @@ fi
 
 ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
 DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
-CLOUDHOST="`/bin/ls ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`"
 ipaddress="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
 
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] && [ "${CLOUDHOST}" = "aws" ] )
-then
-    /bin/echo "use mysql;
-update user set user=\"${DB_U}\" where user='root';
-flush privileges;
-create database ${DB_N};
-GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
-flush privileges;" > ${HOME}/runtime/initialiseDB.sql
-else
+
 /bin/echo "use mysql;
-CREATE USER \"${DB_U}\"@'localhost' IDENTIFIED BY '${DB_P}';
-CREATE USER \"${DB_U}\"@'127.0.0.1' IDENTIFIED BY '${DB_P}';
-CREATE USER \"${DB_U}\"@'${HOST}' IDENTIFIED BY '${DB_P}';
-CREATE USER \"${DB_U}\"@'${ipmask}' IDENTIFIED BY '${DB_P}';
+CREATE USER \"${DB_U}\"@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
+CREATE USER \"${DB_U}\"@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
+CREATE USER \"${DB_U}\"@'${HOST}' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
+CREATE USER \"${DB_U}\"@'${ipmask}' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 flush privileges;
 create database ${DB_N};
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' WITH GRANT OPTION;
@@ -62,9 +50,8 @@ GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" WITH GRANT OPTION;
 DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-ALTER USER 'root'@'localhost' IDENTIFIED WITH BY '${DB_P}';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
-fi
 
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
