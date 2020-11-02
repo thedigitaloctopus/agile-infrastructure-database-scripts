@@ -21,23 +21,23 @@
 #set -x
 
 if ( [ "`/bin/ls ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql`" != "" ] )
-then
+then#
 
-    if ( [ ! -f {HOME}/.ssh/MAILSERVERTOOLKIT:NONE ] )
-    then
-        /bin/sed -i "s/https:\/\/mail.applicationdomain.tld/https:\/\/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/https:\/\/@/https:\/\//g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/@applicationdomain.tld/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/http:\/\/mail.applicationdomain.tld/http:\/\/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/mail.applicationdomain.tld/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        # /bin/sed -i "s/applicationdomain.tld/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/https:\/\/@/https:\/\//g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-    else
-        /bin/sed -i "s/@${WEBSITE_URL}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/https:\/\/mail.${WEBSITE_URL}/https:\/\/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/mail.${WEBSITE_URL}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/sed -i "s/@mail.${ROOT_DOMAIN}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-    fi
+    domainspecifier="`/bin/echo ${WEBSITE_URL} | /usr/bin/awk -F'.' '{ for(i = 1; i <= NF; i++) { print $i; } }' | /usr/bin/cut -c1-3 | /usr/bin/tr '\n' '-' | /bin/sed 's/-//g'`"
+    /bin/sed -i "s/ApplicationDomainSpec/${domainspecifier}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/https:\/\/mail.applicationdomain.tld/https:\/\/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/https:\/\/@/https:\/\//g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/@applicationdomain.tld/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/http:\/\/mail.applicationdomain.tld/http:\/\/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/mail.applicationdomain.tld/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    # /bin/sed -i "s/applicationdomain.tld/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/https:\/\/@/https:\/\//g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+        
+    /bin/sed -i "s/@${WEBSITE_URL}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/https:\/\/mail.${WEBSITE_URL}/https:\/\/mail.${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/mail.${WEBSITE_URL}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/@mail.${ROOT_DOMAIN}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+  
 
     /bin/sed -i "s/www.applicationdomain.tld/${WEBSITE_URL}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/applicationdomain.tld/${WEBSITE_URL}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
