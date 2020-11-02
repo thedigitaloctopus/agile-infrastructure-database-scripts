@@ -21,7 +21,7 @@
 #set -x
 
 if ( [ "`/bin/ls ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql`" != "" ] )
-then#
+then
 
     domainspecifier="`/bin/echo ${WEBSITE_URL} | /usr/bin/awk -F'.' '{ for(i = 1; i <= NF; i++) { print $i; } }' | /usr/bin/cut -c1-3 | /usr/bin/tr '\n' '-' | /bin/sed 's/-//g'`"
     /bin/sed -i "s/ApplicationDomainSpec/${domainspecifier}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
