@@ -30,7 +30,7 @@ DB_N="`/bin/sed '1q;d' ${HOME}/credentials/shit`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
 
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] && [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] )
+if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] || [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] )
 then
     for webserverip in `/bin/ls ${HOME}/config/webserverips`
     do
