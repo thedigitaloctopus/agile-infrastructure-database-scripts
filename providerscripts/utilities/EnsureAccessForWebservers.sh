@@ -24,6 +24,7 @@
 # along with The Agile Deployment Toolkit.  If not, see <http://www.gnu.org/licenses/>.
 ##################################################################################
 ###################################################################################set -x
+#set -x
 
 DB_N="`/bin/sed '1q;d' ${HOME}/credentials/shit`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
@@ -46,10 +47,10 @@ then
         ipmask="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`.%.%"
         ipmask="`/bin/echo ${ipmask} | /bin/sed 's/%/0/g'`"
 
-        if ( [ "`/bin/cat ${postgres_config} | /bin/grep ${DB_N}`" = "" ] )
+        if ( [ "`/bin/cat ${postgres_config} | /bin/grep ${DB_N} | /bin/grep ${ipmask}`" = "" ] )
         then
             ipmask="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`"
-            /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/0          trust" >> ${postgres_config}
+            /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}.0.0/0          trust" >> ${postgres_config}
             /usr/sbin/service postgresql reload
         fi
     done
