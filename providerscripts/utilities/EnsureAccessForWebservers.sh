@@ -35,7 +35,7 @@ then
     for webserverip in `/bin/ls ${HOME}/config/webserverips`
     do
         ipmask="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`.%.%"
-        /usr/bin/mysql -u ${DB_U} -p${DB_P} -e "GRANT ALL PRIVILEGES ON *.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;"
+        /usr/bin/mysql -u ${DB_U} -p${DB_P} -e "GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;"
     done
 fi
 
