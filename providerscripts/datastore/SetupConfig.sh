@@ -20,8 +20,6 @@
 ####################################################################################
 #set -x
 
-#set -x
-
 if ( [ "`/bin/ls ${HOME}/config 2>&1 | /bin/grep "Transport endpoint is not connected"`" != "" ] )
 then
     /bin/umount -f ${HOME}/config
@@ -89,7 +87,7 @@ then
     export AWSACCESSKEYID=`/bin/cat ~/.s3cfg | /bin/grep 'access_key' | /usr/bin/awk '{print $NF}'`
     export AWSSECRETACCESSKEY=`/bin/cat ~/.s3cfg | /bin/grep 'secret_key' | /usr/bin/awk '{print $NF}'`
     /usr/bin/s3cmd mb s3://${configbucket}
-    /usr/bin/s3fs -o nonempty,allow_other,kernel_cache,use_path_request_style,sigv2 -ourl=https://${endpoint} ${configbucket} ${HOME}/config
+    /usr/bin/s3fs -o nonempty,allow_other,kernel_cache,use_path_request_style -ourl=https://${endpoint} ${configbucket} ${HOME}/config
 fi
 
 if ( [ "${DATASTORE_PROVIDER}" = "vultr" ] )
