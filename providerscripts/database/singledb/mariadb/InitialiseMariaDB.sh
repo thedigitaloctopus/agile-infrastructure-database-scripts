@@ -39,7 +39,7 @@ CLOUDHOST="`/bin/ls ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`
 BUILDOS="`/bin/ls ${HOME}/.ssh/BUILDOS:* | /usr/bin/awk -F':' '{print $NF}'`"
 
 #Older style user setup where necessary, might have to change this with time
-if ( ( [ "${CLOUDHOST}" = "exoscale" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ "${CLOUDHOST}" = "linode" ] ) ||  ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] && [ "${CLOUDHOST}" = "aws" ] ) )
+if ( ( [ "${CLOUDHOST}" = "exoscale" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] && [ "${CLOUDHOST}" = "aws" ] ) )
 then
     /bin/echo "use mysql;
 update user set user=\"${DB_U}\" where user='root';
