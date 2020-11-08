@@ -29,7 +29,7 @@ if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     /usr/bin/apt-get -qq -y -f install python3-pip
     /bin/rm /usr/bin/python
-    /bin/ln -s `/usr/bin/whereis python | /usr/bin/awk '{print $2}'` /usr/bin/python
+    /bin/ln -s /usr/bin/python3 /usr/bin/python
     /bin/rm /usr/bin/pip
     /bin/ln /usr/bin/pip3 /usr/bin/pip
 fi
@@ -38,7 +38,7 @@ if ( [ "${BUILDOS}" = "debian" ] )
 then
     /usr/bin/apt-get -qq -y -f install python3-pip
     /bin/rm /usr/bin/python
-    /bin/ln -s `/usr/bin/whereis python | /usr/bin/awk '{print $2}'` /usr/bin/python
+    /bin/ln -s /usr/bin/python3 /usr/bin/python
     /bin/rm /usr/bin/pip
     /bin/ln /usr/bin/pip3 /usr/bin/pip
 fi
