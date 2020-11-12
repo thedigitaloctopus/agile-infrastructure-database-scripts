@@ -22,7 +22,10 @@
 #set -x
 if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:1 ] )
 then
-    #Application specific customisations for the socialnetwork application -APPLICATIONIDENTIFIER=1
-    /bin/echo "*/2 * * * * export HOME=${HOMEDIR} && ${HOME}/applicationscripts/socialnetwork/EmailStatusUpdates.sh" >> /var/spool/cron/crontabs/root
-    /bin/echo "0 0 * * 6 export HOME=${HOMEDIR} && ${HOME}/applicationscripts/socialnetwork/EmailWeeklyReports.sh" >> /var/spool/cron/crontabs/root
+    #you can add crontasks here as needed by your application, for example:
+    #/bin/echo "*/2 * * * * export HOME=${HOMEDIR} && ${HOME}/applicationscripts/demo-joomla/EmailStatusUpdates.sh" >> /var/spool/cron/crontabs/root
+fi
+if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:2 ] )
+then
+   :
 fi
