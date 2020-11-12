@@ -22,7 +22,7 @@
 
 if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:1 ] )
 then
-    . ${HOME}/applicationscripts/socialnetwork/RemoveApplicationBranding.sh
+    . ${HOME}/applicationscripts/demo-joomla/RemoveApplicationBranding.sh
 fi
 if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:2 ] )
 then
