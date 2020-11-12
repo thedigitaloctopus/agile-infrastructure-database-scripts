@@ -21,7 +21,7 @@
 #set -x
 if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:1 ] )
 then
-    . ${HOME}/applicationscripts/socialnetwork/ApplyApplicationBranding.sh
+    . ${HOME}/applicationscripts/demo-joomla/ApplyApplicationBranding.sh
 fi
 if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:2 ] )
 then
