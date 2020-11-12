@@ -22,6 +22,7 @@
 #set -x
 if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:1 ] )
 then
+    :
     #you can add crontasks here as needed by your application, for example:
     #/bin/echo "*/2 * * * * export HOME=${HOMEDIR} && ${HOME}/applicationscripts/demo-joomla/EmailStatusUpdates.sh" >> /var/spool/cron/crontabs/root
 fi
