@@ -37,7 +37,7 @@ then
     /bin/echo "SET SESSION sql_require_primary_key = 0;" > applicationDB.sql
     tries="1"
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y  --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
-    while ( [ "$?" != "0"  ] || [ "${tries}" -lt "5" ] )
+    while ( [ "$?" != "0"  ] && [ "${tries}" -lt "5" ] )
     do
         /bin/sleep 10
         tries="`/usr/bin/expr ${tries} + 1`"
@@ -59,7 +59,7 @@ then
     /bin/echo "SET SESSION sql_require_primary_key = 0;" > applicationDB.sql
     tries="1"
     /usr/bin/mysqldump --lock-tables=false --no-tablespaces -y --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
-    while ( [ "$?" != "0"  ] || [ "${tries}" -lt "5" ] )
+    while ( [ "$?" != "0"  ] && [ "${tries}" -lt "5" ] )
     do
         /bin/sleep 10
         tries="`/usr/bin/expr ${tries} + 1`"
