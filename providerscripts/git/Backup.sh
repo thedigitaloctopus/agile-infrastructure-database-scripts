@@ -111,6 +111,8 @@ else
     ${HOME}/providerscripts/git/CreateRepository.sh "${APPLICATION_REPOSITORY_USERNAME}" "${APPLICATION_REPOSITORY_PASSWORD}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}" "${period}" "${BUILD_IDENTIFIER}" "${APPLICATION_REPOSITORY_PROVIDER}"
 fi
 
+/bin/sleep 30
+
 #Create an archive of the master db
 /usr/bin/split -b 10M -d ${websiteDB} "${WEBSITE_NAME}-db-"
 
