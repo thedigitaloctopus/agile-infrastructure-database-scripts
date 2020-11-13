@@ -35,7 +35,21 @@ fi
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Maria ] )
 then    
     /bin/echo "SET SESSION sql_require_primary_key = 0;" > applicationDB.sql
+    tries="1"
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y  --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
+    while ( [ "$?" != "0"  ] || [ "${tries}" -lt "5" ] )
+    do
+        /bin/sleep 10
+        tries="`/usr/bin/expr ${tries} + 1`"
+        /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y  --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
+    done
+    
+    if ( [ "${tries}" = "5" ] )
+    then
+        /bin/echo "${0} `/bin/date`: Had trouble makng a backup of your database. Please investigate..." >> ${HOME}/logs/MonitoringLog.dat
+        ${HOME}/providerscripts/email/SendEmail.sh "FAILED TO TAKE BACKUP" "I haven't been able to take a database backup, please investigate"
+        exit
+    fi
     /bin/sed -i '/SESSION.SQL_LOG_BIN/d' applicationDB.sql
     /bin/echo "CREATE TABLE \`zzzz\` ( \`idxx\` int(10) unsigned NOT NULL, PRIMARY KEY (\`idxx\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
 fi
@@ -43,7 +57,21 @@ fi
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:MySQL ] )
 then
     /bin/echo "SET SESSION sql_require_primary_key = 0;" > applicationDB.sql
+    tries="1"
     /usr/bin/mysqldump --lock-tables=false --no-tablespaces -y --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
+    while ( [ "$?" != "0"  ] || [ "${tries}" -lt "5" ] )
+    do
+        /bin/sleep 10
+        tries="`/usr/bin/expr ${tries} + 1`"
+        /usr/bin/mysqldump --lock-tables=false --no-tablespaces -y --port=${DB_PORT} --host=${HOST} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
+    done
+    
+    if ( [ "${tries}" = "5" ] )
+    then
+        /bin/echo "${0} `/bin/date`: Had trouble makng a backup of your database. Please investigate..." >> ${HOME}/logs/MonitoringLog.dat
+        ${HOME}/providerscripts/email/SendEmail.sh "FAILED TO TAKE BACKUP" "I haven't been able to take a database backup, please investigate"
+        exit
+    fi
     /bin/sed -i '/SESSION.SQL_LOG_BIN/d' applicationDB.sql
     /bin/echo "CREATE TABLE \`zzzz\` ( \`idxx\` int(10) unsigned NOT NULL, PRIMARY KEY (\`idxx\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
 fi
