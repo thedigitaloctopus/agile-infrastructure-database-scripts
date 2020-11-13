@@ -48,7 +48,7 @@ then
     
     tries="1"
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y --host=${HOST} --port=${DB_PORT} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
-    while ( [ "$?" != "0"  ] || [ "${tries}" -lt "5" ] )
+    while ( [ "$?" != "0"  ] && [ "${tries}" -lt "5" ] )
     do
         /bin/sleep 10
         tries="`/usr/bin/expr ${tries} + 1`"
