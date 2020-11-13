@@ -26,11 +26,6 @@ repository_password="${3}"
 repository_ownername="${4}"
 repository_name="${5}"
 
-if ( [ "${repository_password}" = "" ] )
-then
-    repository_password="none"
-fi
-
 if ( [ "${repository_provider}" = "bitbucket" ] )
 then
     if ( [ "${repository_password}" = "none" ] )
