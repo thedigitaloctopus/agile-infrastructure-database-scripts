@@ -47,7 +47,7 @@ then
     /bin/echo "DROP TABLE IF EXISTS \`zzzz\`;" >> applicationDB.sql
     /usr/bin/mysqldump --lock-tables=false  --no-tablespaces -y --host=${HOST} --port=${DB_PORT} -u ${DB_U} -p${DB_P} ${DB_N} >> applicationDB.sql
     tries="1"
-    while ( [ "${tries}" -lt "5" ] ) || [ "$?" != "0"  ] )
+    while ( [ "$?" != "0"  ] || [ "${tries}" -lt "5" ] )
     do
         /bin/sleep 10
         tries="`/usr/bin/expr ${tries} + 1`"
@@ -56,7 +56,9 @@ then
     
     if ( [ "${tries}" = "5" ] )
     then
-         /bin/echo "${0} `/bin/date`: Had trouble makng a backup of your database. Please investigate..." >> ${HOME}/logs/MonitoringLog.dat
+        /bin/echo "${0} `/bin/date`: Had trouble makng a backup of your database. Please investigate..." >> ${HOME}/logs/MonitoringLog.dat
+        ${HOME}/providerscripts/email/SendEmail.sh "FAILED TO TAKE BACKUP" "I haven't been able to take a database backup, please investigate"
+        exit
     fi
 
     /bin/echo "CREATE TABLE \`zzzz\` ( \`idxx\` int(10) unsigned NOT NULL, PRIMARY KEY (\`idxx\`) ) Engine=INNODB CHARSET=utf8;" >> applicationDB.sql
