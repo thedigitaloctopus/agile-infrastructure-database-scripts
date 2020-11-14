@@ -75,7 +75,7 @@ then
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:10 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/10.3/debian buster main'
+        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/10.4/debian buster main'
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
