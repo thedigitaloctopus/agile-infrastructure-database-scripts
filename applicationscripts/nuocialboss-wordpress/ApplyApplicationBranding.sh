@@ -32,6 +32,7 @@ then
     /bin/sed -i "s/@mail.${ROOT_DOMAIN}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
 
     /bin/sed -i "s/www.applicationdomain.tld/${WEBSITE_URL}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/@applicationdomain.tld/${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/applicationdomain.tld/${WEBSITE_URL}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/The GreatApplication/${WEBSITE_DISPLAY_NAME}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/GreatApplication/${WEBSITE_DISPLAY_NAME}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
