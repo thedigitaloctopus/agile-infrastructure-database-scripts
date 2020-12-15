@@ -45,4 +45,5 @@ then
     /bin/sed -i "s/YYYYYYYYYY/${ipmask}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/THE THE/THE/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/The The/The/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    /bin/sed -i "s/@${WEBSITE_URL}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
 fi
