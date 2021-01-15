@@ -44,6 +44,7 @@ CREATE USER \"${DB_U}\"@'${HOST}' IDENTIFIED WITH mysql_native_password BY '${DB
 CREATE USER \"${DB_U}\"@'${ipmask}' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 flush privileges;
 create database ${DB_N};
+ALTER DATABASE ${DB_N} CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" WITH GRANT OPTION;
