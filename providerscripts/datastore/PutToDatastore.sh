@@ -27,4 +27,5 @@ datastore_to_put_in="$3"
 if ( [ "${datastore_provider}" = "amazonS3" ] || [ "${datastore_provider}" = "digitalocean" ] || [ "${datastore_provider}" = "exoscale" ] || [ "${datastore_provider}" = "linode" ] || [ "${datastore_provider}" = "vultr" ] )
 then
     /usr/bin/s3cmd --force --recursive --multipart-chunk-size-mb=5 put ${file_to_put} s3://${datastore_to_put_in}
+    /usr/bin/s3cmd setacl s3://${datastore_to_put_in}/${file_to_put} --acl-private
 fi
