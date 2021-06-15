@@ -52,6 +52,10 @@ then
             ipmask="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`"
             /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}.0.0/0          trust" >> ${postgres_config}
             /usr/sbin/service postgresql reload
+            if ( [ "$?" != "0" ] )
+            then
+                /usr/bin/systemctl restart rc-local.service
+            fi
         fi
     done
 fi
