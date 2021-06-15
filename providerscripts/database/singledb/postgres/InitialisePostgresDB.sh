@@ -39,6 +39,10 @@ then
     postgres_config="`/usr/bin/find / -name pg_hba.conf -print`"
     postgres_pid="`/usr/bin/find / -name postmaster.pid -print`"
     postgres_sql_config="`/usr/bin/find / -name postgresql.conf -print | /bin/grep etc`"
+    if ( [ "${postgres_sql_config}" = "" ] )
+    then
+        postgres_sql_config="`/usr/bin/find / -name postgresql.conf -print`"
+    fi
 
     /bin/rm ${postgres_pid}
   #  /bin/sed -i 's/md5/trust/g' ${postgres_config}
@@ -54,6 +58,10 @@ then
     fi
 
     /usr/sbin/service postgresql restart
+    if ( [ "$?" != "0" ] )
+    then
+        /usr/bin/systemctl restart rc-local.service
+    fi
     
     /usr/bin/sudo -u postgres /usr/bin/psql -p ${DB_PORT} template1 -c "CREATE USER ${DB_U} WITH ENCRYPTED PASSWORD '${DB_P}';"
     /usr/bin/sudo -u postgres /usr/bin/psql -p ${DB_PORT} template1 -c "ALTER USER ${DB_U} WITH SUPERUSER;"
@@ -67,7 +75,12 @@ then
     /bin/sed -i "s/trust/md5/g" ${postgres_config}
 
     /bin/rm ${postgres_pid}
-    /usr/sbin/service postgresql restart
+            
+   /usr/sbin/service postgresql reload
+   if ( [ "$?" != "0" ] )
+   then
+       /usr/bin/systemctl restart rc-local.service
+   fi
 
 elif ( [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Postgres ] )
 then
