@@ -26,7 +26,7 @@ cd postgresql-${version}
 
 /bin/echo "#!/bin/bash
 
-/usr/sbin/runuser -l "postgres -c "/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start"
+/usr/sbin/runuser -l \"postgres\" -c \"/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start\"
 
 exit 0" > /etc/rc.local
 
