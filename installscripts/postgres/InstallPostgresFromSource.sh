@@ -21,13 +21,12 @@ cd postgresql-${version}
 /usr/sbin/adduser --disabled-password --gecos \"\" postgres ; /bin/echo postgres:${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/chpasswd ;
 /usr/bin/mkdir /usr/local/pgsql/data
 /usr/bin/chown postgres:postgres /usr/local/pgsql/data
-/usr/bin/su - postgres
-/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/
-/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start
+/usr/sbin/runuser -l "postgres" -c "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/"
+/usr/sbin/runuser -l "postgres" -c "/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start"
 
 /bin/echo "#!/bin/bash
 
-/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start
+/usr/sbin/runuser -l "postgres -c "/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start"
 
 exit 0" > /etc/rc.local
 
@@ -51,3 +50,8 @@ WantedBy=multi-user.target" > /etc/systemd/system/rc-local.service
 
 /usr/bin/systemctl enable rc-local.service
 /usr/bin/systemctl start rc-local.service
+
+/usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+/bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+/usr/bin/apt update
+/usr/bin/apt -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
