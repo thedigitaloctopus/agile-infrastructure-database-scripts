@@ -27,6 +27,10 @@ postgres_config="`/usr/bin/find / -name pg_hba.conf -print`"
 /bin/echo "host       all              postgres           ${HOST}/0          md5" >> ${postgres_config}
 
 /usr/sbin/service postgresql restart
+if ( [ "$?" != "0" ] )
+then
+    /usr/bin/systemctl restart rc-local.service
+fi
 
 export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} -c "DROP DATABASE ${DB_N}"
 if ( [ "$?" != "0" ] )
