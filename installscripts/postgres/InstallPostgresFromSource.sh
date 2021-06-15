@@ -3,6 +3,8 @@
 /usr/bin/apt install -qq -y curl
 /usr/bin/apt install -qq -y zlib1g-dev
 
+SERVER_USER_PASSWORD="`/bin/ls /home/${SERVER_USER}/.ssh/SERVERUSERPASSWORD:* | /usr/bin/awk -F':' '{print $NF}'`"
+
 version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
 
 if ( [ ! -f postgresql-${version}.tar.gz ] )
@@ -11,6 +13,7 @@ then
 fi
 
 /bin/tar xvfz postgresql-${version}.tar.gz
+/bin/rm postgresql-${version}.tar.gz
 cd postgresql-${version}
 ./configure --without-readline
 /usr/bin/make
