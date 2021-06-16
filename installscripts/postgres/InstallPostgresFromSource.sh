@@ -20,6 +20,8 @@ cd postgresql-${version}
 /usr/sbin/useradd postgres
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 /usr/sbin/usermod --password ${DB_P} postgres
+/bin/mkdir /home/postgres
+/bin/chowm postgres.postgres /home/postgres
 /usr/bin/mkdir /usr/local/pgsql/data
 /usr/bin/chown postgres:postgres /usr/local/pgsql/data
 /usr/sbin/runuser -l "postgres" -c "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/"
