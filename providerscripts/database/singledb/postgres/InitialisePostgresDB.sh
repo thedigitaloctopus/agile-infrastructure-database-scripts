@@ -57,7 +57,7 @@ then
         /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          md5" >> ${postgres_config}
     else
         /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          md5" >> ${postgres_config}
-        /bin/echo "host       all              postgres            127.0.0.1/16          md5" >> ${postgres_config}
+        /bin/echo "host       all              postgres            127.0.0.1/32         trust" >> ${postgres_config}
     fi
 
     /usr/sbin/service postgresql restart
