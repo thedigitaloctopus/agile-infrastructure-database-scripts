@@ -3,7 +3,6 @@
 /usr/bin/apt install -qq -y curl
 /usr/bin/apt install -qq -y zlib1g-dev
 
-SERVER_USER_PASSWORD="`/bin/ls /home/${SERVER_USER}/.ssh/SERVERUSERPASSWORD:* | /usr/bin/awk -F':' '{print $NF}'`"
 
 version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
 
@@ -18,7 +17,8 @@ cd postgresql-${version}
 ./configure --without-readline
 /usr/bin/make
 /usr/bin/make install
-/usr/sbin/adduser --disabled-password --gecos \"\" postgres ; /bin/echo postgres:${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/chpasswd ;
+/usr/sbin/useradd postgres
+/usr/sbin/usermod --password ${DB_P} postgres
 /usr/bin/mkdir /usr/local/pgsql/data
 /usr/bin/chown postgres:postgres /usr/local/pgsql/data
 /usr/sbin/runuser -l "postgres" -c "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/"
