@@ -18,6 +18,7 @@ cd postgresql-${version}
 /usr/bin/make
 /usr/bin/make install
 /usr/sbin/useradd postgres
+DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 /usr/sbin/usermod --password ${DB_P} postgres
 /usr/bin/mkdir /usr/local/pgsql/data
 /usr/bin/chown postgres:postgres /usr/local/pgsql/data
