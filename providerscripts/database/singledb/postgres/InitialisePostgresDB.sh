@@ -48,6 +48,8 @@ then
   #  /bin/sed -i 's/md5/trust/g' ${postgres_config}
     /bin/sed -i "/listen_addresses/c\        listen_addresses = '*'" ${postgres_sql_config}
     /bin/sed -i "/^port/c\        port = ${DB_PORT}" ${postgres_sql_config}
+    /bin/sed -i "/^#port/c\        port = ${DB_PORT}" ${postgres_sql_config}
+
     ipmask="`/bin/echo ${ipmask} | /bin/sed 's/%/0/g'`"
     
     if ( [ "${CLOUDHOST}" = "aws" ] )
@@ -55,6 +57,7 @@ then
         /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          md5" >> ${postgres_config}
     else
         /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          md5" >> ${postgres_config}
+        /bin/echo "host       all              postgres            127.0.0.1/16          md5" >> ${postgres_config}
     fi
 
     /usr/sbin/service postgresql restart
