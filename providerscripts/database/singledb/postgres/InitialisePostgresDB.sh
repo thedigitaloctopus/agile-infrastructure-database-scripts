@@ -52,6 +52,8 @@ then
 
     ipmask="`/bin/echo ${ipmask} | /bin/sed 's/%/0/g'`"
     
+    /bin/sed -i '/127.0.0.1/d' ${postgres_config}
+    
     if ( [ "${CLOUDHOST}" = "aws" ] )
     then
         /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          md5" >> ${postgres_config}
