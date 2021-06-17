@@ -2,6 +2,12 @@ if ( [ -f ${HOME}/runtime/POSTGRES_CONFIGURED ] )
 then
     exit
 fi
+
+DB_N="`/bin/sed '1q;d' ${HOME}/credentials/shit`"
+DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
+DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
+
+DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
  
 running="0"
    
