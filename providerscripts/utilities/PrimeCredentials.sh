@@ -45,3 +45,16 @@ ${HOME}/providerscripts/utilities/UpdateIP.sh
 /bin/chmod 400 ${HOME}/config/credentials/shit
 /bin/chmod 400 ${HOME}/credentials/shit
 /bin/chmod 400 ${HOME}/.ssh/shit
+
+DB_N="`/bin/sed '1q;d' ${HOME}/config/credentials/shit`"
+DB_P="`/bin/sed '2q;d' ${HOME}/config/credentials/shit`"
+DB_U="`/bin/sed '3q;d' ${HOME}/config/credentials/shit`"
+
+DB1_N="`/bin/sed '1q;d' ${HOME}/credentials/shit`"
+DB1_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
+DB1_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
+
+if ( [ "${DB_N}" != "${DB1_N}" ] || [ "${DB_P}" != "${DB1_P}" ] ||  [ "${DB_U}" != "${DB1_U}" ] )
+then
+    /bin/cp ${HOME}/credentials/shit ${HOME}/config/credentials/shit
+fi
