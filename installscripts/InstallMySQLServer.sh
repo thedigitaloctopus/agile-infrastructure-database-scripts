@@ -38,8 +38,6 @@ if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     /usr/bin/wget https://repo.mysql.com//mysql-apt-config_${version}_all.deb
     DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config_${version}_all.deb
-   # /usr/bin/wget https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb
-   # DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config*
     /bin/rm mysql-apt-config*
     ${HOME}/installscripts/Update.sh ${BUILDOS}
     DEBIAN_FRONTEND=noninteractive apt-get -qq -y install mysql-server
@@ -50,8 +48,6 @@ then
 
     /usr/bin/wget https://repo.mysql.com//mysql-apt-config_${version}_all.deb
     DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config_${version}_all.deb
-   # /usr/bin/wget https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb
-    #DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config*
     /bin/rm mysql-apt-config*
     ${HOME}/installscripts/Update.sh ${BUILDOS}
     DEBIAN_FRONTEND=noninteractive apt-get -qq -y install mysql-server
