@@ -31,6 +31,7 @@ then
 fi
 
 BUILDOSVERSION="`/bin/ls ${HOME}/.ssh/BUILDOSVERSION:* | /usr/bin/awk -F':' '{print $NF}'`"
+version="`curl https://downloads.mariadb.org/ | grep stable | /bin/sed 's/.*>MariaDB //g' | /usr/bin/awk '{print $1}' | /usr/bin/head -1 2>/dev/null`"
 
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
@@ -49,7 +50,7 @@ then
     elif ( [ -f ${HOME}/.ssh/BUILDOSVERSION:20.04 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/10.5/ubuntu focal main'
+        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/ubuntu focal main'
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
@@ -75,7 +76,7 @@ then
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:10 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/10.5/debian buster main'
+        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main'
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
