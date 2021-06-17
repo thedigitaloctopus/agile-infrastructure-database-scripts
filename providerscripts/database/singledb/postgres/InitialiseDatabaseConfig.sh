@@ -1,3 +1,8 @@
+    if ( [ -f ${HOME}/runtime/POSTGRES_CONFIGURED ] )
+    then
+        exit
+    fi
+    
     /usr/sbin/service postgresql restart
     if ( [ "$?" != "0" ] )
     then
