@@ -58,3 +58,4 @@ WantedBy=multi-user.target" > /etc/systemd/system/rc-local.service
 /bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
 /usr/bin/apt update
 /usr/bin/apt -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
+/bin/touch ${HOME}/runtime/POSTGRES_FROM_SOURCE
