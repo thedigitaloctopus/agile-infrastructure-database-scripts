@@ -65,7 +65,7 @@ then
    
         /bin/rm ${postgres_pid}
             
-        /usr/sbin/service postgresql reload
+        /usr/sbin/service postgresql restart
         if ( [ "$?" != "0" ] )
         then
             /usr/bin/su postgres -c "/usr/local/pgsql/bin/pg_ctl restart -D /usr/local/pgsql/data/ -l /home/postgres/logfile"   
@@ -73,9 +73,11 @@ then
             then
                /bin/touch ${HOME}/runtime/POSTGRES_CONFIGURED
                /bin/sed -i "s/trust/md5/g" ${postgres_config}
+               /usr/bin/su postgres -c "/usr/local/pgsql/bin/pg_ctl reload -D /usr/local/pgsql/data/ -l /home/postgres/logfile"   
             fi
         else
            /bin/sed -i "s/trust/md5/g" ${postgres_config}
+           /usr/sbin/service postgresql reload
         fi
     fi
 fi
