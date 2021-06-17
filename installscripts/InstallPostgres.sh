@@ -27,22 +27,22 @@ fi
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
-    ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
-  #  /usr/bin/apt-get -qq -y update
-  #  /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
-  #  version="`/bin/ls /etc/postgresql/`"
-  #  /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
-  #  /usr/sbin/service postgresql restart
+  #  ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
+    /usr/bin/apt-get -qq -y update
+    /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
+    version="`/bin/ls /etc/postgresql/`"
+    /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
+    /usr/sbin/service postgresql restart
 fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
 then
-    ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
+ #   ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
 
-#    /usr/bin/apt-get -qq -y update
-#    /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
-#    version="`/bin/ls /etc/postgresql/`"
-#    /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
-#    /usr/sbin/service postgresql restart
+    /usr/bin/apt-get -qq -y update
+    /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
+    version="`/bin/ls /etc/postgresql/`"
+    /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
+    /usr/sbin/service postgresql restart
 fi
 
