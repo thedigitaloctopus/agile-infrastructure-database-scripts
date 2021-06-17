@@ -22,4 +22,8 @@
    if ( [ "$?" != "0" ] )
    then
       /usr/bin/su postgres -c "/usr/local/pgsql/bin/pg_ctl restart -D /usr/local/pgsql/data/ -l /home/postgres/logfile"   
+      if ( [ "$?" != "0" ] )
+      then
+          /bin/touch ${HOME}/runtime/POSTGRES_CONFIGURED
+      fi
    fi
