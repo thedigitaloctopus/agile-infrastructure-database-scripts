@@ -29,7 +29,7 @@ postgres_config="`/usr/bin/find / -name pg_hba.conf -print`"
 /usr/sbin/service postgresql restart
 if ( [ "$?" != "0" ] )
 then
-    /usr/bin/systemctl restart rc-local.service
+    /usr/bin/su postgres -c "/usr/local/pgsql/bin/pg_ctl reload -D /usr/local/pgsql/data/ -l /home/postgres/logfile"
 fi
 
 export PGPASSWORD="${DB_P}" && /usr/bin/psql -U ${DB_U} -h ${HOST} -p ${DB_PORT} -c "DROP DATABASE ${DB_N}"
