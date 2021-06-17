@@ -72,7 +72,7 @@ SERVER_TIMEZONE_CITY="`/bin/ls ${HOMEDIR}/.ssh/SERVERTIMEZONECITY:* | /usr/bin/a
 
 if ( [ -f ${HOME}/runtime/POSTGRES_FROM_SOURCE ] )
 then
-    /bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/database/singledb/postgres/" >> /var/spool/cron/crontabs/root
+    /bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/database/singledb/postgres/InitialiseDatabaseConfig.sh" >> /var/spool/cron/crontabs/root
 fi
 
 
