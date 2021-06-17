@@ -30,13 +30,14 @@ then
     BUILDOS="`/bin/ls ${HOME}/.ssh/BUILDOS:* | /usr/bin/awk -F':' '{print $NF}'`"
 fi
 BUILDOSVERSION="`/bin/ls ${HOME}/.ssh/BUILDOSVERSION:* | /usr/bin/awk -F':' '{print $NF}'`"
+version="`/usr/bin/wget -O - https://dev.mysql.com/downloads/repo/apt/ | /bin/grep config | /bin/sed 's/.*-config_//g' | /usr/bin/awk -F'_' '{print $1}'`"
 
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
-    /usr/bin/wget https://repo.mysql.com//mysql-apt-config_0.8.16-1_all.deb
-    DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config_0.8.16-1_all.deb
+    /usr/bin/wget https://repo.mysql.com//mysql-apt-config_${version}_all.deb
+    DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config_${version}_all.deb
    # /usr/bin/wget https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb
    # DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config*
     /bin/rm mysql-apt-config*
@@ -47,8 +48,8 @@ fi
 if ( [ "${BUILDOS}" = "debian" ] )
 then    
 
-    /usr/bin/wget https://repo.mysql.com//mysql-apt-config_0.8.16-1_all.deb
-    DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config_0.8.16-1_all.deb
+    /usr/bin/wget https://repo.mysql.com//mysql-apt-config_${version}_all.deb
+    DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config_${version}_all.deb
    # /usr/bin/wget https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb
     #DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i mysql-apt-config*
     /bin/rm mysql-apt-config*
