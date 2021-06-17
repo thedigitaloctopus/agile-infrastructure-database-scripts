@@ -18,7 +18,12 @@
 # along with The Agile Deployment Toolkit.  If not, see <http://www.gnu.org/licenses/>.
 ####################################################################################
 ####################################################################################
-#set -x
+set -x
+
+OUT_FILE="postie-build-out-`/bin/date | /bin/sed 's/ //g'`"
+exec 1>>${HOME}/logs/${OUT_FILE}
+ERR_FILE="postie-build-err-`/bin/date | /bin/sed 's/ //g'`"
+exec 2>>${HOME}/logs/${ERR_FILE}
 
 ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
 DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
