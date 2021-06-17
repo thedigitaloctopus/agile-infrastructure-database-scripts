@@ -72,7 +72,7 @@ then
     /usr/sbin/service postgresql restart
     if ( [ "$?" != "0" ] )
     then
-        /usr/bin/systemctl restart rc-local.service
+        /usr/bin/su postgres -c "/usr/local/pgsql/bin/pg_ctl reload -D /usr/local/pgsql/data/"
     fi
     
     /usr/bin/sudo -u postgres /usr/bin/psql -h 127.0.0.1 -p ${DB_PORT} template1 -c "CREATE USER ${DB_U} WITH ENCRYPTED PASSWORD '${DB_P}';"
@@ -91,7 +91,7 @@ then
    /usr/sbin/service postgresql reload
    if ( [ "$?" != "0" ] )
    then
-       /usr/bin/systemctl restart rc-local.service
+      /usr/bin/su postgres -c "/usr/local/pgsql/bin/pg_ctl reload -D /usr/local/pgsql/data/"   
    fi
 
 elif ( [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Postgres ] )
