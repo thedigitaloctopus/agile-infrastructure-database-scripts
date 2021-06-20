@@ -37,8 +37,7 @@ export HOMEDIR=${HOME}
 
 #First thing is to tighten up permissions in case theres any wronguns. 
 
-/usr/bin/find ${HOME} -type d -exec chmod 755 {} \;
-/usr/bin/find ${HOME} -type f -exec chmod 644 {} \;
+/bin/chmod -R 755 ${HOME}/autoscaler ${HOME}/cron ${HOME}/installscripts ${HOME}/providerscripts ${HOME}/security
 
 if ( [ ! -d ${HOME}/logs ] )
 then
