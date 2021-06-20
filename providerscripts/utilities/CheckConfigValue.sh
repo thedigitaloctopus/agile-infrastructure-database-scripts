@@ -1,3 +1,4 @@
+#!/bin/sh
 
 export HOME="`/bin/cat /home/homedir.dat`"
 
