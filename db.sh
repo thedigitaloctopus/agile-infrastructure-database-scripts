@@ -117,8 +117,6 @@ then
     /bin/mkdir ${HOME}/runtime
 fi
 
-/bin/chmod -R 755 ${HOME}/cron ${HOME}/installscripts ${HOME}/providerscripts ${HOME}/security
-
 /bin/echo "${0} `/bin/date`: Setting hostname" >> ${HOME}/logs/MonitoringLog.dat
 #Set the hostname for the machine
 /bin/echo "${WEBSITE_NAME}DB" > /etc/hostname
