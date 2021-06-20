@@ -39,6 +39,11 @@ then
     /bin/mkdir ${HOME}/logs
 fi
 
+OUT_FILE="database-build-out-`/bin/date | /bin/sed 's/ //g'`"
+exec 1>>${HOME}/logs/${OUT_FILE}
+ERR_FILE="database-build-err-`/bin/date | /bin/sed 's/ //g'`"
+exec 2>>${HOME}/logs/${ERR_FILE}
+
 #Validate the parameters that have been passed
 if ( [ "$1" = "" ] || [ "$2" = "" ] )
 then
@@ -46,20 +51,15 @@ then
     exit
 fi
 
-OUT_FILE="database-build-out-`/bin/date | /bin/sed 's/ //g'`"
-exec 1>>${HOME}/logs/${OUT_FILE}
-ERR_FILE="database-build-err-`/bin/date | /bin/sed 's/ //g'`"
-exec 2>>${HOME}/logs/${ERR_FILE}
-
 /bin/echo "${0} `/bin/date`: Building a new DB server" >> ${HOME}/logs/MonitoringLog.dat
 /bin/echo "${0} `/bin/date`: Obtaining repository credentials " >> ${HOME}/logs/MonitoringLog.dat
 
 #Load the configuration into memory for easy access
 BUILD_ARCHIVE_CHOICE="$1"
-/bin/touch ${HOME}/.ssh/BUILDARCHIVECHOICE:${BUILD_ARCHIVE_CHOICE}
 SERVER_USER="$2"
 BUILD_TYPE="$3"
 
+/bin/touch ${HOME}/.ssh/BUILDARCHIVECHOICE:${BUILD_ARCHIVE_CHOICE}
 CLOUDHOST="`/bin/ls ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`"
 AUTOSCALER_IP="`/bin/ls ${HOME}/.ssh/ASIP:* | /usr/bin/awk -F':' '{print $NF}'`"
 BUILD_IDENTIFIER="`/bin/ls ${HOME}/.ssh/BUILDIDENTIFIER:* | /usr/bin/awk -F':' '{print $NF}'`"
