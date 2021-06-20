@@ -42,7 +42,7 @@ fi
 #Validate the parameters that have been passed
 if ( [ "$1" = "" ] || [ "$2" = "" ] )
 then
-    /bin/echo "Usage: ./db.sh <build archive choice> server_user>" >> ${HOME}/logs/MonitoringLog.dat
+    /bin/echo "Usage: ./db.sh <build archive choice> <server_user>" >> ${HOME}/logs/MonitoringLog.dat
     exit
 fi
 
