@@ -32,8 +32,7 @@ fi
 
 BUILDOSVERSION="`/bin/ls ${HOME}/.ssh/BUILDOSVERSION:* | /usr/bin/awk -F':' '{print $NF}'`"
 #version="`curl https://downloads.mariadb.org/ | grep stable | /bin/sed 's/.*>MariaDB //g' | /usr/bin/awk '{print $1}' | /usr/bin/head -1 2>/dev/null`"
-version="`/usr/bin/curl https://downloads.mariadb.org/ | /bin/grep stable | /usr/bin/head -1 | /bin/sed 's/[^0-9.]*//g' | /bin/sed 's/\./ /g' | /usr/bin/xargs | /bin/sed 's/ 
-/./g'`"
+version="`/usr/bin/curl https://downloads.mariadb.org/ | /bin/grep stable | /usr/bin/head -1 | /bin/sed 's/[^0-9.]*//g' | /bin/sed 's/\./ /g' | /usr/bin/xargs | /bin/sed 's/ /./g'`"
 
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
