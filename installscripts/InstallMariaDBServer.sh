@@ -31,7 +31,9 @@ then
 fi
 
 BUILDOSVERSION="`/bin/ls ${HOME}/.ssh/BUILDOSVERSION:* | /usr/bin/awk -F':' '{print $NF}'`"
-version="`curl https://downloads.mariadb.org/ | grep stable | /bin/sed 's/.*>MariaDB //g' | /usr/bin/awk '{print $1}' | /usr/bin/head -1 2>/dev/null`"
+#version="`curl https://downloads.mariadb.org/ | grep stable | /bin/sed 's/.*>MariaDB //g' | /usr/bin/awk '{print $1}' | /usr/bin/head -1 2>/dev/null`"
+version="`/usr/bin/curl https://downloads.mariadb.org/ | /bin/grep stable | /usr/bin/head -1 | /bin/sed 's/[^0-9.]*//g' | /bin/sed 's/\./ /g' | /usr/bin/xargs | /bin/sed 's/ 
+/./g'`"
 
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
@@ -39,8 +41,8 @@ if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     /usr/bin/apt-get -qq -y remove --purge mysql*
     /usr/bin/apt-get -qq -y  remove --purge mariadb*
-    /bin/echo "mariadb-server-10.4 mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
-    /bin/echo "mariadb-server-10.4 mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
     /usr/bin/apt-get -qq -y install software-properties-common dirmngr
 
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:18.04 ] )
@@ -63,8 +65,8 @@ then
     /usr/bin/apt-get -qq -y remove --purge mysql*
     /usr/bin/apt-get -qq -y remove --purge mariadb*
     
-    /bin/echo "mariadb-server-10.3 mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
-    /bin/echo "mariadb-server-10.3 mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
     /usr/bin/apt-get -qq -y install software-properties-common dirmngr
 
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:9 ] )
