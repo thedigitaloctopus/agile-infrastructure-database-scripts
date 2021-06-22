@@ -30,24 +30,25 @@ then
     BUILDOS="`/bin/ls ${HOME}/.ssh/BUILDOS:* | /usr/bin/awk -F':' '{print $NF}'`"
 fi
 BUILDOSVERSION="`/bin/ls ${HOME}/.ssh/BUILDOSVERSION:* | /usr/bin/awk -F':' '{print $NF}'`"
+version="`/usr/bin/curl https://downloads.mariadb.org/ | /bin/grep stable | /usr/bin/head -1 | /bin/sed 's/[^0-9.]*//g' | /bin/sed 's/\./ /g' | /usr/bin/xargs | /bin/sed 's/ /./g'`"
 
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
-    /bin/echo "mariadb-server-10.4 mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
-    /bin/echo "mariadb-server-10.4 mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
     /usr/bin/apt-get -qq -y install software-properties-common dirmngr
 
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:18.04 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirrors.coreix.net/mariadb/repo/10.4/ubuntu bionic main'
+        /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] http://mirrors.coreix.net/mariadb/repo/10.4/ubuntu bionic main"
     fi
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:20.04 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/10.4/ubuntu focal main'
+        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/ubuntu focal main"
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
@@ -59,8 +60,8 @@ then
     /usr/bin/apt-get -qq -y remove --purge mysql*
     /usr/bin/apt-get -qq -y remove --purge mariadb*
     
-    /bin/echo "mariadb-server-10.3 mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
-    /bin/echo "mariadb-server-10.3 mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+    /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
     /usr/bin/apt-get -qq -y install software-properties-common dirmngr
 
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:9 ] )
@@ -72,7 +73,7 @@ then
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:10 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/10.3/debian buster main'
+        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main"
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
