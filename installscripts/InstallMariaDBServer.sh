@@ -47,11 +47,11 @@ then
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:18.04 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirrors.coreix.net/mariadb/repo/10.4/ubuntu bionic main'
+        /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] http://mirrors.coreix.net/mariadb/repo/10.4/ubuntu bionic main"
     elif ( [ -f ${HOME}/.ssh/BUILDOSVERSION:20.04 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/ubuntu focal main'
+        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/ubuntu focal main"
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
@@ -71,13 +71,13 @@ then
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:9 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mirrors.coreix.net/mariadb/repo/10.3/debian stretch main'
+        /usr/bin/add-apt-repository "deb [arch=amd64,i386,ppc64el] http://mirrors.coreix.net/mariadb/repo/10.3/debian stretch main"
     fi
     
     if ( [ -f ${HOME}/.ssh/BUILDOSVERSION:10 ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository 'deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main'
+        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main"
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
