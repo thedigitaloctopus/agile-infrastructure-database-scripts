@@ -201,6 +201,9 @@ ${HOME}/bootstrap/GitPull.sh ${INFRASTRUCTURE_REPOSITORY_PROVIDER} ${INFRASTRUCT
 /usr/bin/find ${HOME} -type d -print0 | xargs -0 chmod 0755 # for directories
 /usr/bin/find ${HOME} -type f -print0 | xargs -0 chmod 0755 # for files
 
+/bin/mv ${HOME}/providerscripts/utilities/Super.sh ${HOME}/.ssh
+/bin/chmod 400 ${HOME}/.ssh/Super.sh
+
 . ${HOME}/providerscripts/datastore/InstallDatastoreTools.sh
 
 cd ${HOME}
