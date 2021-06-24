@@ -69,6 +69,7 @@ SERVER_TIMEZONE_CITY="`/bin/ls ${HOMEDIR}/.ssh/SERVERTIMEZONECITY:* | /usr/bin/a
 /bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/datastore/SetupConfig.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "@reboot /bin/sleep 600 && export HOME=${HOMEDIR} && ${HOME}/security/KnickersUp.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "@reboot export HOME=${HOMEDIR} && /usr/bin/find ${HOME}/runtime -name *lock* -type f -delete" >> /var/spool/cron/crontabs/root
+/bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/GetIP.sh" >> /var/spool/cron/crontabs/root
 
 if ( [ -f ${HOME}/runtime/POSTGRES_FROM_SOURCE ] )
 then
