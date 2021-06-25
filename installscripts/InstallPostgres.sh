@@ -27,10 +27,10 @@ fi
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
-    if ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
+    if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
     then
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
-    elif ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
+    elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
         /usr/bin/apt-get -qq -y update
         /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
         version="`/bin/ls /etc/postgresql/`"
@@ -41,10 +41,10 @@ fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
 then
-    if ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
+    if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
     then
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh    
-    elif ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
+    elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
         /usr/bin/apt-get -qq -y update
         /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
         version="`/bin/ls /etc/postgresql/`"
