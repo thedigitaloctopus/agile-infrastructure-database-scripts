@@ -31,6 +31,17 @@ DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
 /usr/sbin/runuser -l \"postgres\" -c \"/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start\"
 
+/bin/sleep 10
+
+postgreses=\"\`/usr/bin/ps -ef | /bin/grep postgres | /bin/grep -v grep | /usr/bin/wc -l\`\"
+
+while ( [ \"\${postgreses}\" = \"0\" ] )
+do
+    /usr/sbin/runuser -l \"postgres\" -c \"/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data/ -l logfile start\"
+    postgreses=\"\`/usr/bin/ps -ef | /bin/grep postgres | /bin/grep -v grep | /usr/bin/wc -l\`\"
+    /bin/sleep 10
+done
+
 exit 0" > /etc/rc.local
 
 /bin/chmod +x /etc/rc.local
