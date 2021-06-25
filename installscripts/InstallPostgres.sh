@@ -31,6 +31,7 @@ then
     then
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
+    then
         /usr/bin/apt-get -qq -y update
         /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
         version="`/bin/ls /etc/postgresql/`"
@@ -45,6 +46,7 @@ then
     then
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh    
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
+    then
         /usr/bin/apt-get -qq -y update
         /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
         version="`/bin/ls /etc/postgresql/`"
