@@ -27,22 +27,29 @@ fi
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
-  #  ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
-    /usr/bin/apt-get -qq -y update
-    /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
-    version="`/bin/ls /etc/postgresql/`"
-    /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
-    /usr/sbin/service postgresql restart
+    if ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
+    then
+        ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
+    elif ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
+        /usr/bin/apt-get -qq -y update
+        /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
+        version="`/bin/ls /etc/postgresql/`"
+        /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
+        /usr/sbin/service postgresql restart
+    fi
 fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
 then
- #   ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
-
-    /usr/bin/apt-get -qq -y update
-    /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
-    version="`/bin/ls /etc/postgresql/`"
-    /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
-    /usr/sbin/service postgresql restart
+    if ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
+    then
+        ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh    
+    elif ( [ "`${HOME}/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
+        /usr/bin/apt-get -qq -y update
+        /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
+        version="`/bin/ls /etc/postgresql/`"
+        /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
+        /usr/sbin/service postgresql restart
+    fi
 fi
 
