@@ -52,17 +52,23 @@ exec 2>>${HOME}/logs/${ERR_FILE}
 #Validate the parameters that have been passed
 if ( [ "$1" = "" ] || [ "$2" = "" ] )
 then
-    /bin/echo "Usage: ./db.sh <build archive choice> <server_user>" >> ${HOME}/logs/MonitoringLog.dat
+    /bin/echo "Usage: ./db.sh <build archive choice> <server_user>" >> ${HOME}/logs/DATABASE_BUILD.dat
     exit
 fi
 
-/bin/echo "${0} `/bin/date`: Building a new DB server" >> ${HOME}/logs/MonitoringLog.dat
-/bin/echo "${0} `/bin/date`: Obtaining repository credentials " >> ${HOME}/logs/MonitoringLog.dat
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Building a new database server" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
 #Load the configuration into memory for easy access
 BUILD_ARCHIVE_CHOICE="$1"
 SERVER_USER="$2"
 BUILD_TYPE="$3"
+
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Settting up build parameters" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
 /bin/touch ${HOME}/.ssh/BUILDARCHIVECHOICE:${BUILD_ARCHIVE_CHOICE}
 CLOUDHOST="`/bin/ls ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`"
@@ -117,7 +123,9 @@ then
     /bin/mkdir ${HOME}/runtime
 fi
 
-/bin/echo "${0} `/bin/date`: Setting hostname" >> ${HOME}/logs/MonitoringLog.dat
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Setting hostname to: ${WEBSITE_NAME}DB" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Set the hostname for the machine
 /bin/echo "${WEBSITE_NAME}DB" > /etc/hostname
 /bin/hostname -F /etc/hostname
@@ -141,17 +149,10 @@ fi
 /bin/echo "vm.panic_on_oom=1
 kernel.panic=10" >> /etc/sysctl.conf
 
-#Double down on preventing logins as root. We already tried, but, make absolutely sure because we can't guarantee format of /etc/ssh/sshd_config
 
-if ( [ "`/bin/grep '^#PermitRootLogin' /etc/ssh/sshd_config`" != "" ] || [ "`/bin/grep '^PermitRootLogin' /etc/ssh/sshd_config`" != "" ] )
-then
-    /bin/sed -i "s/^PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
-    /bin/sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
-else
-    /bin/echo "PermitRootLogin no" >> /etc/ssh/sshd_config
-fi
-
-/bin/echo "${0} `/bin/date`: Installing software ...." >> ${HOME}/logs/MonitoringLog.dat
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Installing necessary software" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Update and upgrade the software to its latest available versions
 
 ${HOME}/installscripts/Update.sh ${BUILDOS}
@@ -174,7 +175,9 @@ fi
 
 ${HOME}/providerscripts/utilities/InstallMonitoringGear.sh
 
-/bin/echo "${0}: Setting timezone" >> ${HOME}/logs/MonitoringLog.dat
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Setting timezone" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Set the time on the machine
 /usr/bin/timedatectl set-timezone ${SERVER_TIMEZONE_CONTINENT}/${SERVER_TIMEZONE_CITY}
 /bin/touch ${HOME}/.ssh/SERVERTIMEZONECONTINENT:${SERVER_TIMEZONE_CONTINENT}
@@ -193,8 +196,18 @@ fi
 /bin/mkdir -p ${HOME}/credentials
 /bin/chmod 700 ${HOME}/credentials
 
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Installing Cloudhost tools" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
 #Install the tools for our particular cloudhost provider
 . ${HOME}/providerscripts/cloudhost/InstallCloudhostTools.sh
+
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Getting infrastructure repositories from git" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
 #Configure git
 cd ${HOME}
@@ -211,8 +224,17 @@ ${HOME}/bootstrap/GitPull.sh ${INFRASTRUCTURE_REPOSITORY_PROVIDER} ${INFRASTRUCT
 /usr/bin/find ${HOME} -type d -print0 | xargs -0 chmod 0755 # for directories
 /usr/bin/find ${HOME} -type f -print0 | xargs -0 chmod 0755 # for files
 
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Setting up script that allows us to root" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
 /bin/mv ${HOME}/providerscripts/utilities/Super.sh ${HOME}/.ssh
 /bin/chmod 400 ${HOME}/.ssh/Super.sh
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Setting up datastore tools" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
 . ${HOME}/providerscripts/datastore/InstallDatastoreTools.sh
 
@@ -234,6 +256,10 @@ fi
 #Stop cron from sending notification emails
 /bin/echo "MAILTO=''" > /var/spool/cron/crontabs/root
 
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Installing the application DB" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Initialise the database
 . ${HOME}/providerscripts/database/singledb/InstallSingleDB.sh ${DATABASE_INSTALLATION_TYPE}
 
@@ -250,11 +276,53 @@ then
     fi
 fi
 
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Configuring our SSH settings" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
 #Set the ssh port we want to use
-/bin/sed -i "s/22/${SSH_PORT}/g" /etc/ssh/sshd_config
-/bin/sed -i 's/^#Port/Port/' /etc/ssh/sshd_config
-/bin/sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-/bin/sed -i 's/.*PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+#/bin/sed -i "s/22/${SSH_PORT}/g" /etc/ssh/sshd_config
+#/bin/sed -i 's/^#Port/Port/' /etc/ssh/sshd_config
+
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Disabling password authentication" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
+/bin/sed -i 's/^PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+/bin/sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Changing to our preferred SSH port" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
+#Double down on preventing logins as root. We already tried, but, make absolutely sure because we can't guarantee format of /etc/ssh/sshd_config
+
+if ( [ "`/bin/grep '^#Port' /etc/ssh/sshd_config`" != "" ] || [ "`/bin/grep '^Port' /etc/ssh/sshd_config`" != "" ] )
+then
+    /bin/sed -i "s/^Port.*/Port ${SSH_PORT}/g" /etc/ssh/sshd_config
+    /bin/sed -i "s/^#Port.*/Port ${SSH_PORT}/g" /etc/ssh/sshd_config
+else
+    /bin/echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+fi
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Preventing root logins" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
+#Double down on preventing logins as root. We already tried, but, make absolutely sure because we can't guarantee format of /etc/ssh/sshd_config
+
+if ( [ "`/bin/grep '^#PermitRootLogin' /etc/ssh/sshd_config`" != "" ] || [ "`/bin/grep '^PermitRootLogin' /etc/ssh/sshd_config`" != "" ] )
+then
+    /bin/sed -i "s/^PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
+    /bin/sed -i "s/^#PermitRootLogin.*/PermitRootLogin no/g" /etc/ssh/sshd_config
+else
+    /bin/echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+fi
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Ensuring SSH connections are long lasting" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
 #Make sure that client connections to sshd are long lasting
 if ( [ "`/bin/cat /etc/ssh/sshd_config | /bin/grep 'ClientAliveInterval 200' 2>/dev/null`" = "" ] )
@@ -270,6 +338,10 @@ fi
 /bin/sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf
 SERVER_USER_PASSWORD="`/bin/ls ${HOME}/.ssh/SERVERUSERPASSWORD:* | /usr/bin/awk -F':' '{print $NF}'`"
 
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Initialising cron" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 # Configure the crontab
 . ${HOME}/providerscripts/utilities/InitialiseCron.sh
 
@@ -286,12 +358,21 @@ ${HOME}/providerscripts/utilities/GetIP.sh
 /bin/sed -i "s/IPV6=yes/IPV6=no/g" /etc/default/ufw
 
 
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Setting up firewall" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
+
 /usr/sbin/ufw logging off
 #The firewall is down until the initial configuration steps are completed. We set our restrictive rules as soon as possible
 #and pull our knickers up fully after 10 minutes with a call from cron
 /usr/sbin/ufw default allow incoming
 /usr/sbin/ufw default allow outgoing
 /usr/sbin/ufw --force enable
+
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} `/bin/date`: Rebooting after install" >> ${HOME}/logs/DATABASE_BUILD.log
+/bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
 ${HOME}/providerscripts/email/SendEmail.sh "A DATABASE HAS BEEN SUCCESSFULLY BUILT" "A Database has been successfully built and primed as is rebooting ready for use"
 
