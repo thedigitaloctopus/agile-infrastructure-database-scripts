@@ -26,21 +26,15 @@ then
     HOST="127.0.0.1"
 elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
-    HOST="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
 else
-    # HOST="`/bin/ls ${HOME}/.ssh/MYIP:* | /usr/bin/awk -F':' '{print $NF}'`"
-    HOST="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
 fi
 
 
 
 if ( [ -f ${HOME}/.ssh/APPLICATION:moodle ] )
 then
-    #  /usr/bin/mysql -A -u ${DB_U} -p${DB_P} ${DB_N} --host="127.0.0.1" --port="${DB_PORT}" -e "SET GLOBAL innodb_file_format=Barracuda;"
-    #  /usr/bin/mysql -A -u ${DB_U} -p${DB_P} ${DB_N} --host="127.0.0.1" --port="${DB_PORT}" -e "SET GLOBAL innodb_file_per_table=ON;"
-    #  /usr/bin/mysql -A -u ${DB_U} -p${DB_P} ${DB_N} --host="127.0.0.1" --port="${DB_PORT}" -e "SET GLOBAL INNODB_DEFAULT_ROW_FORMAT=DYNAMIC;"
-    #  /usr/bin/mysql -A -u ${DB_U} -p${DB_P} ${DB_N} --host="127.0.0.1" --port="${DB_PORT}" -e "SET GLOBAL innodb_large_prefix=1;"
-    #  /usr/bin/mysql -A -u ${DB_U} -p${DB_P} ${DB_N} --host="127.0.0.1" --port="${DB_PORT}" -e "SET GLOBAL binlog_format = 'MIXED';"
     /bin/sed -i '/^\[mysqld\]/a binlog_format=mixed' /etc/mysql/my.cnf
     /bin/sed -i '/^\[mysqld\]/a innodb_large_prefix=1' /etc/mysql/my.cnf
     /bin/sed -i '/^\[mysqld\]/a innodb_file_per_table=ON' /etc/mysql/my.cnf
