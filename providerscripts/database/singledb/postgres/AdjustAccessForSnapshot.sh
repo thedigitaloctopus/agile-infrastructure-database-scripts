@@ -20,8 +20,9 @@
 ####################################################################################
 #set -x
 
-HOST="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
-DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
+HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
+DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
+
 postgres_config="`/usr/bin/find / -name pg_hba.conf -print`"
 
 /bin/echo "host       all              postgres           ${HOST}/0          md5" >> ${postgres_config}
