@@ -20,14 +20,14 @@
 #######################################################################################################
 #set -x
 
-DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
+DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
 
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
 then
     host="127.0.0.1"
 elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
-    host="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
+    host="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
 else
     host=127.0.0.1
 fi
@@ -52,7 +52,6 @@ then
     fi
 fi
 
-#if ( [ "`export PGPASSWORD=${DB_P} && /usr/bin/psql -U ${DB_U} -h ${host} -p ${DB_PORT} ${DB_N} -c "select exists ( select 1 from information_schema.tables where table_name='zzzz');" | /bin/grep -v 'exist' | /bin/grep -v '\-\-\-\-'  | /bin/grep -v 'row' | /bin/sed 's/ //g'`" = "t" ] )
 if ( [ "`/usr/bin/psql -h ${host} -p ${DB_PORT} -U ${DB_U} ${DB_N} -c "select exists ( select 1 from information_schema.tables where table_name='zzzz');" | /bin/grep -v 'exist' | /bin/grep -v '\-\-\-\-'  | /bin/grep -v 'row' | /bin/sed 's/ //g'`" = "t" ] || [ "${BUILD_ARCHIVE_CHOICE}" = "virgin" ] )
 then
     /bin/echo "${0} `/bin/date` : An application has been installed in the database, right on" >> ${HOME}/logs/MonitoringLog.dat
