@@ -41,7 +41,8 @@
 /bin/echo "*/10 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/EnforcePermissions.sh" >> /var/spool/cron/crontabs/root
 
 #The scripts run at set times
-BYPASS_DB_LAYER="`/bin/ls ${HOME}/.ssh/BYPASSDBLAYER:* | /usr/bin/awk -F':' '{print $NF}'`"
+BYPASS_DB_LAYER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BYPASSDBLAYER'`"
+
 #If we are using DBaaS then we don't want to run backups from our regular DB layer. The regular DB layer is still required for config
 #reasons, but we don't actully use it, the webservers go straight to the DBaaS provider when they query the database
 if ( [ "${BYPASS_DB_LAYER}" != "1" ] )
