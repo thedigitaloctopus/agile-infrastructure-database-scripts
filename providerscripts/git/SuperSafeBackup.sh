@@ -24,9 +24,9 @@
 ####RUN IT ONCE FOR EACH REPOSITORY YOU WISH TO BACKUP PASSING REPOSITORY NAME FROM THE HTTPS URL
 ####TO THE REPOSITORY YOU WISH TO BACKUP AS A PARAMETER TO THIS SCRIPT
 #########################################################################################################################
-set -x
+#set -x
 
-BUIILDOS="`/bin/ls ${HOME}/.ssh/BUILDOS:* | /usr/bin/awk -F':' '{print $NF}'`"
+BUIILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 
 if ( [ "$1" = "" ] )
 then
@@ -99,7 +99,8 @@ fi
 cd ${HOME}/supersafebackup
 
 date="`/bin/date | /bin/sed 's/ //g' | /bin/sed 's/://g'`"
-BUCKET_NAME="`/bin/ls ${HOME}/.ssh/WEBSITEURL:* | /usr/bin/awk -F':' '{print $NF}'${date} | /bin/sed 's/\./-/g'`"
+BUCKET_NAME="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'WEBSITEURL'${date} | /bin/sed 's/\./-/g'`"
+
 
 if ( [ "${datastoreprovider}" = "amazons3" ] || [ "${datastore_provider}" = "digitalocean" ] )
 then
