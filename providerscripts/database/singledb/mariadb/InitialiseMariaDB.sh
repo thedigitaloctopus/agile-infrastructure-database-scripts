@@ -32,9 +32,8 @@ else
     HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
 fi
 
-ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+IPMASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
-ipaddress="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
 CLOUDHOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'CLOUDHOST'`"
 BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 
@@ -49,7 +48,7 @@ ALTER DATABASE ${DB_N} CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${IPMASK}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 else
     /bin/echo "use mysql;
@@ -61,7 +60,7 @@ GRANT ALL PRIVILEGES ON *.* TO \"${DB_U}\"@'localhost';
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${IPMASK}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 drop user 'root'@'localhost';
 drop user 'mysql'@'localhost';
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
@@ -83,16 +82,6 @@ else
     /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
     #make sure by trying with password
     /usr/bin/mysql -A --force -u root -p${DB_P} < ${HOME}/runtime/initialiseDB.sql
-    
-    #Run through and terminate all mariadb processes and start fresh
-   # pid_files="`/usr/bin/find / -name "*.pid" -print | /bin/grep -e mysql -e maria`"
-
-    #for pid_file in ${pid_files}
-    #do
-    #    /usr/bin/kill `/bin/cat ${pid_file}`
-   # done
-    
-   # /usr/bin/systemctl start mariadb 
 fi
 
 if ( [ -f /etc/mysql/mariadb.conf.d/50-server.cnf ] )
