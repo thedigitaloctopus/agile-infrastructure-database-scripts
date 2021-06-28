@@ -57,10 +57,10 @@ fi
 /bin/echo "@daily export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/MonitorFreeDiskSpace.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "@daily export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/PerformSoftwareUpdate.sh" >> /var/spool/cron/crontabs/root
 
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
-then
-    /bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/SetupSSHTunnel.sh" >> /var/spool/cron/crontabs/root
-fi
+#if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
+#then
+#    /bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/SetupSSHTunnel.sh" >> /var/spool/cron/crontabs/root
+#fi
 
 SERVER_TIMEZONE_CONTINENT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERTIMEZONECONTINENT'`"
 SERVER_TIMEZONE_CITY="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERTIMEZONECITY'`"
