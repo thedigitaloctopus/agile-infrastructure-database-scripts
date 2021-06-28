@@ -25,7 +25,7 @@ exec >>${HOME}/logs/DATABASESERVER_APPLICATION_INSTALLATION_BUILD.log
 exec 2>&1
 if ( [ "${HOME}" = "" ] )
 then
-    export HOME="`/bin/ls -ld /home/X*X | /usr/bin/awk '{print $NF}'`"
+    export HOME="`/bin/cat /home/homedir.dat`"
 fi
 
 if ( [ "${1}" = "force" ] )
@@ -50,7 +50,7 @@ then
     DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
 fi
 
-DATASTORE_PROVIDER="`/bin/ls ${HOME}/.ssh/DATASTORECHOICE:* | /usr/bin/awk -F':' '{print $NF}'`"
+DATASTORE_CHOICE="`/bin/ls ${HOME}/.ssh/DATASTORECHOICE:* | /usr/bin/awk -F':' '{print $NF}'`"
 WEBSITE_URL="`/bin/ls ${HOME}/.ssh/WEBSITEURL:* | /usr/bin/awk -F':' '{print $NF}'`"
 ROOT_DOMAIN="`/bin/echo ${WEBSITE_URL} | /usr/bin/cut -d'.' -f2-`"
 SUB_DOMAIN="`/bin/ls ${HOME}/.ssh/WEBSITEURL:* | /usr/bin/awk -F':' '{print $NF}' | /usr/bin/awk -F'.' '{print $1}'`"
@@ -99,7 +99,7 @@ do
 
         if ( [ ! -f /installer/${BUILD_ARCHIVE_CHOICE}/application-db* ] )
         then
-            ${HOME}/providerscripts/datastore/GetFromDatastore.sh "${DATASTORE_PROVIDER}" "`/bin/echo ${WEBSITE_URL} | /bin/sed 's/\./-/g'`-db-${BUILD_ARCHIVE_CHOICE}" "${WEBSITE_NAME}-DB-backup.tar.gz"
+            ${HOME}/providerscripts/datastore/GetFromDatastore.sh "${DATASTORE_CHOICE}" "`/bin/echo ${WEBSITE_URL} | /bin/sed 's/\./-/g'`-db-${BUILD_ARCHIVE_CHOICE}" "${WEBSITE_NAME}-DB-backup.tar.gz"
             /bin/mv /installer/${WEBSITE_NAME}-DB-backup.tar.gz ${WEBSITE_NAME}-DB-full.tar.gz
         fi
     else
@@ -114,7 +114,7 @@ do
 
             if ( [ -f ${HOME}/.ssh/SUPERSAFEDB:1 ] && [ ! -f /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db* ] )
             then
-                ${HOME}/providerscripts/datastore/GetFromDatastore.sh "${DATASTORE_PROVIDER}" "`/bin/echo ${WEBSITE_URL} | /bin/sed 's/\./-/g'`-db-${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-DB-backup.tar.gz"
+                ${HOME}/providerscripts/datastore/GetFromDatastore.sh "${DATASTORE_CHOICE}" "`/bin/echo ${WEBSITE_URL} | /bin/sed 's/\./-/g'`-db-${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-DB-backup.tar.gz"
                 /bin/mv /installer/${WEBSITE_NAME}-DB-backup.tar.gz ${WEBSITE_NAME}-DB-full.tar.gz
             fi
         fi
