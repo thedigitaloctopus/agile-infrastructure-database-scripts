@@ -20,13 +20,13 @@
 ######################################################################################
 ######################################################################################
 #set -x
-if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:1 ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:1`" = "1" ] )
 then
     :
     #you can add crontasks here as needed by your application, for example:
     #/bin/echo "*/2 * * * * export HOME=${HOMEDIR} && ${HOME}/applicationscripts/demo-joomla/EmailStatusUpdates.sh" >> /var/spool/cron/crontabs/root
 fi
-if ( [ -f ${HOME}/.ssh/APPLICATIONIDENTIFIER:2 ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:2`" = "1" ] )
 then
    :
 fi
