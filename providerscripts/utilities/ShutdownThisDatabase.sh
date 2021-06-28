@@ -24,7 +24,7 @@
 
 if ( [ "$1" = "backup" ] )
 then
-    BUILD_IDENTIFIER="`/bin/ls ${HOME}/.ssh/BUILDIDENTIFIER:* | /usr/bin/awk -F':' '{print $NF}'`"
+    BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
     ${HOME}/providerscripts/git/Backup.sh "HOURLY" ${BUILD_IDENTIFIER} > /dev/null 2>&1
 fi
 
