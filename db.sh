@@ -252,10 +252,10 @@ cd ${HOME}
 #to install the application into the remote database and also to make periodic backups of the database and that
 #is why we have to build it. In ordinary operation of the application, this machine is not touched the webserver
 #communicates directly to the database running as a remote service.
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
-then
-    ${HOME}/providerscripts/utilities/SetupSSHTunnel.sh
-fi
+#if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
+#then
+#    ${HOME}/providerscripts/utilities/SetupSSHTunnel.sh
+#fi
 
 #Stop cron from sending notification emails
 /bin/echo "MAILTO=''" > /var/spool/cron/crontabs/root
