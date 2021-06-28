@@ -20,8 +20,8 @@
 #######################################################################################################
 #set -x
 
-DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
-CLOUDHOST="`/bin/ls ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`"
+CLOUDHOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'CLOUDHOST'`"
+DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
 
 HOST=""
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
@@ -29,9 +29,10 @@ then
     HOST="127.0.0.1"
 elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
-    HOST="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
 else
-    HOST="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
+
 fi
 
 . ${HOME}/applicationdb/maria/CustomiseMariaByApplication.sh
@@ -71,14 +72,6 @@ then
     else
         exit
     fi
-
-    # if ( [ "`/usr/bin/mysql -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port=${DB_PORT} ${DB_N} -e "show tables like 'zzzz'" | /usr/bin/wc -l`" != "1" ] )
-    # then
-    #     /bin/echo "${0} `/bin/date` : It looks like something went wrong with the database installation. It may have been a partial install. If it was a partial install" >> ${HOME}/logs/MonitoringLog.dat
-    #     /bin/echo "${0} `/bin/date` : This is an error. I will let the script complete, but you will need to manually install the database from the command line using the" >> ${HOME}/logs/MonitoringLog.dat
-    #     /bin/echo "${0} `/bin/date` : the backup script you can find under the ${HOME}/backups directory" >> ${HOME}/logs/MonitoringLog.dat
-    #     ${HOME}/providerscripts/email/SendEmail.sh "DATABASE INSTALLATION HAS FAILED" "Please review your logs as the system has failed to install your database application"
-    #fi
 elif ( [ "${BUILD_ARCHIVE_CHOICE}" != "virgin" ] )
 then
     /bin/echo "Something went wrong with obtaining the DB archive, can't run without it..... The END" >> ${HOME}/logs/MonitoringLog.dat
