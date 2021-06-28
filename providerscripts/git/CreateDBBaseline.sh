@@ -65,7 +65,8 @@ cd ${HOME}/backups
 
 . ${HOME}/applicationscripts/RemoveApplicationBranding.sh
 
-ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
+ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+
 /bin/sed -i "s/${ipmask}/YYYYYYYYYY/g" applicationDB.sql
 /bin/tar cvfz ${websiteDB} applicationDB.sql
 /bin/rm applicationDB.sql
