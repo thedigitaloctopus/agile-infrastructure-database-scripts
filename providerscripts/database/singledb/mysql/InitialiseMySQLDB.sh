@@ -21,10 +21,7 @@
 set -x
 
 HOST=""
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
-then
-    HOST="127.0.0.1"
-elif ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
     HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
 else
@@ -55,9 +52,6 @@ flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
     /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
-elif ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
-then
-    /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="127.0.0.1" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
 else
     #make sure database has been started and is available - this is local instance under our full control
     /usr/sbin/service mysql start
