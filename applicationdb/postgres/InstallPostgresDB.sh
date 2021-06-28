@@ -40,7 +40,7 @@ then
     then
         /usr/bin/touch ${lockfile}
         /bin/sed -i "s/XXXXXXXXXX/${DB_U}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
+        ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
         /bin/sed -i "s/YYYYYYYYYY/${ipmask}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         olduser="`/bin/cat ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql | /bin/grep 'u........u' | /bin/sed 's/ /\n/g' | grep '^u........u$' | /usr/bin/head -1`"
         /bin/sed -i "s/${olduser}/${DB_U}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
