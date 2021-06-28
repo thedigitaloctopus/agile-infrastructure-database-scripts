@@ -20,7 +20,7 @@
 ####################################################################################
 #set -x
 
-ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+IPMASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
 CLOUDHOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'CLOUDHOST'`"
 
@@ -49,7 +49,7 @@ then
     /bin/sed -i "/^port/c\        port = ${DB_PORT}" ${postgres_sql_config}
     /bin/sed -i "/^#port/c\        port = ${DB_PORT}" ${postgres_sql_config}
 
-    ipmask="`/bin/echo ${ipmask} | /bin/sed 's/%/0/g'`"
+    IPMASK="`/bin/echo ${IPMASK} | /bin/sed 's/%/0/g'`"
     
     /bin/sed -i '/127.0.0.1/d' ${postgres_config}
     /bin/sed -i '/128/d' ${postgres_config}
@@ -59,7 +59,7 @@ then
     then
         /bin/echo "host       ${DB_N}              ${DB_U}            0.0.0.0/0          md5" >> ${postgres_config}
     else
-        /bin/echo "host       ${DB_N}              ${DB_U}            ${ipmask}/16          md5" >> ${postgres_config}
+        /bin/echo "host       ${DB_N}              ${DB_U}            ${IPMASK}/16          md5" >> ${postgres_config}
         /bin/echo "host       all              postgres            127.0.0.1/32         trust" >> ${postgres_config}
     fi
     
