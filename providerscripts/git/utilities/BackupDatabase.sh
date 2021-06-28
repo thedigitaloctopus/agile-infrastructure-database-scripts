@@ -26,12 +26,12 @@ then
     HOST="127.0.0.1"
 elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
-    HOST="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
 else
     HOST="`${HOME}/providerscripts/utilities/GetIP.sh`"
 fi
 
-DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
+DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
 
 #The standard troop of SQL databases
 if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Maria ] || [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:MySQL ] )
@@ -66,7 +66,7 @@ then
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
     /bin/sed -i '/SESSION.SQL_LOG_BIN/d' applicationDB.sql
-    ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
+    ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
     /bin/sed -i "s/${ipmask}/YYYYYYYYYY/g" applicationDB.sql
     /bin/echo "${0} `/bin/date`: replaced all http with https in the SQL file" >> ${HOME}/logs/MonitoringLog.dat
     /bin/echo "${0} `/bin/date`: Taring the database dump" >> ${HOME}/logs/MonitoringLog.dat
@@ -88,7 +88,7 @@ then
     /bin/echo "CREATE TABLE public.zzzz ( idxx serial PRIMARY KEY );" >> applicationDB.sql
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
-    ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
+    ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
     /bin/sed -i "s/${ipmask}/YYYYYYYYYY/g" applicationDB.sql
     /bin/echo "${0} `/bin/date`: replaced all http with https in the SQL file" >> ${HOME}/logs/MonitoringLog.dat
     /bin/echo "${0} `/bin/date`: Taring the database dump" >> ${HOME}/logs/MonitoringLog.dat
