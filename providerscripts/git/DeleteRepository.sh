@@ -29,8 +29,8 @@ BUILD_IDENTIFIER="${5}"
 provider_name="${6}"
 
 REPOSITORY_NAME="${WEBSITE_NAME}-db-${period}-${BUILD_IDENTIFIER}"
-REPOSITORY_PROVIDER="`/bin/ls ${HOME}/.ssh/APPLICATIONREPOSITORYPROVIDER:* | /usr/bin/awk -F':' '{print $NF}'`"
-REPOSITORY_OWNER="`/bin/ls ${HOME}/.ssh/APPLICATIONREPOSITORYOWNER:* | /usr/bin/awk -F':' '{print $NF}'`"
+REPOSITORY_PROVIDER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'APPLICATIONREPOSITORYPROVIDER'`"
+REPOSITORY_OWNER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'APPLICATIONREPOSITORYOWNER'`"
 
 if ( [ "${provider_name}" = "bitbucket" ] )
 then
