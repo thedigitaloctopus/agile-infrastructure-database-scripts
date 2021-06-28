@@ -267,7 +267,7 @@ fi
 #Initialise the database
 . ${HOME}/providerscripts/database/singledb/InstallSingleDB.sh ${DATABASE_INSTALLATION_TYPE}
 
-BYPASS_DB_LAYER="`/bin/ls ${HOME}/.ssh/BYPASSDBLAYER:* | /usr/bin/awk -F':' '{print $NF}'`"
+BYPASS_DB_LAYER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BYPASSDBLAYER'`"
 
 if ( [ "${BYPASS_DB_LAYER}" != "1" ] )
 then
@@ -340,8 +340,7 @@ fi
 
 #Set userallow for fuse
 /bin/sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf
-SERVER_USER_PASSWORD="`/bin/ls ${HOME}/.ssh/SERVERUSERPASSWORD:* | /usr/bin/awk -F':' '{print $NF}'`"
-
+SERVER_USER_PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSERPASSWORD'`"
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} `/bin/date`: Initialising cron" >> ${HOME}/logs/DATABASE_BUILD.log
