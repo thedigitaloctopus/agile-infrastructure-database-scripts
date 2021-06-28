@@ -27,10 +27,10 @@ fi
 
 if ( [ "${BUILDOS}" = "" ] )
 then
-    BUILDOS="`/bin/ls ${HOME}/.ssh/BUILDOS:* | /usr/bin/awk -F':' '{print $NF}'`"
+    BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 fi
-#BUILDOSVERSION="`/bin/ls ${HOME}/.ssh/BUILDOSVERSION:* | /usr/bin/awk -F':' '{print $NF}'`"
-#DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
+
+BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
