@@ -37,8 +37,8 @@ then
     then
         if ( [ "${BUILDOSVERSION}" = "18.04" ] || [ "${BUILDOSVERSION}" = "20.04" ] )
 	then
-	    ip="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
-	    /bin/sed -i "s/addresses.*/addresses: [${ip}\/16]/" /etc/netplan/10-ens7.yaml
+	    IP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
+	    /bin/sed -i "s/addresses.*/addresses: [${IP}\/16]/" /etc/netplan/10-ens7.yaml
             if ( [ -f /etc/netplan/10-ens3.yaml ] )
             then
                 /bin/echo "network:
@@ -57,8 +57,8 @@ then
     then
         if ( [ "${BUILDOSVERSION}" = "9" ] || [ "${BUILDOSVERSION}" = "10" ] )
             then
-	    ip="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
-            /bin/sed -i "s/address.*/address ${ip}/" /etc/network/interfaces
+	    IP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
+            /bin/sed -i "s/address.*/address ${IP}/" /etc/network/interfaces
             /sbin/ifup ens7
         fi
     fi
