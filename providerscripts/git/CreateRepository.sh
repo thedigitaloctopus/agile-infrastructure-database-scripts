@@ -38,7 +38,7 @@ then
 fi
 if ( [ "${provider_name}" = "gitlab" ] )
 then
-    APPLICATION_REPOSITORY_TOKEN="`/bin/ls ${HOME}/.ssh/APPLICATIONREPOSITORYTOKEN:* | /usr/bin/awk -F':' '{print $NF}'`"
+    APPLICATION_REPOSITORY_TOKEN="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'APPLICATIONREPOSITORYTOKEN'`"
     repo_name="${WEBSITE_NAME}-db-${period}-${BUILD_IDENTIFIER}"
     /usr/bin/curl --header "PRIVATE-TOKEN: ${APPLICATION_REPOSITORY_TOKEN}" -F "name=${repo_name}" https://gitlab.com/api/v3/projects
 fi
