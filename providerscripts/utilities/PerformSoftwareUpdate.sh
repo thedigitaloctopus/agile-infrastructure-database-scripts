@@ -19,7 +19,7 @@
 #################################################################################
 #################################################################################
 
-BUILDOS="`/bin/ls ${HOME}/.ssh/BUILDOS:* | /usr/bin/awk -F':' '{print $NF}'`"
+BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 
 if ( [ -f ${HOME}/.ssh/BUILDOS:ubuntu ] || [ -f ${HOME}/.ssh/BUILDOS:debian ] )
 then
