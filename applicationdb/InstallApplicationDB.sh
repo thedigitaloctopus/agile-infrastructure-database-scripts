@@ -71,11 +71,11 @@ WEBSITE_DISPLAY_NAME="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh '
 
 if ( [ "${BUILD_ARCHIVE_CHOICE}" = "" ] )
 then
-    BUILD_ARCHIVE_CHOICE="`/bin/ls ${HOME}/.ssh/BUILDARCHIVECHOICE:* | /usr/bin/awk -F':' '{print $NF}'`"
+    BUILD_ARCHIVE_CHOICE="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDARCHIVECHOICE'`"
 fi
 if ( [ "${BUILD_IDENTFIER}" = "" ] )
 then
-    BUILD_IDENTIFIER="`/bin/ls ${HOME}/.ssh/BUILDIDENTIFIER:* | /usr/bin/awk -F':' '{print $NF}'`"
+    BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
 fi
 
 /bin/echo "${0} `/bin/date`: Installing Application Database" >> ${HOME}/logs/MonitoringLog.dat
