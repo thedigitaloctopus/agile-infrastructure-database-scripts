@@ -20,7 +20,7 @@
 #######################################################################################################
 #set -x
 
-${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'
+/bin/echo "`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
 BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
 
