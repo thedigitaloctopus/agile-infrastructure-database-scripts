@@ -30,9 +30,10 @@ then
     /usr/sbin/dhclient
 fi
 
+IP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
+
 if ( [ -f ${HOME}/VULTR ] && [ ! -f ${HOME}/runtime/NETCONFIGURED ] )
 then
-    ip="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
 
     if ( [ "${BUILDOS}" = "debian" ] )
     then
@@ -40,12 +41,12 @@ then
         then
             /bin/echo "auto ens7
 iface ens7 inet static
-address ${ip}
+address ${IP}
 netmask 255.255.0.0
             mtu 1450" >> /etc/network/interfaces
             /sbin/ifup --all
         fi
-elif ( [ "${BUILDOS}" = "ubuntu" ] )
+    elif ( [ "${BUILDOS}" = "ubuntu" ] )
     then
         if ( [ "${BUILDOSVERSION}" = "18.04" ] || [ "${BUILDOSVERSION}" = "20.04" ] )
         then
@@ -56,7 +57,7 @@ elif ( [ "${BUILDOS}" = "ubuntu" ] )
     ens7:
       mtu: 1450
       dhcp4: no
-      addresses: [${ip}/16]" >> /etc/netplan/10-ens7.yaml
+      addresses: [${IP}/16]" >> /etc/netplan/10-ens7.yaml
             /usr/sbin/netplan apply
         fi
     fi
