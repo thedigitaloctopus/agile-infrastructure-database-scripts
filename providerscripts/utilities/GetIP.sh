@@ -32,7 +32,7 @@ fi
 
 if ( [ -f ${HOME}/VULTR ] && [ ! -f ${HOME}/runtime/NETCONFIGURED ] )
 then
-    ip="`/bin/ls ${HOME}/.ssh/MYIP:* | /usr/bin/awk -F':' '{print $NF}'`"
+    ip="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
 
     if ( [ "${BUILDOS}" = "debian" ] )
     then
