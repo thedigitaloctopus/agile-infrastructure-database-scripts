@@ -38,10 +38,10 @@ then
     /bin/sed -i "s/GreatApplication/${WEBSITE_DISPLAY_NAME}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/GREATAPPLICATION/${WEBSITE_DISPLAY_NAME_UPPER}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/THE GREATAPPLICATION/${WEBSITE_DISPLAY_NAME_UPPER}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-    from_email="`/bin/ls ${HOME}/.ssh/EMAILUSERNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
+    from_email="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILUSERNAME'`"
     /bin/sed -i "s/XXX@YYY/${from_email}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/XXXXXXXXXX/${DB_U}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-    ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
+    ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
     /bin/sed -i "s/YYYYYYYYYY/${ipmask}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/THE THE/THE/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/The The/The/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
