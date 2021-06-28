@@ -26,16 +26,15 @@ then
     HOST="127.0.0.1"
 elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
-    HOST="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
+
 else
-    HOST="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
 fi
 
-
-ipmask="`/bin/ls ${HOME}/.ssh/IPMASK:* | /usr/bin/awk -F':' '{print $NF}'`"
-DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
-ipaddress="`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
-
+ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
+ipaddress="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
 
 /bin/echo "use mysql;
 CREATE USER \"${DB_U}\"@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
@@ -68,12 +67,6 @@ else
     #make sure by trying with password
     /usr/bin/mysql -f -A -u root -p${DB_P} < ${HOME}/runtime/initialiseDB.sql
 fi
-
-#if ( [ -f /etc/mysql/my.cnf ] )
-#then
-#    /bin/sed -i.bak '/bind-address/d' /etc/mysql/my.cnf
-#    /bin/sed -i.bak "s/3306/${DB_PORT}/" /etc/mysql/my.cnf
-#fi
 
 if ( [ "`/bin/cat /etc/mysql/my.cnf | /bin/grep "${DB_PORT}"`" = "" ] )
 then
