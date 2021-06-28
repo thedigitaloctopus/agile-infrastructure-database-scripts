@@ -30,7 +30,7 @@ fi
 
 if ( [ "${1}" = "force" ] )
 then
-    if ( [ -f ${HOME}/.ssh/BUILDARCHIVECHOICE:baseline ] )
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDARCHIVECHOICE:baseline`" = "1" ] )
     then
         exit
     fi
@@ -175,8 +175,8 @@ fi
 
 cd /root
 /bin/rm -r /installer/*
-
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Maria ] )
+    
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Maria`" = "1" ] )
 then
     if ( [ "${1}" = "force" ] )
     then
@@ -185,8 +185,7 @@ then
     . ${HOME}/applicationscripts/ApplyApplicationBranding.sh
     . ${HOME}/applicationdb/maria/InstallMariaDB.sh
 fi
-
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Postgres ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Postgres ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Postgres`" = "1" ] )
 then
     if ( [ "${1}" = "force" ] )
     then
@@ -195,8 +194,7 @@ then
     . ${HOME}/applicationscripts/ApplyApplicationBranding.sh
     . ${HOME}/applicationdb/postgres/InstallPostgresDB.sh
 fi
-
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] || [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:MySQL ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:MySQL`" = "1" ] )
 then
     if ( [ "${1}" = "force" ] )
     then
