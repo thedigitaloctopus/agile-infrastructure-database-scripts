@@ -21,7 +21,7 @@
 ##########################################################################################
 #set -x
 
-/bin/echo "Your application type is set to: `/bin/ls ${HOME}/.ssh/APPLICATIONIDENTIFIER:* | /usr/bin/awk -F':' '{print $NF}'`"
+/bin/echo "Your application type is set to: `${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'APPLICATIONIDENTIFIER'`"
 /bin/echo "Please make very sure this is correct for your application otherwise things will break"
 /bin/echo "Press <enter> when you are sure"
 read x
