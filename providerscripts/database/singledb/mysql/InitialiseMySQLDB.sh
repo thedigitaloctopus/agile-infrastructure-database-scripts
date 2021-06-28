@@ -31,7 +31,7 @@ else
     HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
 fi
 
-ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
 ipaddress="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
 
@@ -39,14 +39,14 @@ ipaddress="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'
 CREATE USER \"${DB_U}\"@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 CREATE USER \"${DB_U}\"@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 CREATE USER \"${DB_U}\"@'${HOST}' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
-CREATE USER \"${DB_U}\"@'${ipmask}' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
+CREATE USER \"${DB_U}\"@'${IP_MASK}' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 flush privileges;
 create database ${DB_N};
 ALTER DATABASE ${DB_N} CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${ipmask}\" WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${IP_MASK}\" WITH GRANT OPTION;
 DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
