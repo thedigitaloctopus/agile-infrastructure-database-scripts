@@ -66,8 +66,8 @@ then
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
     /bin/sed -i '/SESSION.SQL_LOG_BIN/d' applicationDB.sql
-    ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
-    /bin/sed -i "s/${ipmask}/YYYYYYYYYY/g" applicationDB.sql
+    IPMASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+    /bin/sed -i "s/${IPMASK}/YYYYYYYYYY/g" applicationDB.sql
     /bin/echo "${0} `/bin/date`: replaced all http with https in the SQL file" >> ${HOME}/logs/MonitoringLog.dat
     /bin/echo "${0} `/bin/date`: Taring the database dump" >> ${HOME}/logs/MonitoringLog.dat
 
@@ -89,8 +89,8 @@ then
     /bin/echo "CREATE TABLE public.zzzz ( idxx serial PRIMARY KEY );" >> applicationDB.sql
     /bin/sed -i -- 's/http:\/\//https:\/\//g' applicationDB.sql
     /bin/sed -i "s/${DB_U}/XXXXXXXXXX/g" applicationDB.sql
-    ipmask="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
-    /bin/sed -i "s/${ipmask}/YYYYYYYYYY/g" applicationDB.sql
+    IPMASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+    /bin/sed -i "s/${IPMASK}/YYYYYYYYYY/g" applicationDB.sql
     /bin/echo "${0} `/bin/date`: replaced all http with https in the SQL file" >> ${HOME}/logs/MonitoringLog.dat
     /bin/echo "${0} `/bin/date`: Taring the database dump" >> ${HOME}/logs/MonitoringLog.dat
     /bin/tar cvfz ${websiteDB} applicationDB.sql
