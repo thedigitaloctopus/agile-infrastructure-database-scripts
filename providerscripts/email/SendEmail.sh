@@ -21,30 +21,30 @@
 ################################################################################
 #set -x
 
-subject="$1"
-message="$2"
+SUBJECT="$1"
+MESSAGE="$2"
 
-fromaddress="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'FROMADDRESS'`"
-toaddress="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'TOADDRESS'`"
-username="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILUSERNAME'`"
-password="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPASSWORD'`"
-emailprovider="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPROVIDER'`"
+FROM_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'FROMADDRESS'`"
+TO_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'TOADDRESS'`"
+USERNAME="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILUSERNAME'`"
+PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPASSWORD'`"
+EMAIL_PROVIDER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPROVIDER'`"
 
 
-if ( [ "${password}" = "" ] )
+if ( [ "${PASSWORD}" = "" ] )
 then
-    password="`/bin/cat ${HOME}/.ssh/SYSTEMEMAILPASSWORD.dat`"
+    PASSWORD="`/bin/cat ${HOME}/.ssh/SYSTEMEMAILPASSWORD.dat`"
 fi
 
-if ( [ "${emailprovider}" = "1" ] )
+if ( [ "${EMAIL_PROVIDER}" = "1" ] )
 then
-    /usr/bin/sendemail -o tls=no -f ${fromaddress} -t ${toaddress} -s smtp-pulse.com:2525 -xu ${username} -xp ${password} -u "${subject}`/bin/date`" -m ${message}
+    /usr/bin/sendemail -o tls=no -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s smtp-pulse.com:2525 -xu ${USERNAME} -xp ${PASSWORD} -u "${SUBJECT}`/bin/date`" -m ${MESSAGE}
 fi
-if ( [ "${emailprovider}" = "2" ] )
+if ( [ "${EMAIL_PROVIDER}" = "2" ] )
 then
-    /usr/bin/sendemail -o tls=yes -f ${fromaddress} -t ${toaddress} -s smtp.gmail.com:587 -xu ${username} -xp ${password} -u "${subject} `/bin/date`" -m ${message}
+    /usr/bin/sendemail -o tls=yes -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s smtp.gmail.com:587 -xu ${USERNAME} -xp ${PASSWORD} -u "${SUBJECT} `/bin/date`" -m ${MESSAGE}
 fi
-if ( [ "${emailprovider}" = "3" ] )
+if ( [ "${EMAIL_PROVIDER}" = "3" ] )
 then
-    /usr/bin/sendemail -o tls=yes -f ${fromaddress} -t ${toaddress} -s email-smtp.eu-west-1.amazonaws.com -xu ${username} -xp ${password} -u "${subject} `/bin/date`" -m ${message}
+    /usr/bin/sendemail -o tls=yes -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s email-smtp.eu-west-1.amazonaws.com -xu ${USERNAME} -xp ${PASSWORD} -u "${SUBJECT} `/bin/date`" -m ${MESSAGE}
 fi
