@@ -20,4 +20,5 @@
 #######################################################################################################
 #set -x
 
-/bin/echo "`/bin/ls ${HOME}/.ssh/MYPUBLICIP:* | /usr/bin/awk -F':' '{print $NF}'`"
+/bin/echo "`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
+
