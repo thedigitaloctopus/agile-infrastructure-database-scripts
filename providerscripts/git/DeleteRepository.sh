@@ -42,7 +42,7 @@ then
 fi
 if ( [ "${provider_name}" = "gitlab" ] )
 then
-    APPLICATION_REPOSITORY_TOKEN="`/bin/ls ${HOME}/.ssh/APPLICATIONREPOSITORYTOKEN:* | /usr/bin/awk -F':' '{print $NF}'`"
+    APPLICATION_REPOSITORY_TOKEN="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'APPLICATIONREPOSITORYTOKEN'`"
     /usr/bin/curl --request DELETE --header "PRIVATE-TOKEN: ${APPLICATION_REPOSITORY_TOKEN}" https://gitlab.com/api/v3/projects/${REPOSITORY_OWNER}%2F${REPOSITORY_NAME}
 fi
 
