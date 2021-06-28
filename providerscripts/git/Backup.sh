@@ -105,7 +105,7 @@ fi
 /bin/rm ${HOME}/backups/${period}/*
 /bin/rm -r ${HOME}/.git
 
-if ( [ "${period}" = "hourly" ] && [ -f ${HOME}/.ssh/DISABLEHOURLY:1 ] )
+if ( [ "${period}" = "hourly" ] &&  [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DISABLEHOURLY:1`" = "1" ] )
 then
     /bin/echo "${0} `/bin/date`: Skipping repository creation because hourly backups are disabled" >> ${HOME}/logs/MonitoringLog.dat
 else
@@ -137,7 +137,7 @@ fi
 
 cd ${HOME}/backups/
 
-if ( [ "${period}" = "hourly" ] && [ -f ${HOME}/.ssh/DISABLEHOURLY:1 ] )
+if ( [ "${period}" = "hourly" ] && [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DISABLEHOURLY:1`" = "1" ] )
 then
     /bin/echo "${0} `/bin/date`: Skipping hourly backup because hourly backups are disabled" >> ${HOME}/logs/MonitoringLog.dat
 else
