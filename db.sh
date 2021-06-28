@@ -172,7 +172,7 @@ ${HOME}/installscripts/InstallS3FS.sh ${BUILDOS}
 ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
 ${HOME}/installscripts/InstallJQ.sh ${BUILDOS}
 
-if ( [ -f ${HOME}/.ssh/ENABLEEFS:1 ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh ENABLEEFS:1`" = "1" ] )
 then
     ${HOME}/installscripts/InstallNFS.sh ${BUILDOS}
 fi
@@ -252,7 +252,7 @@ cd ${HOME}
 #to install the application into the remote database and also to make periodic backups of the database and that
 #is why we have to build it. In ordinary operation of the application, this machine is not touched the webserver
 #communicates directly to the database running as a remote service.
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
 then
     ${HOME}/providerscripts/utilities/SetupSSHTunnel.sh
 fi
