@@ -1,5 +1,6 @@
 
-if ( [ ! -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:MySQL ] && [ ! -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] )
+
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "0" ] && [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "0" ] )
 then
    exit
 fi
@@ -9,10 +10,11 @@ DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
 
 HOST=""
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS-secured ] )
+
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
 then
     HOST="127.0.0.1"
-elif ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
+elif ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
     HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
 else
