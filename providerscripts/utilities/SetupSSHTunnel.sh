@@ -21,11 +21,11 @@
 #########################################################################################
 #set -x
 
-DB_PORT="`/bin/ls ${HOME}/.ssh/DB_PORT:* | /usr/bin/awk -F':' '{print $NF}'`"
-DBaaS_HOSTNAME="`/bin/ls ${HOME}/.ssh/DBaaSHOSTNAME:* | /usr/bin/awk -F':' '{print $NF}'`"
-DBaaS_REMOTE_SSH_PROXY_IP="`/bin/ls ${HOME}/.ssh/DBaaSREMOTESSHPROXYIP:* | /usr/bin/awk -F':' '{print $NF}'`"
-DEFAULT_DBaaS_OS_USER="`/bin/ls ${HOME}/.ssh/DEFAULTDBaaSOSUSER:* | /usr/bin/awk -F':' '{print $NF}'`"
-BUILDOS="`/bin/ls ${HOME}/.ssh/BUILDOS:* | /usr/bin/awk -F':' '{print $NF}'`"
+DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
+DBaaS_HOSTNAME="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
+DBaaS_REMOTE_SSH_PROXY_IP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSREMOTESSHPROXYIP'`"
+DEFAULT_DBaaS_OS_USER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DEFAULTDBaaSOSUSER'`"
+BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 
 if ( [ "`/bin/ps -ef | /bin/grep "${DBaaS_HOSTNAME}" | /bin/grep -v 'grep'`" != "" ] )
 then
