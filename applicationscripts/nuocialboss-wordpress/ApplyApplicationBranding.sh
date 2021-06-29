@@ -41,8 +41,8 @@ then
     FROM_EMAIL="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILUSERNAME'`"
     /bin/sed -i "s/XXX@YYY/${FROM_EMAIL}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/XXXXXXXXXX/${DB_U}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-    IPMASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
-    /bin/sed -i "s/YYYYYYYYYY/${IPMASK}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
+    IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+    /bin/sed -i "s/YYYYYYYYYY/${IP_MASK}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/THE THE/THE/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/The The/The/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     /bin/sed -i "s/@${WEBSITE_URL}/@${ROOT_DOMAIN}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
