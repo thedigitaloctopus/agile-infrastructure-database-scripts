@@ -65,9 +65,9 @@ cd ${HOME}/backups
 
 . ${HOME}/applicationscripts/RemoveApplicationBranding.sh
 
-IPMASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
+IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 
-/bin/sed -i "s/${IPMASK}/YYYYYYYYYY/g" applicationDB.sql
+/bin/sed -i "s/${IP_MASK}/YYYYYYYYYY/g" applicationDB.sql
 /bin/tar cvfz ${websiteDB} applicationDB.sql
 /bin/rm applicationDB.sql
 /usr/bin/split -b 10M -d ${websiteDB} "application-db-"
