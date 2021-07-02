@@ -70,8 +70,7 @@ BUILD_TYPE="$3"
 /bin/echo "${0} `/bin/date`: Settting up build parameters" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
-/bin/touch ${HOME}/.ssh/BUILDARCHIVECHOICE:${BUILD_ARCHIVE_CHOICE}
-
+${HOME}/providerscripts/utilities/StoreConfigValue.sh "BUILDARCHIVECHOICE" "${BUILD_ARCHIVE_CHOICE}"
 
 CLOUDHOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'CLOUDHOST'`"
 AUTOSCALERIP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ASIP'`"
@@ -184,8 +183,8 @@ ${HOME}/providerscripts/utilities/InstallMonitoringGear.sh
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Set the time on the machine
 /usr/bin/timedatectl set-timezone ${SERVER_TIMEZONE_CONTINENT}/${SERVER_TIMEZONE_CITY}
-/bin/touch ${HOME}/.ssh/SERVERTIMEZONECONTINENT:${SERVER_TIMEZONE_CONTINENT}
-/bin/touch ${HOME}/.ssh/SERVERTIMEZONECITY:${SERVER_TIMEZONE_CITY}
+${HOME}/providerscripts/utilities/StoreConfigValue.sh "SERVERTIMEZONECONTINENT" "${SERVER_TIMEZONE_CONTINENT}"
+${HOME}/providerscripts/utilities/StoreConfigValue.sh "SERVERTIMEZONECITY" "${SERVER_TIMEZONE_CITY}"
 export TZ=":${SERVER_TIMEZONE_CONTINENT}/${SERVER_TIMEZONE_CITY}"
 
 #Some rudimentary checks to ensure that the software is installed
