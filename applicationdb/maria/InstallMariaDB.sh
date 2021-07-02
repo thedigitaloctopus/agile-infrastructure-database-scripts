@@ -41,7 +41,7 @@ then
     # We are a mysql cluster so we need to use NDB engine type the way to do this is to modify the dump file
     /bin/sed -i "s/${currentengine}/ENGINE=INNODB /g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     
-    if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:Maria ] )
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] )
     then
         /bin/sed -i '/SESSION.SQL_LOG_BIN/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         /bin/sed -i '/sql_require_primary_key/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
@@ -52,7 +52,8 @@ then
         fi
         /bin/sed -i '/^\[mysqld\]/a character-set-server = utf8mb4' /etc/mysql/my.cnf
         /bin/sed -i '/^\[mysqld\]/a collation-server = utf8mb4_bin' /etc/mysql/my.cnf
-    elif ( [ -f ${HOME}/.ssh/DATABASEDBaaSINSTALLATIONTYPE:Maria ]  && [ "${CLOUDHOST}" = "digitalocean" ] )
+        
+    elif ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Maria`" = "1" ] && [ "${CLOUDHOST}" = "digitalocean" ] )
     then
         /bin/sed -i '1s/^/SET SESSION sql_require_primary_key = 0;\n/' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     fi
