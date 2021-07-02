@@ -53,7 +53,7 @@ CREATE USER \"${DB_U}\" IDENTIFIED BY \"${DB_P}\";
 flush privileges;
 create database ${DB_N};
 ALTER DATABASE ${DB_N} CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-GRANT ALL PRIVILEGES ON *.* TO \"${DB_U}\"@'localhost';
+GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost';
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'localhost' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@'127.0.0.1' IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${HOST}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;
