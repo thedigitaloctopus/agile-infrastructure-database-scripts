@@ -115,8 +115,7 @@ do
             /bin/cat /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db-?? > /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db
             /bin/rm /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db-*
             /bin/mv /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db-00
-
-            if ( [ -f ${HOME}/.ssh/SUPERSAFEDB:1 ] && [ ! -f /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db* ] )
+            if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh SUPERSAFEDB:1`" = "1" ] && [ ! -f /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db* ] )
             then
                 ${HOME}/providerscripts/datastore/GetFromDatastore.sh "${DATASTORE_CHOICE}" "`/bin/echo ${WEBSITE_URL} | /bin/sed 's/\./-/g'`-db-${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-DB-backup.tar.gz"
                 /bin/mv /installer/${WEBSITE_NAME}-DB-backup.tar.gz ${WEBSITE_NAME}-DB-full.tar.gz
