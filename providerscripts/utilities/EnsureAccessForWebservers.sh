@@ -30,7 +30,7 @@ DB_N="`/bin/sed '1q;d' ${HOME}/credentials/shit`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
 
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ]|| [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] )
 then
     for webserverip in `/bin/ls ${HOME}/config/webserverips`
     do
