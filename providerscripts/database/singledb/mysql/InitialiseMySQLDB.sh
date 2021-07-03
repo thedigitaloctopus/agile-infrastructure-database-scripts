@@ -61,7 +61,7 @@ else
     /usr/bin/mysql -f -A -u root -p${DB_P} < ${HOME}/runtime/initialiseDB.sql
 fi
 
-if ( [ "`/bin/cat /etc/mysql/my.cnf | /bin/grep "${DB_PORT}"`" = "" ] )
+if ( [ "`/bin/grep "${DB_PORT}" /etc/mysql/my.cnf`" = "" ] )
 then
     /bin/echo "[mysqld]" >> /etc/mysql/my.cnf
     /bin/echo "port        = ${DB_PORT}" >> /etc/mysql/my.cnf
