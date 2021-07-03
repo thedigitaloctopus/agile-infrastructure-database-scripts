@@ -37,7 +37,7 @@ fi
 
 if ( [ "`/bin/ls ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql`" != "" ] )
 then
-    currentengine="`/bin/cat ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql | /bin/grep ENGINE= | /usr/bin/awk -F' ' '{print $2}' | /usr/bin/head -1`"
+    currentengine="`/bin/grep ENGINE= ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql | /usr/bin/awk -F' ' '{print $2}' | /usr/bin/head -1`"
     # We are a mysql cluster so we need to use NDB engine type the way to do this is to modify the dump file
     /bin/sed -i "s/${currentengine}/ENGINE=INNODB /g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
     
@@ -45,7 +45,7 @@ then
     then
         /bin/sed -i '/SESSION.SQL_LOG_BIN/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         /bin/sed -i '/sql_require_primary_key/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        if ( [ "`/bin/cat ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql | /bin/grep GTID`" != "" ] )
+        if ( [ "`/bin/grep GTID ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql`" != "" ] )
         then
             /bin/sed -i '/GTID_PURGED/d' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
             /bin/sed -i 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
