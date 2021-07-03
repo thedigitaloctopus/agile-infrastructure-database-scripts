@@ -87,7 +87,7 @@ else
 fi
 
 
-if ( [ "`/bin/cat /etc/mysql/mariadb.conf.d/50-server.cnf | /bin/grep "${DB_PORT}"`" = "" ] )
+if ( [ "`/bin/grep "${DB_PORT}" /etc/mysql/mariadb.conf.d/50-server.cnf`" = "" ] )
 then
     if ( [ -f /etc/mysql/mariadb.conf.d/50-server.cnf ] )
     then
@@ -95,7 +95,7 @@ then
         /bin/echo "port        = ${DB_PORT}" >> /etc/mysql/mariadb.conf.d/50-server.cnf
         /bin/echo "bind-address        = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/50-server.cnf
     fi
-elif ( [ "`/bin/cat /etc/mysql/my.cnf | /bin/grep "${DB_PORT}"`" = "" ] )
+elif ( [ "`/bin/grep "${DB_PORT}" /etc/mysql/my.cnf`" = "" ] )
 then
     /bin/echo "[mysqld]" >> /etc/mysql/my.cnf
     /bin/echo "port        = ${DB_PORT}" >> /etc/mysql/my.cnf
