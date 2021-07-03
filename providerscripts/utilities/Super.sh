@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/bin/cat  database_configuration_settings.dat | /bin/grep SERVERUSERPASSWORD | /usr/bin/awk -F':' '{print $NF}' | /usr/bin/sudo -S /bin/echo "Going Super hold on to your hat" 
+/bin/grep SERVERUSERPASSWORD database_configuration_settings.dat | /usr/bin/awk -F':' '{print $NF}' | /usr/bin/sudo -S /bin/echo "Going Super hold on to your hat" 
 
 /bin/echo
 /bin/echo
