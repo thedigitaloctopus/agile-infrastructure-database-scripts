@@ -31,10 +31,10 @@ PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPASSWOR
 EMAIL_PROVIDER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPROVIDER'`"
 
 
-if ( [ "${PASSWORD}" = "" ] )
-then
-    PASSWORD="`/bin/cat ${HOME}/.ssh/SYSTEMEMAILPASSWORD.dat`"
-fi
+#if ( [ "${PASSWORD}" = "" ] )
+#then
+#    PASSWORD="`/bin/cat ${HOME}/.ssh/SYSTEMEMAILPASSWORD.dat`"
+#fi
 
 if ( [ "${EMAIL_PROVIDER}" = "1" ] )
 then
