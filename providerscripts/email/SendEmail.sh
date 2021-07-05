@@ -21,30 +21,25 @@
 ################################################################################
 #set -x
 
-SUBJECT="$1"
-MESSAGE="$2"
-
+subject="$1"
+message="$2"
 FROM_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SYSTEMFROMEMAILADDRESS'`"
 TO_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SYSTEMTOEMAILADDRESS'`"
 USERNAME="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILUSERNAME'`"
 PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPASSWORD'`"
 EMAIL_PROVIDER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPROVIDER'`"
 
-
-#if ( [ "${PASSWORD}" = "" ] )
-#then
-#    PASSWORD="`/bin/cat ${HOME}/.ssh/SYSTEMEMAILPASSWORD.dat`"
-#fi
-
 if ( [ "${EMAIL_PROVIDER}" = "1" ] )
 then
-    /usr/bin/sendemail -o tls=no -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s smtp-pulse.com:2525 -xu ${USERNAME} -xp ${PASSWORD} -u "${SUBJECT}`/bin/date`" -m ${MESSAGE}
+    /bin/echo "${0} `/bin/date`: Email sent via sendpulse, subject : ${subject} to: ${TO_ADDRESS}" >> ${HOME}/logs/MonitoringLog.log
+    /usr/bin/sendemail -o tls=no -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s smtp-pulse.com:2525 -xu ${USERNAME} -xp ${PASSWORD} -u "${subject} `/bin/date`" -m ${message}
 fi
 if ( [ "${EMAIL_PROVIDER}" = "2" ] )
 then
-    /usr/bin/sendemail -o tls=yes -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s smtp.gmail.com:587 -xu ${USERNAME} -xp ${PASSWORD} -u "${SUBJECT} `/bin/date`" -m ${MESSAGE}
+    /bin/echo "${0} `/bin/date`: Email sent via gmail, subject : ${subject} to: ${TO_ADDRESS}" >> ${HOME}/logs/MonitoringLog.log
+    /usr/bin/sendemail -o tls=yes -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s smtp.gmail.com:587 -xu ${USERNAME} -xp ${PASSWORD} -u "${subject} `/bin/date`" -m ${message}
 fi
-if ( [ "${EMAIL_PROVIDER}" = "3" ] )
+if ( [ "${emailprovider}" = "3" ] )
 then
-    /usr/bin/sendemail -o tls=yes -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s email-smtp.eu-west-1.amazonaws.com -xu ${USERNAME} -xp ${PASSWORD} -u "${SUBJECT} `/bin/date`" -m ${MESSAGE}
+    /usr/bin/sendemail -o tls=yes -f ${FROM_ADDRESS} -t ${TO_ADDRESS} -s email-smtp.eu-west-1.amazonaws.com -xu ${USERNAME} -xp ${PASSWORD} -u "${subject} `/bin/date`" -m ${message}
 fi
