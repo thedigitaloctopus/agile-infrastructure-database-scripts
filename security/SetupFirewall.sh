@@ -26,7 +26,7 @@ exec >${HOME}/logs/FIREWALL_CONFIGURATION.log
 exec 2>&1
 
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
-SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSH_PORT'`"
+SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSHPORT'`"
 
 #If the toolkit isn't fully installed, don't do anything
 
