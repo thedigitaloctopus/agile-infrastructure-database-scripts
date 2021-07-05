@@ -24,8 +24,8 @@
 SUBJECT="$1"
 MESSAGE="$2"
 
-FROM_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'FROMADDRESS'`"
-TO_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'TOADDRESS'`"
+FROM_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SYSTEMFROMEMAILADDRESS'`"
+TO_ADDRESS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SYSTEMTOEMAILADDRESS'`"
 USERNAME="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILUSERNAME'`"
 PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPASSWORD'`"
 EMAIL_PROVIDER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'EMAILPROVIDER'`"
