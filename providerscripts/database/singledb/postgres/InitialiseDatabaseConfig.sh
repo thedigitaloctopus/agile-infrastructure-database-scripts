@@ -28,7 +28,7 @@ then
     exit
 fi
 
-DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DB_PORT'`"
+DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBPORT'`"
 
 DB_N="`/bin/sed '1q;d' ${HOME}/credentials/shit`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
