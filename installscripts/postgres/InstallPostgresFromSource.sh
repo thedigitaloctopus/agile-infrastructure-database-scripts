@@ -1,7 +1,7 @@
-/usr/bin/apt install -qq -y software-properties-common
-/usr/bin/apt install -qq -y build-essential 
-/usr/bin/apt install -qq -y curl
-/usr/bin/apt install -qq -y zlib1g-dev
+/usr/bin/apt-get install -qq -y software-properties-common
+/usr/bin/apt-get install -qq -y build-essential 
+/usr/bin/apt-get install -qq -y curl
+/usr/bin/apt-get install -qq -y zlib1g-dev
 
 
 version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
@@ -67,6 +67,6 @@ WantedBy=multi-user.target" > /etc/systemd/system/rc-local.service
 
 /usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 /bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
-/usr/bin/apt update
-/usr/bin/apt -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
+/usr/bin/apt-get update
+/usr/bin/apt-get -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
 /bin/touch ${HOME}/runtime/POSTGRES_FROM_SOURCE
