@@ -251,7 +251,7 @@ ${HOME}/bootstrap/GitPull.sh ${INFRASTRUCTURE_REPOSITORY_PROVIDER} ${INFRASTRUCT
 
 #Set permissions appropriately
 /usr/bin/find ${HOME} -type d -print0 | xargs -0 chmod 0755 # for directories
-/usr/bin/find ${HOME} -type f -print0 | xargs -0 chmod 0755 # for files
+/usr/bin/find ${HOME} -type f -print0 | xargs -0 chmod 0500 # for files
 
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
