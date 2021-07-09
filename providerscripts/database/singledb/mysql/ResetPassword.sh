@@ -15,3 +15,9 @@ ALTER USER \"${username}\"@'127.0.0.1' IDENTIFIED BY "${password}";
 ALTER USER \"${username}\"@\"${HOST}\" IDENTIFIED BY "${password}";
 ALTER USER \"${username}\"@\"${IP_MASK}\" IDENTIFIED BY "${password}";
 " > ${HOME}/runtime/resetpasswordDB.sql
+
+
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
+then
+    /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/resetpasswordDB.sql
+fi
