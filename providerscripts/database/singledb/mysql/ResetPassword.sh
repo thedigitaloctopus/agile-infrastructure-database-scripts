@@ -14,13 +14,10 @@ fi
 IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBPORT'`"
 
-/bin/echo "use mysql;
-ALTER USER \"${username}\"@'localhost' IDENTIFIED BY "${new_password}";
-ALTER USER \"${username}\"@'127.0.0.1' IDENTIFIED BY "${new_password}";
-ALTER USER \"${username}\"@\"${HOST}\" IDENTIFIED BY "${new_password}";
-ALTER USER \"${username}\"@\"${IP_MASK}\" IDENTIFIED BY "${new_password}";
-" > ${HOME}/runtime/resetpasswordDB.sql
-
+/bin/echo "ALTER USER \"${username}\"@'localhost' IDENTIFIED BY \"${new_password}\";
+ALTER USER \"${username}\"@'127.0.0.1' IDENTIFIED BY \"${new_password}\";
+ALTER USER \"${username}\"@\"${HOST}\" IDENTIFIED BY \"${new_password}\";
+ALTER USER \"${username}\"@\"${IP_MASK}\" IDENTIFIED BY \"${new_password}\";" > ${HOME}/runtime/resetpasswordDB.sql
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
