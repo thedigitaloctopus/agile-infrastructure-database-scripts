@@ -1,6 +1,7 @@
 #!/bin/sh
 ###################################################################################
-# Description: This  will install mariadb server
+# Description: This  will install mariadb server. I considered it to be too lengthy a process
+# to build mariadb from source, build time wise, so, only the repo option is supported.
 # Date: 18/11/2016
 # Author : Peter Winter
 ###################################################################################
