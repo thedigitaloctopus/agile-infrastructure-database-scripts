@@ -9,3 +9,5 @@ cd server
 mariadb_version="`/usr/bin/wget -qO- https://mariadb.com/kb/en/release-notes/ | /bin/grep "MariaDB" | /bin/grep "Release Notes" | /usr/bin/head -n 1 | /bin/sed 's/.*MariaDB //g' | /usr/bin/awk -F' ' '{print $1}'`"
 /usr/bin/git checkout ${mariadb_version}
 /usr/bin/cmake . -DBUILD_CONFIG=mysql_release && make -j8
+make install
+/usr/sbin/mysqld
