@@ -47,11 +47,16 @@ BYPASS_DB_LAYER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BYPAS
 #reasons, but we don't actully use it, the webservers go straight to the DBaaS provider when they query the database
 if ( [ "${BYPASS_DB_LAYER}" != "1" ] )
 then
-    /bin/echo "2 * * * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'HOURLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
-    /bin/echo "8 2 * * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'DAILY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
-    /bin/echo "8 3 * * 7 export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'WEEKLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
-    /bin/echo "8 4 1 * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'MONTHLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
-    /bin/echo "8 5 1 Jan,Mar,May,Jul,Sep,Nov * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'BIMONTHLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
+     #Time based backups are not taken for virgin CMS installs. Instead, make a baseline if you want to save a copy of your work and work it out from there once your application is ready
+
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDARCHIVECHOICE:virgin`" = "0" ] ) 
+    then
+        /bin/echo "2 * * * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'HOURLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
+        /bin/echo "8 2 * * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'DAILY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
+        /bin/echo "8 3 * * 7 export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'WEEKLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
+        /bin/echo "8 4 1 * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'MONTHLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
+        /bin/echo "8 5 1 Jan,Mar,May,Jul,Sep,Nov * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'BIMONTHLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
+    fi
 fi
 
 /bin/echo "@daily export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/MonitorFreeDiskSpace.sh" >> /var/spool/cron/crontabs/root
