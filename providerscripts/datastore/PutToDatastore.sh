@@ -18,7 +18,7 @@
 # along with The Agile Deployment Toolkit.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################################
 #######################################################################################
-#set -x
+set -x
 
 datastore_provider="$1"
 file_to_put="$2"
@@ -27,5 +27,6 @@ datastore_to_put_in="$3"
 if ( [ "${datastore_provider}" = "amazonS3" ] || [ "${datastore_provider}" = "digitalocean" ] || [ "${datastore_provider}" = "exoscale" ] || [ "${datastore_provider}" = "linode" ] || [ "${datastore_provider}" = "vultr" ] )
 then
     /usr/bin/s3cmd --force --recursive --multipart-chunk-size-mb=5 put ${file_to_put} s3://${datastore_to_put_in}
-    /usr/bin/s3cmd setacl s3://${datastore_to_put_in}/${file_to_put} --acl-private
+    file="`/bin/echo ${file_to_put} | /usr/bin/awk -F'/' '{print $NF}'`"
+    /usr/bin/s3cmd setacl s3://${datastore_to_put_in}/${file} --acl-private
 fi
