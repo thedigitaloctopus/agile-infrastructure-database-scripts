@@ -2,6 +2,8 @@
 /usr/bin/apt-get install -qq -y build-essential 
 /usr/bin/apt-get install -qq -y curl
 /usr/bin/apt-get install -qq -y zlib1g-dev
+/usr/bin/apt-get install -qq -y flex
+/usr/bin/apt-get install -qq -y bison
 
 
 version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
