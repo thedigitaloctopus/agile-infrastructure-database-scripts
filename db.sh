@@ -185,6 +185,7 @@ kernel.panic=10" >> /etc/sysctl.conf
 #Update and upgrade the software to its latest available versions
 
 ${HOME}/installscripts/Update.sh ${BUILDOS}
+${HOME}/installscripts/Upgrade.sh ${BUILDOS}
 ${HOME}/installscripts/InstallSoftwareProperties.sh ${BUILDOS}
 ${HOME}/installscripts/InstallCurl.sh ${BUILDOS}
 ${HOME}/installscripts/InstallLibioSocketSSL.sh ${BUILDOS}
