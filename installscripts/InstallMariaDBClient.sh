@@ -76,6 +76,12 @@ then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
         /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main"
     fi
+    
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:11`" = "1" ] )
+    then
+        /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
+        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian bullseye main"
+    fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
     ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
