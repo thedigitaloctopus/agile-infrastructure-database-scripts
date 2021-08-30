@@ -246,6 +246,8 @@ cd ${HOME}
 /usr/bin/git config --global user.name "${GIT_USER}"
 /usr/bin/git config --global user.email ${GIT_EMAIL_ADDRESS}
 /usr/bin/git config --global init.defaultBranch master
+/usr/bin/git config --global pull.rebase false 
+
 
 /bin/echo "${0} `/bin/date`: Pulling configuration scripts from repository" >> ${HOME}/logs/MonitoringLog.dat
 
