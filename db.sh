@@ -245,6 +245,8 @@ cd ${HOME}
 /bin/echo "${0} `/bin/date`: Installing GIT ...." >> ${HOME}/logs/MonitoringLog.dat
 /usr/bin/git config --global user.name "${GIT_USER}"
 /usr/bin/git config --global user.email ${GIT_EMAIL_ADDRESS}
+/usr/bin/git config --global init.defaultBranch master
+
 /bin/echo "${0} `/bin/date`: Pulling configuration scripts from repository" >> ${HOME}/logs/MonitoringLog.dat
 
 #Install the infrastructure scripts on the machine
