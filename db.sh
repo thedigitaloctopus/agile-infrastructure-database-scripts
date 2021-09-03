@@ -24,12 +24,6 @@
 #presented on the screen as your database is built
 
 
-#HOMEDIRFORROOT="`/bin/echo ${HOME} | /bin/sed 's/\///g' | /bin/sed 's/home//g'`"
-#HOMEDIRFORROOT="`/bin/ls /home | /bin/grep '^X'`"
-#/usr/bin/touch /root/.ssh/HOMEDIRFORROOT:${HOMEDIRFORROOT}
-#HOMEDIR="/home/`/bin/ls /root/.ssh/HOMEDIRFORROOT:* | /usr/bin/awk -F':' '{print $NF}'`"
-#export HOME="${HOMEDIR}"
-
 USER_HOME="`/usr/bin/awk -F: '{ print $1}' /etc/passwd | /bin/grep "X*X"`"
 export HOME="/home/${USER_HOME}" | /usr/bin/tee -a ~/.bashrc
 export HOMEDIR=${HOME}
@@ -37,7 +31,7 @@ export HOMEDIR=${HOME}
 
 #First thing is to tighten up permissions in case theres any wronguns. 
 
-/bin/chmod -R 750 ${HOME}/autoscaler ${HOME}/cron ${HOME}/installscripts ${HOME}/providerscripts ${HOME}/security
+/bin/chmod -R 750 ${HOME}/cron ${HOME}/installscripts ${HOME}/providerscripts ${HOME}/security
 
 if ( [ ! -d ${HOME}/logs ] )
 then
