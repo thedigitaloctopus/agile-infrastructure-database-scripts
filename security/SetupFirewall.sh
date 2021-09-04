@@ -124,6 +124,21 @@ do
     fi
 done
 
+for ip in `/bin/ls ${HOME}/config/autoscalerip/`
+do
+    /bin/sleep 5
+    if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
+    then
+        /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${DB_PORT}
+        /bin/sleep 5
+    fi
+    if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
+    then
+        /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${SSH_PORT}
+        /bin/sleep 5
+    fi
+done
+
 #if ( [ "`/bin/cat ${HOME}/logs/FIREWALL_CONFIGURATION.log | /bin/grep 'Chain already exists.'`" != "" ] )
 #then
 #        /sbin/iptables -F
