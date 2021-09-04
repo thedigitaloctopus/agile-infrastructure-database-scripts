@@ -21,32 +21,32 @@
 #set -x
 
 
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh PRODUCTION:1`" = "1" ] )
-then
-    if ( [ ! -d ${HOME}/config ] )
-    then
-        ${HOME}/providerscripts/utilities/SetupConfigDirectories.sh
-    fi
-    
-    SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSHPORT'`"
-    ALGORITHM="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ALGORITHM'`"
-    SERVER_USER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSER'`"
-    ASIP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ASIP'`"
-    /usr/bin/scp -P ${SSH_PORT} -i ${HOME}/.ssh/id_${ALGORITHM}_AGILE_DEPLOYMENT_BUILD_KEY -o ConnectTimeout=2 -o ConnectionAttempts=2 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SERVER_USER}@${ASIP}:${HOME}/config ${HOME}/config
-    ASIPS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ASIPS'`"
-
-    for ip in ${ASIPS}
-    do
-        if ( [ "${ASIP}" != "${ip}" ] )
-        then
-            /usr/bin/scp -P ${SSH_PORT} -i ${HOME}/.ssh/id_${ALGORITHM}_AGILE_DEPLOYMENT_BUILD_KEY -o ConnectTimeout=2 -o ConnectionAttempts=2 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SERVER_USER}@${ip}:${HOME}/config ${HOME}/config
-        fi
-    done
-        
-    #for publicautoscalerip in `/bin/ls ${HOME}/config/autoscalerpublicip`
-    #do
-    exit
-fi
+#if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh PRODUCTION:1`" = "1" ] )
+#then
+#    if ( [ ! -d ${HOME}/config ] )
+#    then
+#        ${HOME}/providerscripts/utilities/SetupConfigDirectories.sh
+#    fi
+#    
+#    SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSHPORT'`"
+#    ALGORITHM="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ALGORITHM'`"
+#    SERVER_USER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSER'`"
+#    ASIP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ASIP'`"
+#    /usr/bin/scp -P ${SSH_PORT} -i ${HOME}/.ssh/id_${ALGORITHM}_AGILE_DEPLOYMENT_BUILD_KEY -o ConnectTimeout=2 -o ConnectionAttempts=2 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SERVER_USER}@${ASIP}:${HOME}/config ${HOME}/config
+#    ASIPS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ASIPS'`"
+#
+#    for ip in ${ASIPS}
+#    do
+#        if ( [ "${ASIP}" != "${ip}" ] )
+#        then
+#            /usr/bin/scp -P ${SSH_PORT} -i ${HOME}/.ssh/id_${ALGORITHM}_AGILE_DEPLOYMENT_BUILD_KEY -o ConnectTimeout=2 -o ConnectionAttempts=2 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SERVER_USER}@${ip}:${HOME}/config ${HOME}/config
+#        fi
+#    done
+#        
+#    #for publicautoscalerip in `/bin/ls ${HOME}/config/autoscalerpublicip`
+#    #do
+#    exit
+#fi
 
 if ( [ "`/bin/ls ${HOME}/config 2>&1 | /bin/grep "Transport endpoint is not connected"`" != "" ] )
 then
