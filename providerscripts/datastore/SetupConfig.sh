@@ -23,6 +23,12 @@
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh PRODUCTION:1`" = "1" ] )
 then
+
+    if ( [ ! -d ${HOME}/config ] )
+    then
+        ${HOME}/providerscripts/utilities/SetupConfigDirectories.sh
+    fi
+    
     SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSHPORT'`"
     ALGORITHM="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ALGORITHM'`"
     SERVER_USER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSER'`"
