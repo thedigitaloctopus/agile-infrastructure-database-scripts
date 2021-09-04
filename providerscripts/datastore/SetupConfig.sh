@@ -20,6 +20,11 @@
 ####################################################################################
 #set -x
 
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh PRODUCTION:1`" = "1" ] )
+then
+    exit
+fi
+
 if ( [ "`/bin/ls ${HOME}/config 2>&1 | /bin/grep "Transport endpoint is not connected"`" != "" ] )
 then
     /bin/umount -f ${HOME}/config
