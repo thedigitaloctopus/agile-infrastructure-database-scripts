@@ -40,6 +40,10 @@
 #These scripts run ever 10 minutes
 /bin/echo "*/10 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/EnforcePermissions.sh" >> /var/spool/cron/crontabs/root
 
+#This script runs at 1 minute past the hour
+/bin/echo "1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/UpdateInfrastructure.sh" >>/var/spool/cron/crontabs/root
+
+
 #The scripts run at set times
 BYPASS_DB_LAYER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BYPASSDBLAYER'`"
 
@@ -77,6 +81,7 @@ SERVER_TIMEZONE_CITY="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh '
 /bin/echo "@reboot /bin/sleep 600 && export HOME=${HOMEDIR} && ${HOME}/security/KnickersUp.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "@reboot export HOME=${HOMEDIR} && /usr/bin/find ${HOME}/runtime -name *lock* -type f -delete" >> /var/spool/cron/crontabs/root
 /bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/GetIP.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/UpdateInfrastructure.sh" >>/var/spool/cron/crontabs/root
 
 if ( [ -f ${HOME}/runtime/POSTGRES_FROM_SOURCE ] )
 then
