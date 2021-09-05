@@ -40,10 +40,6 @@
 #These scripts run ever 10 minutes
 /bin/echo "*/10 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/EnforcePermissions.sh" >> /var/spool/cron/crontabs/root
 
-#This script runs at 1 minute past the hour
-/bin/echo "1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/UpdateInfrastructure.sh" >>/var/spool/cron/crontabs/root
-
-
 #The scripts run at set times
 BYPASS_DB_LAYER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BYPASSDBLAYER'`"
 
