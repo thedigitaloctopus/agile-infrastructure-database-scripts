@@ -19,9 +19,9 @@
 ###################################################################################
 ###################################################################################
 #set -x
-/usr/sbin/ufw default allow incoming
-/usr/sbin/ufw default allow outgoing
-/usr/sbin/ufw --force enable
+#/usr/sbin/ufw default allow incoming
+#/usr/sbin/ufw default allow outgoing
+#/usr/sbin/ufw --force enable
 #We need to disable the firewall so that initial connections to the websever are allowed through.
 #The firewall rules will be built up and applied within the first few minutes of the websever
 #being online. If we don't disable the firewall to begin with, then, initial requests will be
