@@ -58,3 +58,27 @@ then
     /usr/bin/git remote add origin https://${APPLICATION_REPOSITORY_USERNAME}:${APPLICATION_REPOSITORY_PASSWORD}@gitlab.com/${APPLICATION_REPOSITORY_OWNER}/${APPLICATION_REPOSITORY_NAME}.git
 fi
 /usr/bin/git push -u -f origin master
+
+if ( [ ! -d /tmp/check ] )
+then
+    /bin/mkdir /tmp/check
+fi
+
+/bin/rm -r /tmp/check/*
+
+dir="`/usr/bin/pwd`"
+
+cd /tmp/check
+
+${HOME}/providerscripts/git/GitClone.sh ${repository_provider} ${APPLICATION_REPOSITORY_USERNAME} ${APPLICATION_REPOSITORY_PASSWORD} ${APPLICATION_REPOSITORY_OWNER} ${APPLICATION_REPOSITORY_NAME}
+
+/usr/bin/cmp /tmp/check/*/*.gz ${HOME}/backups/*.gz > /tmp/BackupDeltas.log
+
+if ( [ "`/bin/cat /tmp/BackupDeltas.log`" != "" ] )
+then
+    /bin/echo "###########################################################################################" >> ${HOME}/logs/BackupDeltas.log
+    /bin/echo "${APPLICATION_REPOSITORY_NAME} `/usr/bin/date`" >> ${HOME}/logs/BackupDeltas.log
+    /bin/echo "###########################################################################################"
+    /bin/cat /tmp/BackupDeltas.log >> ${HOME}/logs/BackupDeltas.log 
+    ${HOME}/providerscripts/email/SendEmail.sh "POTENTIAL BACKUP INCONSISTENCY" "Check ${HOME}/logs/BackupDelta.log on machine: `${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
+fi
