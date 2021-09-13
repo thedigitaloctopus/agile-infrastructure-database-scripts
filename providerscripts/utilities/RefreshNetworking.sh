@@ -55,7 +55,7 @@ then
     fi
     if ( [ "${BUILDOS}" = "debian" ] )
     then
-        if ( [ "${BUILDOSVERSION}" = "9" ] || [ "${BUILDOSVERSION}" = "10" ] || [ "${BUILDOSVERSION}" = "11" ] )
+        if ( [ "${BUILDOSVERSION}" = "10" ] || [ "${BUILDOSVERSION}" = "11" ] )
             then
 	    IP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
             /bin/sed -i "s/address.*/address ${IP}/" /etc/network/interfaces
