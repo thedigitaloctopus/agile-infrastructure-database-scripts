@@ -26,9 +26,10 @@
 
 if ( [ "$1" = "backup" ] )
 then
-    /bin/echo "Making an daily backup of your database"
+    /bin/echo "Making an daily and shutdown backup of your database"
     BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
     ${HOME}/providerscripts/git/Backup.sh "DAILY" ${BUILD_IDENTIFIER} > /dev/null 2>&1
+    ${HOME}/providerscripts/git/Backup.sh "SHUTDOWN" ${BUILD_IDENTIFIER} > /dev/null 2>&1
 fi
 
 /bin/echo "#######################################################################"
