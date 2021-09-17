@@ -24,8 +24,9 @@
 
 if ( [ "$1" = "backup" ] )
 then
+    /bin/echo "Making an daily backup of your database"
     BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
-    ${HOME}/providerscripts/git/Backup.sh "HOURLY" ${BUILD_IDENTIFIER} > /dev/null 2>&1
+    ${HOME}/providerscripts/git/Backup.sh "DAILY" ${BUILD_IDENTIFIER} > /dev/null 2>&1
 fi
 
 if ( [ -f ${HOME}/config/databaseip/`${HOME}/providerscripts/utilities/GetIP.sh` ] )
@@ -36,5 +37,4 @@ fi
 
 ${HOME}/providerscripts/email/SendEmail.sh "A database is being shutdown" "A database is being shutdown"
 
-#Note, we don't call the shutdown command here, on purpose, we just destroy the VM because we have cleaned it up as much as we need to
-
+/usr/sbin/shutdown -h now
