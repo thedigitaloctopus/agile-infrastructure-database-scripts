@@ -20,6 +20,8 @@
 ########################################################################################
 #set -x
 
+/bin/echo ""
+/bin/echo "#######################################################################"
 /bin/echo "Shutting down a database, please wait whilst I clean the place up first"
 
 if ( [ "$1" = "backup" ] )
@@ -29,11 +31,13 @@ then
     ${HOME}/providerscripts/git/Backup.sh "DAILY" ${BUILD_IDENTIFIER} > /dev/null 2>&1
 fi
 
+/bin/echo "#######################################################################"
+/bin/echo ""
+
 if ( [ -f ${HOME}/config/databaseip/`${HOME}/providerscripts/utilities/GetIP.sh` ] )
 then
     /bin/rm ${HOME}/config/databaseip/`${HOME}/providerscripts/utilities/GetIP.sh`
 fi
-
 
 ${HOME}/providerscripts/email/SendEmail.sh "A database is being shutdown" "A database is being shutdown"
 
