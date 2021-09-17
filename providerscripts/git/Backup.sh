@@ -77,6 +77,10 @@ if ( [ "$1" = "BIMONTHLY" ] )
 then
     period="bimonthly"
 fi
+if ( [ "$1" = "SHUTDOWN" ] )
+then
+   period="shutdown"
+fi
 
 
 #Get the date as a unique timestamp for the backup
