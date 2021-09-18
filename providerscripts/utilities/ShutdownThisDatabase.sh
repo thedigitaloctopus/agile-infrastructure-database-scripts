@@ -29,9 +29,9 @@ then
     /bin/echo "Making a daily and an emergency shutdown backup of your database"
     BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
     /bin/echo "Making the daily periodicity backup please wait....."
-    ${HOME}/providerscripts/git/Backup.sh "DAILY" ${BUILD_IDENTIFIER} > /dev/null 2>&1
+    ${HOME}/cron/BackupFromCron.sh 'DAILY' ${BUILD_IDENTIFIER} > /dev/null 2>&1
     /bin/echo "Making the special shutdown backup please wait....."
-    ${HOME}/providerscripts/git/Backup.sh "SHUTDOWN" ${BUILD_IDENTIFIER} > /dev/null 2>&1
+    ${HOME}/cron/BackupFromCron.sh 'SHUTDOWN' ${BUILD_IDENTIFIER} > /dev/null 2>&1
 fi
 
 /bin/echo "#######################################################################"
