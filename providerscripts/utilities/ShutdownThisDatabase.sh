@@ -24,7 +24,7 @@
 /bin/echo "#######################################################################"
 /bin/echo "Shutting down a database, please wait whilst I clean the place up first"
 
-if ( [ "$1" = "backup" ] )
+if ( [ "$1" = "backup" ] && [ ! -f ${HOME}/config/dbbackuplock.file ] )
 then
     /bin/echo "Making a daily and an emergency shutdown backup of your database"
     BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
