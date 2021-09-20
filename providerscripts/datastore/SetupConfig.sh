@@ -55,7 +55,15 @@ fi
 
 if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] )
 then
-    exit
+    if ( [ -f ${HOME}/config/REFRESH_MOUNT ] )
+    then
+        /bin/sleep 20
+        /bin/rm ${HOME}/config/REFRESH_MOUNT
+        /bin/umount -f ${HOME}/config
+        exit
+    else
+        exit
+    fi
 fi
 
 BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
