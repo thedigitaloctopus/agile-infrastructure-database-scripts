@@ -81,6 +81,10 @@ if ( [ "$1" = "SHUTDOWN" ] )
 then
    period="shutdown"
 fi
+if ( [ "$1" = "MANUAL" ] )
+then
+   period="manual"
+fi
 
 
 #Get the date as a unique timestamp for the backup
