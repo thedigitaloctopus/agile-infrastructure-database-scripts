@@ -5,5 +5,9 @@ DB_U="`/bin/sed '3q;d' ${HOME}/config/credentials/shit`"
 HOST="`/bin/ls ${HOME}/config/databaseip/* | /usr/bin/awk -F'/' '{print $NF}'`"
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBPORT'`"
 
-
-/usr/bin/mysql -u ${DB_U} -p${DB_P} ${DB_N} --host="${HOST}" --port="${DB_PORT}"
+if ( [ "${1}" = "" ] )
+then
+    /usr/bin/mysql -u ${DB_U} -p${DB_P} ${DB_N} --host="${HOST}" --port="${DB_PORT}"
+else 
+    /usr/bin/mysql -u ${DB_U} -p${DB_P} ${DB_N} --host="${HOST}" --port="${DB_PORT}" -e "${1}"
+fi
