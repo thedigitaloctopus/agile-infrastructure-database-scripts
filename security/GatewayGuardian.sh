@@ -21,17 +21,22 @@ fi
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:joomla`" = "1" ] )
 then
-    dir="`/usr/bin/pwd`"
-    cd /var/www/html/administrator
-    /usr/bin/s3cmd get s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd 
-    cd ${dir}
+    
     prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
     userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',username,email) from ${prefix}_users"`"
 fi
 
 nousers="`/bin/echo ${userdetails} | /usr/bin/awk -F'::' '{print NF-1}'`"
 
-if ( [ -f ${HOME}/config/credentials/htpasswd ] )
+if ( [ ! -f ${HOME}/runtime/credentials/htpasswd ] )
+then 
+    dir="`/usr/bin/pwd`"
+    cd ${HOME}/runtime/credentials
+    /usr/bin/s3cmd get s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd 
+    cd ${dir}
+fi
+
+if ( [ -f ${HOME}/runtime/credentials/htpasswd ] )
 then
     liveusers="`/usr/bin/wc -l ${HOME}/runtime/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
 else
