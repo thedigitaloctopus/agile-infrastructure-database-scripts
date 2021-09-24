@@ -32,7 +32,7 @@ if ( [ ! -f ${HOME}/runtime/credentials/htpasswd ] )
 then 
     dir="`/usr/bin/pwd`"
     cd ${HOME}/runtime/credentials
-    /usr/bin/s3cmd get s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd 
+    /usr/bin/s3cmd get --force s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd 
     cd ${dir}
 fi
 
