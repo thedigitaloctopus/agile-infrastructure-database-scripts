@@ -21,7 +21,9 @@ then
        email="`/bin/echo ${user} | /usr/bin/awk -F'::' '{print $2}'`"
        if ( [ "`/bin/grep ${username} ${HOME}/config/credentials/htpasswd`" = "" ] && [ "`/bin/grep ${email} ${HOME}/config/credentials/htpasswd`" = "" ] ) 
        then
-           /bin/echo "${username}:password" >> ${HOME}/config/credentials/htpasswd
+           user_password="`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;`"
+           user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
+           /bin/echo "${username}:${user_password_digest}" >> ${HOME}/config/credentials/htpasswd
        fi
    done
    else
