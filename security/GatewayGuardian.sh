@@ -6,6 +6,10 @@ then
     /usr/bin/s3cmd mb d3://gatewayguardian-${BUILD_IDENTIFIER}
 fi
 
+if ( [ "${1}" = "fromcron" ] )
+then
+    /bin/mv ${HOME}/runtime/credentials/htpasswd ${HOME}/runtime/credentials/htpasswd.$$
+
 if ( [ ! -d ${HOME}/runtime/credentials ] )
 then
     /bin/mkdir ${HOME}/runtime/credentials
@@ -20,7 +24,7 @@ then
 
    if ( [ -f ${HOME}/config/credentials/htpasswd ] )
    then
-        liveusers="`/usr/bin/wc -l ${HOME}/config/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
+        liveusers="`/usr/bin/wc -l ${HOME}/runtime/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
    else
         /bin/touch ${HOME}/config/credentials/htpasswd 
         liveusers="0"
@@ -45,7 +49,7 @@ then
    
    if ( [ "`/usr/bin/find ${HOME}/runtime/credentials/htpasswd -type f -mmin -1`" != "" ] )
    then
-       /usr/bin/s3cmd del s3://gatewayguardian-${BUILD_IDENTIFIER}
+       /usr/bin/s3cmd del s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd
        /usr/bin/s3cmd put ${HOME}/runtime/credentials/htpasswd s3://gatewayguardian-${BUILD_IDENTIFIER}/
    fi
 fi
