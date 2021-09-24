@@ -55,6 +55,7 @@ then
            user_password="`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
            /bin/echo "${username}:${user_password_digest}" >> ${HOME}/runtime/credentials/htpasswd
+           /bin/touch ${HOME}/config/credentials/GATEWAY_GUARDIAN_UPDATED
            ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS ${user_passwd}. Please enter it with your application username for access to ${WEBSITE_URL}" "${email}"
        fi
    done
