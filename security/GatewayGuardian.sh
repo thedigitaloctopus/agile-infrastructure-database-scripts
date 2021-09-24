@@ -6,12 +6,13 @@ WEBSITE_URL="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'WEBSITEUR
 
 if ( [ "`/usr/bin/s3cmd ls s3://gatewayguardian-${BUILD_IDENTIFIER}`" = "" ] )
 then
-    /usr/bin/s3cmd mb d3://gatewayguardian-${BUILD_IDENTIFIER}
+    /usr/bin/s3cmd mb s3://gatewayguardian-${BUILD_IDENTIFIER}
 fi
 
 if ( [ "${1}" = "fromcron" ] )
 then
     /bin/mv ${HOME}/runtime/credentials/htpasswd ${HOME}/runtime/credentials/htpasswd.$$
+ fi
 
 if ( [ ! -d ${HOME}/runtime/credentials ] )
 then
