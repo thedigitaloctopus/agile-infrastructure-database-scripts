@@ -41,7 +41,7 @@ if ( [ -f ${HOME}/runtime/credentials/htpasswd ] )
 then
     liveusers="`/usr/bin/wc -l ${HOME}/runtime/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
 else
-    /bin/touch ${HOME}/config/credentials/htpasswd 
+    /bin/touch ${HOME}/runtime/credentials/htpasswd 
     liveusers="0"
 fi
 
