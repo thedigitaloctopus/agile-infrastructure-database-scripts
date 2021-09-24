@@ -1,3 +1,16 @@
+
+BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
+
+if ( [ "`/usr/bin/s3cmd ls s3://gatewayguardian-${BUILD_IDENTIFIER}`" = "" ] )
+then
+    /usr/bin/s3cmd mb d3://gatewayguardian-${BUILD_IDENTIFIER}
+fi
+
+if ( [ ! -d ${HOME}/runtime/credentials ] )
+then
+    /bin/mkdir ${HOME}/runtime/credentials
+fi
+
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:joomla`" = "1" ] )
 then
     prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
@@ -23,10 +36,16 @@ then
        then
            user_password="`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
-           /bin/echo "${username}:${user_password_digest}" >> ${HOME}/config/credentials/htpasswd
+           /bin/echo "${username}:${user_password_digest}" >> ${HOME}/runtime/credentials/htpasswd
        fi
    done
    else
       echo "not updating"
+   fi
+   
+   if ( [ "`/usr/bin/find ${HOME}/runtime/credentials/htpasswd -type f -mmin -1`" != "" ] )
+   then
+       /usr/bin/s3cmd del s3://gatewayguardian-${BUILD_IDENTIFIER}
+       /usr/bin/s3cmd put ${HOME}/runtime/credentials/htpasswd s3://gatewayguardian-${BUILD_IDENTIFIER}/
    fi
 fi
