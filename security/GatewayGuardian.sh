@@ -50,14 +50,14 @@ then
    do
        username="`/bin/echo ${user} | /usr/bin/awk -F'::' '{print $1}'`"
        email="`/bin/echo ${user} | /usr/bin/awk -F'::' '{print $2}'`"
-       if ( [ "`/bin/grep ${username} ${HOME}/config/credentials/htpasswd`" = "" ] && [ "`/bin/grep ${email} ${HOME}/config/credentials/htpasswd`" = "" ] ) 
+       if ( [ "`/bin/grep ${username} ${HOME}/runtime/credentials/htpasswd`" = "" ] ) 
        then
            user_password="`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
            /bin/echo "${username}:${user_password_digest}" >> ${HOME}/runtime/credentials/htpasswd
            /bin/echo "${username}:${user_password}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/touch ${HOME}/config/credentials/GATEWAY_GUARDIAN_UPDATED
-           ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS ${user_passwd}. Please enter it with your application username for access to ${WEBSITE_URL}" "${email}"
+           ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS ${user_password}. Please enter it with your application username for access to ${WEBSITE_URL}" "${email}"
        fi
    done
 fi
