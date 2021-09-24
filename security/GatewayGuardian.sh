@@ -3,7 +3,6 @@
 BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
 WEBSITE_URL="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'WEBSITEURL'`"
 
-
 if ( [ "`/usr/bin/s3cmd ls s3://gatewayguardian-${BUILD_IDENTIFIER}`" = "" ] )
 then
     /usr/bin/s3cmd mb s3://gatewayguardian-${BUILD_IDENTIFIER}
@@ -20,15 +19,13 @@ then
 fi
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:joomla`" = "1" ] )
-then
-    
+then    
     prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
     userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',username,email) from ${prefix}_users"`"
 fi
 
 nousers="`/bin/echo ${userdetails} | /usr/bin/awk -F'::' '{print NF-1}'`"
-
-if ( [ ! -f ${HOME}/runtime/credentials/htpasswd ] )
+if ( [ ! -f ${HOME}/runtime/credentials/htpasswd ] && [ "${1}" != "fromcronreset" ] )
 then 
     dir="`/usr/bin/pwd`"
     cd ${HOME}/runtime/credentials
@@ -53,7 +50,7 @@ then
        email="`/bin/echo ${user} | /usr/bin/awk -F'::' '{print $2}'`"
        if ( [ "`/bin/grep ${username} ${HOME}/runtime/credentials/htpasswd`" = "" ] ) 
        then
-           user_password="`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;`"
+           user_password="`/usr/bin/date +%s | /usr/bin/sha256sum | /usr/bin/base64 | /usr/bin/head -c 10 ; echo`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
            /bin/echo "${username}:${user_password_digest}" >> ${HOME}/runtime/credentials/htpasswd
            /bin/echo "${username}:${user_password}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
