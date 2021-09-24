@@ -9,7 +9,7 @@ then
     /usr/bin/s3cmd mb s3://gatewayguardian-${BUILD_IDENTIFIER}
 fi
 
-if ( [ "${1}" = "fromcron" ] )
+if ( [ "${1}" = "fromcronreset" ] )
 then
     /bin/mv ${HOME}/runtime/credentials/htpasswd ${HOME}/runtime/credentials/htpasswd.$$
 fi
