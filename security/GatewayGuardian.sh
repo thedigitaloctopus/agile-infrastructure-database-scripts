@@ -55,6 +55,7 @@ then
            user_password="`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
            /bin/echo "${username}:${user_password_digest}" >> ${HOME}/runtime/credentials/htpasswd
+           /bin/echo "${username}:${user_password}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/touch ${HOME}/config/credentials/GATEWAY_GUARDIAN_UPDATED
            ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS ${user_passwd}. Please enter it with your application username for access to ${WEBSITE_URL}" "${email}"
        fi
@@ -65,4 +66,5 @@ if ( [ "`/usr/bin/find ${HOME}/runtime/credentials/htpasswd -type f -mmin -1`" !
 then
     /usr/bin/s3cmd del s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd
     /usr/bin/s3cmd put ${HOME}/runtime/credentials/htpasswd s3://gatewayguardian-${BUILD_IDENTIFIER}/
+    /usr/bin/s3cmd put ${HOME}/runtime/credentials/htpasswd_plaintext_history s3://gatewayguardian-${BUILD_IDENTIFIER}/
 fi
