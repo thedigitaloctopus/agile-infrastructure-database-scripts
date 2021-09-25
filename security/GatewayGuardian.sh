@@ -26,6 +26,12 @@ then
     userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',username,email) from ${prefix}_users"`"
 fi
 
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:wordpress`" = "1" ] )
+then
+    prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
+    userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',user_login,user_email) from ${prefix}_users"`"
+fi
+
 nousers="`/bin/echo ${userdetails} | /usr/bin/awk -F'::' '{print NF-1}'`"
 
 if ( [ ! -f ${HOME}/runtime/credentials/htpasswd ] && [ "${1}" != "fromcronreset" ] )
