@@ -41,7 +41,7 @@ fi
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:drupal`" = "1" ] )
 then
     prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
-    userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',name,mail) from ${prefix}_users"`"
+    userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',name,mail) from ${prefix}_users_field_data"`"
 fi
 
 nousers="`/bin/echo ${userdetails} | /usr/bin/awk -F'::' '{print NF-1}'`"
@@ -74,7 +74,7 @@ then
            user_password="`/usr/bin/openssl rand -base64 10`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
            /bin/echo "${username}:${user_password_digest}" >> ${HOME}/runtime/credentials/htpasswd
-           /bin/echo "LIVE:   ${username}:${user_password}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
+           /bin/echo "LIVE:   ${username}:${user_password}:${email}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/touch ${HOME}/config/credentials/GATEWAY_GUARDIAN_UPDATED
            ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS ${user_password}. Please enter it with your application username for access to ${WEBSITE_URL}" "${email}"
        fi
