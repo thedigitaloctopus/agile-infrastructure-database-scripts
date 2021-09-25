@@ -56,7 +56,7 @@ then
            user_password="`/usr/bin/openssl rand -base64 10`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
            /bin/echo "${username}:${user_password_digest}" >> ${HOME}/runtime/credentials/htpasswd
-           /bin/echo "${username}:${user_password}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
+           /bin/echo "LIVE:   ${username}:${user_password}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/touch ${HOME}/config/credentials/GATEWAY_GUARDIAN_UPDATED
            ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS ${user_password}. Please enter it with your application username for access to ${WEBSITE_URL}" "${email}"
        fi
