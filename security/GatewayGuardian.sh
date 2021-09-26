@@ -1,4 +1,4 @@
-#set -x
+set -x
 
 BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
 WEBSITE_URL="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'WEBSITEURL'`"
@@ -65,7 +65,12 @@ if ( [ -f ${HOME}/runtime/credentials/htpasswd ] )
 then
     #liveusers="`/usr/bin/wc -l ${HOME}/runtime/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
     credentials="`/bin/grep -v 'placeholder-for-uid-1' ${HOME}/runtime/credentials/htpasswd`"
-    liveusers="`/usr/bin/wc -w ${credentials} | /usr/bin/awk '{print $1}'`"
+    if ( [ "${credentials}" != "" ] )
+    then
+        liveusers="`/usr/bin/wc -w ${credentials} | /usr/bin/awk '{print $1}'`"
+    else
+        liveusers="0"
+    fi
 else
     /bin/touch ${HOME}/runtime/credentials/htpasswd 
     liveusers="0"
