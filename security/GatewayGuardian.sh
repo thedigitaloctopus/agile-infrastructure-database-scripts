@@ -57,7 +57,9 @@ fi
 
 if ( [ -f ${HOME}/runtime/credentials/htpasswd ] )
 then
-    liveusers="`/usr/bin/wc -l ${HOME}/runtime/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
+    #liveusers="`/usr/bin/wc -l ${HOME}/runtime/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
+    credentials="`/bin/grep -v 'placeholder-for-uid-1' ${HOME}/runtime/credentials/htpasswd`"
+    liveusers="`/usr/bin/wc -w ${credentials} | /usr/bin/awk '{print $1}'`"
 else
     /bin/touch ${HOME}/runtime/credentials/htpasswd 
     liveusers="0"
