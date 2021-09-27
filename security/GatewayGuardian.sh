@@ -44,6 +44,11 @@ then
     userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',name,mail) from ${prefix}_users_field_data"`"
 fi
 
+if ( [ "${userdetails}" = "" ] )
+then
+    userdetails="bootstrap_user::bootstrap@dummyemail.com"
+fi
+
 nousers="`/bin/echo ${userdetails} | /usr/bin/awk -F'::' '{print NF-1}'`"
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDARCHIVECHOICE:virgin`" = "1" ] && [ ! -f ${HOME}/runtime/credentials/htpasswd ] )
