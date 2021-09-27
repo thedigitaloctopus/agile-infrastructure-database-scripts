@@ -44,9 +44,9 @@ then
     userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',name,mail) from ${prefix}_users_field_data"`"
 fi
 
-if ( [ "${userdetails}" = "" ] )
+if ( [ "${userdetails}" = "" ] || [ "`/bin/echo ${userdetails} | /usr/bin/awk -F'::' '{print $1}' | /bin/grep 'placeholder-for-uid-1'`" != "" ] )
 then
-    userdetails="bootstrap_user::bootstrap@dummyemail.com"
+    userdetails="bootstrap_user::bootstrap@dummyemail.com ${userdetails}"
 fi
 
 nousers="`/bin/echo ${userdetails} | /usr/bin/awk -F'::' '{print NF-1}'`"
