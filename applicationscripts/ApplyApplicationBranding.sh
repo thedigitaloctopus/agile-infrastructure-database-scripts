@@ -22,10 +22,18 @@
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:1`" = "1" ] )
 then
-    . ${HOME}/applicationscripts/demo-joomla/ApplyApplicationBranding.sh
+    . ${HOME}/applicationscripts/joomla/ApplyApplicationBranding.sh
 fi
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:2`" = "1" ] )
 then
-    . ${HOME}/applicationscripts/nuocialboss-wordpress/ApplyApplicationBranding.sh
+    . ${HOME}/applicationscripts/wordpress/ApplyApplicationBranding.sh
+fi
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:3`" = "1" ] )
+then
+    . ${HOME}/applicationscripts/drupal/ApplyApplicationBranding.sh
+fi
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:4`" = "1" ] )
+then
+    . ${HOME}/applicationscripts/moodle/ApplyApplicationBranding.sh
 fi
 
