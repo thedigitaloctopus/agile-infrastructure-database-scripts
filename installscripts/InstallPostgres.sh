@@ -29,10 +29,12 @@ if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
     then
+        /usr/sbin/locale-gen UTF-8
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
     then
         /usr/bin/apt-get -qq -y update
+        /usr/sbin/locale-gen UTF-8
         /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
         version="`/bin/ls /etc/postgresql/`"
         /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
@@ -44,10 +46,12 @@ if ( [ "${BUILDOS}" = "debian" ] )
 then
     if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
     then
+        /usr/sbin/locale-gen UTF-8
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh    
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
     then
         /usr/bin/apt-get -qq -y update
+        /usr/sbin/locale-gen UTF-8
         /usr/bin/apt-get -qq -y install postgresql postgresql-contrib
         version="`/bin/ls /etc/postgresql/`"
         /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
