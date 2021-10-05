@@ -30,7 +30,7 @@ then
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
     then
         prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
-        ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT username,email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
+        userdetails="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT username,email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'`"
     fi
 fi
 
@@ -44,7 +44,7 @@ then
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
     then
         prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
-        ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT user_login,user_email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
+        userdetails="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT user_login,user_email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'`"
     fi
 fi
 
@@ -58,7 +58,7 @@ then
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
     then
         prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
-        ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT username,email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
+        userdetails="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT username,email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'`"
     fi
 fi
 
@@ -72,7 +72,7 @@ then
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
     then
         prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
-        ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT name,mail FROM ${prefix}_users_field_data" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
+        userdetails="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT name,mail FROM ${prefix}_users_field_data" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'`"
     fi
 fi
 
