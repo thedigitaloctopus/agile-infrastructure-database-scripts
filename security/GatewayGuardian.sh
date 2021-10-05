@@ -29,7 +29,7 @@ then
     
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
     then
-        prefix="`${HOME}/providerscipts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
+        prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
         ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT username,email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
     fi
 fi
@@ -103,7 +103,7 @@ then
            /bin/sed -i "/${username}:/s/LIVE:   //g" ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/echo "LIVE:   ${username}:${user_password}:${email}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/touch ${HOME}/config/credentials/GATEWAY_GUARDIAN_UPDATED
-           ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS ${user_password}. Please enter it when prompted with your application username for access to ${WEBSITE_URL}" "${email}"
+           ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS (${user_password}).  Please enter it when prompted with your application username for access to ${WEBSITE_URL}" "${email}"
        fi
    done
 fi
