@@ -36,20 +36,44 @@ fi
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:wordpress`" = "1" ] )
 then
-    prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
-    userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',user_login,user_email) from ${prefix}_users"`"
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] )
+    then
+        prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /bin/grep '_users' | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
+        userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',user_login,user_email) from ${prefix}_users"`"
+    fi
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
+    then
+        prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
+        ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT user_login,user_email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
+    fi
 fi
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:moodle`" = "1" ] )
 then
-    prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
-    userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',username,email) from ${prefix}_user"`"
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] )
+    then
+        prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /bin/grep '_users' | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
+        userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',username,email) from ${prefix}_user"`"
+    fi
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
+    then
+        prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
+        ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT username,email FROM ${prefix}_users" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
+    fi
 fi
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:drupal`" = "1" ] )
 then
-    prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
-    userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',name,mail) from ${prefix}_users_field_data"`"
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] )
+    then
+        prefix="`${HOME}/providerscripts/utilities/ConnectToDB.sh "show tables" | /bin/grep '_users_field_data' | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
+        userdetails="`${HOME}/providerscripts/utilities/ConnectToDB.sh "select CONCAT_WS('::',name,mail) from ${prefix}_users_field_data"`"
+    fi
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
+    then
+        prefix="`${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "\dt" | /bin/grep "_users" | /usr/bin/tail -1 | /usr/bin/awk '{print $3}' | /usr/bin/awk -F'_' '{print $1}'`"
+        ${HOME}/providerscripts/utilities/ConnectToPostgresDB.sh "SELECT name,mail FROM ${prefix}_users_field_data" | /usr/bin/tail -n +3 | /usr/bin/head -n -2 | /bin/sed 's/ //g' | /bin/sed 's/|/::/g'
+    fi
 fi
 
 if ( [ "${userdetails}" = "" ] )
