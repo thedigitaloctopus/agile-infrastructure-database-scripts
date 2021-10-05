@@ -127,7 +127,7 @@ then
            /bin/sed -i "/${username}:/s/LIVE:   //g" ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/echo "LIVE:   ${username}:${user_password}:${email}" >> ${HOME}/runtime/credentials/htpasswd_plaintext_history
            /bin/touch ${HOME}/config/credentials/GATEWAY_GUARDIAN_UPDATED
-           ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS (${user_password}).  Please enter it when prompted with your application username for access to ${WEBSITE_URL}" "${email}"
+           ${HOME}/providerscripts/email/SendEmail.sh "YOUR NEW GATEWAY GUARDIAN PASSWORD" "YOUR NEW GATEWAY GUARDIAN PASSWORD IS (  ${user_password}  ).  Please enter it when prompted with your application username for access to ${WEBSITE_URL}" "${email}"
        fi
    done
 fi
