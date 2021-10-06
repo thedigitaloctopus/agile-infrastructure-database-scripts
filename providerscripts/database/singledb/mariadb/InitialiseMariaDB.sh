@@ -102,4 +102,7 @@ then
     /bin/echo "bind-address        = 0.0.0.0" >> /etc/mysql/my.cnf
 fi
 
+/bin/echo "[mariadb]" >> /etc/my.cnf
+/bin/echo "innodb_read_only_compressed=OFF" >> /etc/my.cnf
+
 /usr/sbin/service mysqld restart
