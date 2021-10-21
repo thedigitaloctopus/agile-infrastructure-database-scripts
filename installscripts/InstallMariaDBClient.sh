@@ -37,8 +37,6 @@ DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
-    /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
-    /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
     /usr/bin/apt-get -qq -y install software-properties-common dirmngr
     
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:20.04`" = "1" ] )
@@ -53,6 +51,8 @@ then
             then
                 /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
             else
+                /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+                /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
                 break
            fi
         done        
@@ -68,9 +68,6 @@ if ( [ "${BUILDOS}" = "debian" ] )
 then
     /usr/bin/apt-get -qq -y remove --purge mysql*
     /usr/bin/apt-get -qq -y remove --purge mariadb*
-    
-    /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
-    /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
     /usr/bin/apt-get -qq -y install software-properties-common dirmngr
     
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:10`" = "1" ] )
@@ -86,6 +83,8 @@ then
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
             else
+                /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+                /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
                 break
             fi
         done
@@ -104,6 +103,8 @@ then
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
             else
+                /bin/echo "mariadb-server-${version} mysql-server/root_password password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
+                /bin/echo "mariadb-server-${version} mysql-server/root_password_again password ${DB_P}" | /usr/bin/debconf-set-selections > /dev/null
                 break
             fi
         done
