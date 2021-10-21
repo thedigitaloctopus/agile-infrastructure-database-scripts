@@ -51,7 +51,7 @@ then
         do
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/ubuntu focal main"
-            /usr/bin/apt update
+            /usr/bin/apt -qq -y update
             if ( [ "$?" != "0" ] )
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
@@ -83,7 +83,7 @@ then
         do
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian buster main"
-            /usr/bin/apt update
+            /usr/bin/apt -qq -y update
             if ( [ "$?" != "0" ] )
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
@@ -101,7 +101,7 @@ then
         do
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian bullseye main"
-            /usr/bin/apt update
+            /usr/bin/apt -qq -y update
             if ( [ "$?" != "0" ] )
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
