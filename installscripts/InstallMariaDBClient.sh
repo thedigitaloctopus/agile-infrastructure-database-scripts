@@ -31,7 +31,8 @@ then
 fi
 
 BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
-version="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /usr/bin/sort -V | /usr/bin/tail -1 | /bin/sed 's/release=//g'`"
+#version="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /usr/bin/sort -V | /usr/bin/tail -1 | /bin/sed 's/release=//g'`"
+versions="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /usr/bin/sort -Vr | /bin/sed 's/release=//g'`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
@@ -43,7 +44,20 @@ then
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:20.04`" = "1" ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/ubuntu focal main"
+        for version in ${versions}
+        do
+            version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
+            /usr/bin/add-apt-repository "deb [arch=amd64] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/ubuntu focal main"
+            /usr/bin/apt update
+            if ( [ "$?" != "0" ] )
+            then
+                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
+            else
+                break
+           fi
+        done        
+        
+        #/usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/ubuntu focal main"
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
@@ -62,13 +76,38 @@ then
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:10`" = "1" ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main"
+        
+        for version in ${versions}
+        do
+            version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
+            /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian buster main"
+            /usr/bin/apt update
+            if ( [ "$?" != "0" ] )
+            then
+               /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
+            else
+                break
+            fi
+        done
+        #/usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main"
     fi
     
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:11`" = "1" ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-        /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian bullseye main"
+        for version in ${versions}
+        do
+            version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
+            /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian bullseye main"
+            /usr/bin/apt update
+            if ( [ "$?" != "0" ] )
+            then
+               /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
+            else
+                break
+            fi
+        done
+        #/usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian bullseye main"
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
