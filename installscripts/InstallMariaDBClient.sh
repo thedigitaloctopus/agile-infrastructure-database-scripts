@@ -31,8 +31,7 @@ then
 fi
 
 BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
-version="`/usr/bin/curl https://downloads.mariadb.org/ | /bin/grep stable | /usr/bin/head -1 | /bin/sed 's/[^0-9.]*//g' | /bin/sed 's/\./ /g' | /usr/bin/xargs | /bin/sed 's/ /./g'`"
-
+version="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /usr/bin/sort -V | /usr/bin/tail -1 | /bin/sed 's/release=//g'`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
