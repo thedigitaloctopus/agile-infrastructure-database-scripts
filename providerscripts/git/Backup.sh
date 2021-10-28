@@ -116,6 +116,14 @@ fi
 if ( [ "${period}" = "hourly" ] && [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DISABLEHOURLY:1`" = "1" ] )
 then
     /bin/echo "${0} `/bin/date`: Skipping repository creation because hourly backups are disabled" >> ${HOME}/logs/MonitoringLog.dat
+elif ( [ "${period}" = "manual" ] )
+then
+    if ( [ ! -d /tmp/backup_archive ] )
+    then
+        /bin/mkdir /tmp/backup_archive
+    fi
+    /bin/rm -r /tmp/backup_archive/*
+    /bin/cp ${websiteDB} /tmp/backup_archive/${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}-db-${period}-${BUILD_IDENTIFIER}.tar.gz
 else
     ${HOME}/providerscripts/git/DeleteRepository.sh "${APPLICATION_REPOSITORY_USERNAME}" "${APPLICATION_REPOSITORY_PASSWORD}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}" "${period}" "${BUILD_IDENTIFIER}" "${APPLICATION_REPOSITORY_PROVIDER}"
     ${HOME}/providerscripts/git/CreateRepository.sh "${APPLICATION_REPOSITORY_USERNAME}" "${APPLICATION_REPOSITORY_PASSWORD}" "${WEBSITE_SUBDOMAIN}-${WEBSITE_NAME}" "${period}" "${BUILD_IDENTIFIER}" "${APPLICATION_REPOSITORY_PROVIDER}"
