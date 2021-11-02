@@ -181,6 +181,7 @@ kernel.panic=10" >> /etc/sysctl.conf
 ${HOME}/installscripts/Update.sh ${BUILDOS}
 ${HOME}/installscripts/Upgrade.sh ${BUILDOS}
 ${HOME}/installscripts/InstallSoftwareProperties.sh ${BUILDOS}
+${HOME}/installscripts/InstallGitLFS.sh ${BUILDOS}
 ${HOME}/installscripts/InstallCurl.sh ${BUILDOS}
 ${HOME}/installscripts/InstallLibioSocketSSL.sh ${BUILDOS}
 ${HOME}/installscripts/InstallLibnetSSLLeay.sh ${BUILDOS}
