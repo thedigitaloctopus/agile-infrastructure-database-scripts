@@ -31,7 +31,7 @@ then
     then
         if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'S3FS:repo'`" = "1" ] )
         then
-            /usr/bin/apt-get -qq -y s3fs
+            /usr/bin/apt-get -qq -y install s3fs
         elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'S3FS:source'`" = "1" ] )
         then
             /usr/bin/apt-get -qq -y install build-essential git libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support automake libtool
@@ -52,7 +52,7 @@ then
     then
         if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'S3FS:repo'`" = "1" ] )
         then
-            /usr/bin/apt-get -qq -y s3fs
+            /usr/bin/apt-get -qq -y install s3fs
         elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'S3FS:source'`" = "1" ] )
         then
             /usr/bin/apt-get -qq -y install build-essential git libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support automake libtool
