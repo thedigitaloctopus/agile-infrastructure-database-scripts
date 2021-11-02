@@ -61,7 +61,7 @@ netmask 255.255.0.0
         macaddress: 00:00:00:00:00:00
       mtu: 1450
       dhcp4: no
-      addresses: [${ip}/16]" >> /etc/netplan/10-ens7.yaml
+      addresses: [${IP}/16]" >> /etc/netplan/10-ens7.yaml
             /usr/sbin/netplan apply
         fi
     fi
