@@ -82,6 +82,9 @@ IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 /bin/mv application-db* baseline
 /bin/rm -r .git
 /usr/bin/git init
+/usr/bin/git lfs install
+/usr/bin/git lfs track "*.tar.gz"
+/usr/bin/git add .gitattributes
 /usr/bin/git add .
 /usr/bin/git commit -m "Baseline baby"
 
