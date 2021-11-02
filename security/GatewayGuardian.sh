@@ -119,7 +119,7 @@ then
    do
        username="`/bin/echo ${user} | /usr/bin/awk -F'::' '{print $1}'`"
        email="`/bin/echo ${user} | /usr/bin/awk -F'::' '{print $2}'`"
-       if ( [ "`/bin/grep ${username} ${HOME}/runtime/credentials/htpasswd`" = "" ] ) 
+       if ( [ "`/bin/grep ${username} ${HOME}/runtime/credentials/htpasswd`" = "" ] && [ "${username}" != "" ] && [ "${email}" != "" ] ) 
        then
            user_password="`/usr/bin/openssl rand -base64 10`"
            user_password_digest="`/bin/echo "${user_password}" | /usr/bin/openssl passwd -apr1 -stdin`"
