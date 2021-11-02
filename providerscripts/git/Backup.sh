@@ -143,6 +143,9 @@ fi
 cd ${HOME}/backups
 
 /usr/bin/git init
+/usr/bin/git lfs install
+/usr/bin/git lfs track "*.tar.gz"
+/usr/bin/git add .gitattributes
 
 if ( [ ! -d ${HOME}/backups/${period} ] )
 then
