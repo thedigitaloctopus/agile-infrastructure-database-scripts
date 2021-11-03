@@ -32,7 +32,7 @@ fi
 
 BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
 #version="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /usr/bin/sort -V | /usr/bin/tail -1 | /bin/sed 's/release=//g'`"
-versions="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /usr/bin/sort -Vr | /bin/sed 's/release=//g'`"
+versions="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /bin/grep -v 10.7 | /usr/bin/sort -Vr | /bin/sed 's/release=//g'`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
