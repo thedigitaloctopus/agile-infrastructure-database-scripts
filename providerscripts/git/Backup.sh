@@ -146,6 +146,7 @@ cd ${HOME}/backups
 /usr/bin/git lfs install
 /usr/bin/git lfs track "*tar*"
 /usr/bin/git lfs track "*db*"
+/usr/bin/git lfs track .gitattributes
 /usr/bin/git add .gitattributes
 
 if ( [ ! -d ${HOME}/backups/${period} ] )
