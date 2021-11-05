@@ -27,7 +27,7 @@ repository_ownername="${4}"
 repository_name="${5}"
 
 /usr/bin/git init
-/usr/bin/git lfs install --skip-smudge
+/usr/bin/git lfs install
 
 if ( [ "${repository_provider}" = "bitbucket" ] )
 then
