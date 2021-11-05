@@ -83,6 +83,7 @@ IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 /bin/rm -r .git
 /usr/bin/git init
 /usr/bin/git lfs install
+/usr/bin/git lfs track "*db*"
 /usr/bin/git lfs track "*.tar.gz"
 /usr/bin/git add .gitattributes
 /usr/bin/git add .
