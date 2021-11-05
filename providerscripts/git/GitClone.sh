@@ -25,31 +25,32 @@ repository_username="${2}"
 repository_password="${3}"
 repository_ownername="${4}"
 repository_name="${5}"
+directory="${6}"
 
 if ( [ "${repository_provider}" = "bitbucket" ] )
 then
     if ( [ "${repository_password}" = "none" ] )
     then
-        /usr/bin/git clone https://${repository_username}@bitbucket.org/${repository_ownername}/${repository_name}.git
+        /usr/bin/git clone https://${repository_username}@bitbucket.org/${repository_ownername}/${repository_name}.git ${directory}
     else
-        /usr/bin/git clone https://${repository_username}:${repository_password}@bitbucket.org/${repository_ownername}/${repository_name}.git
+        /usr/bin/git clone https://${repository_username}:${repository_password}@bitbucket.org/${repository_ownername}/${repository_name}.git ${directory}
     fi
 fi
 if ( [ "${repository_provider}" = "github" ] )
 then
     if ( [ "${repository_password}" = "none" ] )
     then
-        /usr/bin/git clone https://${repository_username}@github.com/${repository_ownername}/${repository_name}.git
+        /usr/bin/git clone https://${repository_username}@github.com/${repository_ownername}/${repository_name}.git ${directory}
     else
-        /usr/bin/git clone https://${repository_username}:${repository_password}@github.com/${repository_ownername}/${repository_name}.git
+        /usr/bin/git clone https://${repository_username}:${repository_password}@github.com/${repository_ownername}/${repository_name}.git ${directory}
     fi
 fi
 if ( [ "${repository_provider}" = "gitlab" ] )
 then
     if ( [ "${repository_password}" = "none" ] )
     then
-        /usr/bin/git clone https://${repository_username}@gitlab.com/${repository_ownername}/${repository_name}.git
+        /usr/bin/git clone https://${repository_username}@gitlab.com/${repository_ownername}/${repository_name}.git ${directory}
     else
-        /usr/bin/git clone https://${repository_username}:${repository_password}@gitlab.com/${repository_ownername}/${repository_name}.git
+        /usr/bin/git clone https://${repository_username}:${repository_password}@gitlab.com/${repository_ownername}/${repository_name}.git ${directory}
     fi
 fi
