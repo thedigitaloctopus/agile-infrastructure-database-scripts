@@ -39,7 +39,7 @@ then
 	then
 	    IP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYIP'`"
 #	    /bin/sed -i "s/addresses.*/addresses: [${IP}\/16]/" /etc/netplan/10-ens7.yaml
-	    /bin/sed -i "s/addresses.*/addresses: [${ip}\/16]/" /etc/netplan/10-enp6s0.yaml
+	    /bin/sed -i "s/addresses.*/addresses: [${IP}\/16]/" /etc/netplan/10-enp6s0.yaml
 
            # if ( [ -f /etc/netplan/10-ens3.yaml ] )
            # then
