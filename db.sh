@@ -398,6 +398,9 @@ ${HOME}/providerscripts/utilities/GetIP.sh
 /usr/sbin/ufw default allow outgoing
 /usr/sbin/ufw --force enable
 
+#This is needed to intialise the networking
+${HOME}/providerscripts/utilities/GetIP.sh
+
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} `/bin/date`: Rebooting after install" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
