@@ -91,7 +91,7 @@ do
     /bin/rm -r /installer/.git
     /bin/rm -r /installer/*
     cd /installer
-    /usr/bin/git init
+   # /usr/bin/git init
 
     if ( [ "${BUILD_ARCHIVE_CHOICE}" = "baseline" ] )
     then
