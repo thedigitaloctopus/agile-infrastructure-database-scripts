@@ -69,7 +69,7 @@ netmask 255.255.0.0
     enp6s0:
       match:
         macaddress: ${mac}
-      mtu: 1450
+      mtu: 1200
       dhcp4: no
       addresses: [${IP}/16]" > /etc/netplan/10-enp6s0.yaml
             /usr/sbin/netplan apply
