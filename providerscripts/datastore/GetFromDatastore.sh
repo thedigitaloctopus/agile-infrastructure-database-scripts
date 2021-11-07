@@ -23,7 +23,7 @@
 datastore_provider="$1"
 datastore_to_get="$2"
 
-if ( [ "${datastore_provider}" = "amazonS3" ] || [ "${datastore_provider}" = "digitalocean" ] || [ "${datastore_provider}" = "exoscale" ] ||  [ "${datastore_provider}" = "linode" ] || [ "${datastore_provider}" "vultr" ] )
+if ( [ "${datastore_provider}" = "amazonS3" ] || [ "${datastore_provider}" = "digitalocean" ] || [ "${datastore_provider}" = "exoscale" ] ||  [ "${datastore_provider}" = "linode" ] || [ "${datastore_provider}" = "vultr" ] )
 then
     /usr/bin/s3cmd --force --recursive get s3://${datastore_to_get}
 fi
