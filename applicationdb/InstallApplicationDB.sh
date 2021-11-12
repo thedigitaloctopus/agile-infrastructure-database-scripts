@@ -89,6 +89,7 @@ do
     fi
 
     /bin/rm -r /installer/.git
+    /bin/rm -r /installer/.git*
     /bin/rm -r /installer/*
     cd /installer
    # /usr/bin/git init
