@@ -56,7 +56,7 @@ if ( [ "${BYPASS_DB_LAYER}" != "1" ] )
 then
      #Time based backups are not taken for virgin CMS installs. Instead, make a baseline if you want to save a copy of your work and work it out from there once your application is ready
 
-    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDARCHIVECHOICE:virgin`" = "0" ] ) 
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDARCHIVECHOICE:virgin`" = "0" ] && [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDARCHIVECHOICE:baseline`" = "0" ] ) 
     then
         /bin/echo "2 * * * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'HOURLY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
         /bin/echo "8 2 * * * export HOME=${HOMEDIR} && ${HOME}/cron/BackupFromCron.sh 'DAILY' ${BUILD_IDENTIFIER}" >>/var/spool/cron/crontabs/root
