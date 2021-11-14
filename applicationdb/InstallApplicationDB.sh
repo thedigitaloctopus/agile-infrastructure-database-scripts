@@ -185,16 +185,8 @@ then
         . ${HOME}/providerscripts/database/singledb/mariadb/AdjustAccessForSnapshot.sh
     fi
     . ${HOME}/applicationscripts/ApplyApplicationBranding.sh
+    . ${HOME}/applicationdb/maria/InstallMariaDBClient.sh
     . ${HOME}/applicationdb/maria/InstallMariaDB.sh
-fi
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Postgres`" = "1" ] )
-then
-    if ( [ "${1}" = "force" ] )
-    then
-        . ${HOME}/providerscripts/database/singledb/postgres/AdjustAccessForSnapshot.sh
-    fi
-    . ${HOME}/applicationscripts/ApplyApplicationBranding.sh
-    . ${HOME}/applicationdb/postgres/InstallPostgresDB.sh
 fi
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:MySQL`" = "1" ] )
 then
@@ -203,6 +195,17 @@ then
         . ${HOME}/providerscripts/database/singledb/mariadb/AdjustAccessForSnapshot.sh
     fi
     . ${HOME}/applicationscripts/ApplyApplicationBranding.sh
+    . ${HOME}/applicationdb/mysql/InstallMySQLDBClient.sh
     . ${HOME}/applicationdb/mysql/InstallMySQLDB.sh
+fi
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Postgres`" = "1" ] )
+then
+    if ( [ "${1}" = "force" ] )
+    then
+        . ${HOME}/providerscripts/database/singledb/postgres/AdjustAccessForSnapshot.sh
+    fi
+    . ${HOME}/applicationscripts/ApplyApplicationBranding.sh
+    . ${HOME}/applicationdb/postgres/InstallPostgresClient.sh
+    . ${HOME}/applicationdb/postgres/InstallPostgresDB.sh
 fi
 
