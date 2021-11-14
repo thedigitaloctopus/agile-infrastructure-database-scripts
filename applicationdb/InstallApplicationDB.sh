@@ -195,7 +195,7 @@ then
         . ${HOME}/providerscripts/database/singledb/mariadb/AdjustAccessForSnapshot.sh
     fi
     . ${HOME}/applicationscripts/ApplyApplicationBranding.sh
-    . ${HOME}/installscripts/InstallMySQLDBClient.sh
+    . ${HOME}/installscripts/InstallMySQLClient.sh
     . ${HOME}/applicationdb/mysql/InstallMySQLDB.sh
 fi
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Postgres`" = "1" ] )
