@@ -25,6 +25,13 @@ then
     BUILDOS="${1}"
 fi
 
+if ( [ "${BUILDOS}" = "" ] )
+then
+    BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
+fi
+
+BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
+
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
