@@ -57,7 +57,7 @@ else
     #make sure database has been started and is available - this is local instance under our full control
     /usr/sbin/service mysql start
     #try with no password set
-  #  /usr/bin/mysql -f -A < ${HOME}/runtime/initialiseDB.sql
+    /usr/bin/mysql -f -A < ${HOME}/runtime/initialiseDB.sql
     #make sure by trying with password
     /usr/bin/mysql -f -A -u root -p${DB_P} < ${HOME}/runtime/initialiseDB.sql
 fi
