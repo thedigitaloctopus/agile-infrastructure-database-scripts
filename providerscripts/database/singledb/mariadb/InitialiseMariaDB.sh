@@ -74,7 +74,7 @@ else
    # /bin/sleep 20
     /usr/sbin/service mysql start
     #try with no password set
-    /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
+  #  /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
     #make sure by trying with password
     /usr/bin/mysql -A --force -u root -p${DB_P} < ${HOME}/runtime/initialiseDB.sql
 fi
