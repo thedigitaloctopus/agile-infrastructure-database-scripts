@@ -32,8 +32,8 @@ fi
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:moodle`" = "1" ] )
 then
     /bin/sed -i '/^\[mysqld\]/a binlog_format=mixed' /etc/mysql/my.cnf
-    /bin/sed -i '/^\[mysqld\]/a innodb_large_prefix=1' /etc/mysql/my.cnf
+   # /bin/sed -i '/^\[mysqld\]/a innodb_large_prefix=1' /etc/mysql/my.cnf
     /bin/sed -i '/^\[mysqld\]/a innodb_file_per_table=ON' /etc/mysql/my.cnf
     /bin/sed -i '/^\[mysqld\]/a innodb_default_row_format=dynamic' /etc/mysql/my.cnf
-    /bin/sed -i '/^\[mysqld\]/a innodb_file_format=Barracuda' /etc/mysql/my.cnf
+ #   /bin/sed -i '/^\[mysqld\]/a innodb_file_format=Barracuda' /etc/mysql/my.cnf
 fi
