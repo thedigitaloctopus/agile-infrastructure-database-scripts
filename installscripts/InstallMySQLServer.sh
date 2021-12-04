@@ -35,6 +35,7 @@ BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDO
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
+    /usr/bin/apt-get -qq -y install gnupg
     mysql_apt_config="`/usr/bin/wget -O- https://dev.mysql.com/downloads/repo/apt/ | /bin/grep -o mysql-apt-config.* | /usr/bin/head -1 | /bin/sed 's/deb.*/deb/g'`"
     /usr/bin/wget https://dev.mysql.com/get/${mysql_apt_config} 
     DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i ${mysql_apt_config}
@@ -45,6 +46,7 @@ fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
 then    
+    /usr/bin/apt-get -qq -y install gnupg
     mysql_apt_config="`/usr/bin/wget -O- https://dev.mysql.com/downloads/repo/apt/ | /bin/grep -o mysql-apt-config.* | /usr/bin/head -1 | /bin/sed 's/deb.*/deb/g'`"
     /usr/bin/wget https://dev.mysql.com/get/${mysql_apt_config} 
     DEBIAN_FRONTEND=noninteractive /usr/bin/dpkg -i ${mysql_apt_config}
