@@ -30,6 +30,11 @@ then
     fi
 fi
 
+if ( [ ! -d ${HOME}/config/credentials ] )
+then
+    /bin/mkdir ${HOME}/config/credentials
+fi
+
 if ( [ ! -f ${HOME}/.ssh/shit ] && ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] && [ -f ${HOME}/config/credentials/shit ] ) )
 then
     /bin/cp ${HOME}/config/credentials/shit ${HOME}/.ssh/shit
