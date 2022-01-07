@@ -39,7 +39,8 @@ then
     /usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     /bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
    # /usr/bin/apt-get update
-    ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+    #${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+    ${HOME}/installscripts/Update.sh ${BUILDOS}
     /usr/bin/apt-get -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
     #/usr/bin/apt-get -qq -y install postgresql-client
 fi
@@ -51,7 +52,8 @@ then
     /usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     /bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
     #/usr/bin/apt-get update
-    ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+    ${HOME}/installscripts/Update.sh ${BUILDOS}
+ #   ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
     /usr/bin/apt-get -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
     #/usr/bin/apt-get -qq -y install postgresql-client
 fi
