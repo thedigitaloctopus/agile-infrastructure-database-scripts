@@ -52,7 +52,8 @@ then
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/ubuntu focal main"
             #/usr/bin/apt-get -qq -y update
-            ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+           # ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+            ${HOME}/installscripts/Update.sh ${BUILDOS}
             if ( [ "$?" != "0" ] )
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
@@ -84,7 +85,8 @@ then
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian buster main"
            # /usr/bin/apt-get -qq -y update
-            ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+          #  ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+            ${HOME}/installscripts/Update.sh ${BUILDOS}
             if ( [ "$?" != "0" ] )
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
@@ -104,7 +106,8 @@ then
         do
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian bullseye main"
-            /usr/bin/apt-get -qq -y update
+           # /usr/bin/apt-get -qq -y update
+            ${HOME}/installscripts/Update.sh ${BUILDOS}
             if ( [ "$?" != "0" ] )
             then
                /bin/sed -i '/ukfast/d'  /etc/apt/sources.list
@@ -117,7 +120,7 @@ then
         #/usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian bullseye main"
     fi
 
-    ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+   # ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
 
     #${HOME}/installscripts/Update.sh ${BUILDOS}
     ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
