@@ -42,7 +42,7 @@ then
     /usr/bin/apt-get -qq -y remove --purge mysql*
     /usr/bin/apt-get -qq -y  remove --purge mariadb*
 
-    /usr/bin/apt-get -qq -y install software-properties-common dirmngr
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install software-properties-common dirmngr
 
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:20.04`" = "1" ] )
     then
@@ -75,7 +75,7 @@ if ( [ "${BUILDOS}" = "debian" ] )
 then
     /usr/bin/apt-get -qq -y remove --purge mysql*
     /usr/bin/apt-get -qq -y remove --purge mariadb*
-    /usr/bin/apt-get -qq -y install software-properties-common dirmngr
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install software-properties-common dirmngr
     
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:10`" = "1" ] )
     then
