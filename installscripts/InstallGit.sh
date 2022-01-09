@@ -27,11 +27,11 @@ fi
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
-    /usr/bin/apt-get install -qq git
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq install git
 fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
 then
-    /usr/bin/apt-get install -qq git
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq install git
 fi
 
