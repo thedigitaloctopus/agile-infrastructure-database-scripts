@@ -29,13 +29,13 @@ if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
     then
-        /usr/bin/apt-get -qq -y install locales-all        
+        /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install locales-all        
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
     then
-        #/usr/bin/apt-get -qq -y update
-        #/usr/bin/apt-get -qq -y install locales-all        
-        #/usr/bin/apt-get -qq -y install postgresql postgresql-contrib
+        #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y update
+        #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install locales-all        
+        #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install postgresql postgresql-contrib
         #version="`/bin/ls /etc/postgresql/`"
         #/usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
         #/usr/sbin/service postgresql restart
@@ -46,7 +46,7 @@ then
        # /usr/bin/apt-get update
        # ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
         ${HOME}/installscripts/Update.sh ${BUILDOS}
-        /usr/bin/apt-get -y install postgresql-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
+        /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -y install postgresql-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
         version="`/bin/ls /etc/postgresql/`"
         /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
         /usr/sbin/service postgresql restart
@@ -57,13 +57,13 @@ if ( [ "${BUILDOS}" = "debian" ] )
 then
     if ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:source'`" = "1" ] )
     then
-        /usr/bin/apt-get -qq -y install locales-all        
+        /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install locales-all        
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh    
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
     then
-        #/usr/bin/apt-get -qq -y update
-        #/usr/bin/apt-get -qq -y install locales-all        
-        #/usr/bin/apt-get -qq -y install postgresql postgresql-contrib
+        #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y update
+        #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install locales-all        
+        #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install postgresql postgresql-contrib
         #version="`/bin/ls /etc/postgresql/`"
         #/usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
         #/usr/sbin/service postgresql restart
@@ -74,7 +74,7 @@ then
        # /usr/bin/apt-get update
        # ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
         ${HOME}/installscripts/Update.sh ${BUILDOS}
-        /usr/bin/apt-get -y install postgresql-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
+        /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -y install postgresql-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
         version="`/bin/ls /etc/postgresql/`"
         /usr/bin/sudo -su postgres /usr/lib/postgresql/${version}/bin/postgres -D /var/lib/postgresql/${version}/main -c config_file=/etc/postgresql/${version}/main/postgresql.conf
         /usr/sbin/service postgresql restart
