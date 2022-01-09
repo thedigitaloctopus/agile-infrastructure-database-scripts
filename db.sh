@@ -180,19 +180,33 @@ kernel.panic=10" >> /etc/sysctl.conf
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Update and upgrade the software to its latest available versions
 
+>&2 /bin/echo "${0} Update.sh"
 ${HOME}/installscripts/Update.sh ${BUILDOS}
+>&2 /bin/echo "${0} Upgrade.sh"
 ${HOME}/installscripts/Upgrade.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallSoftwareProperties.sh"
 ${HOME}/installscripts/InstallSoftwareProperties.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallGitLFS.sh"
 ${HOME}/installscripts/InstallGitLFS.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallCurl.sh"
 ${HOME}/installscripts/InstallCurl.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallLibSocketSSL.sh"
 ${HOME}/installscripts/InstallLibioSocketSSL.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallLibnetSSLLeay.sh"
 ${HOME}/installscripts/InstallLibnetSSLLeay.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallSendEmail.sh"
 ${HOME}/installscripts/InstallSendEmail.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallSysStat.sh"
 ${HOME}/installscripts/InstallSysStat.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallUFW.sh"
 ${HOME}/installscripts/InstallUFW.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallSSHFS.sh"
 ${HOME}/installscripts/InstallSSHFS.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallS3FS.sh"
 ${HOME}/installscripts/InstallS3FS.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallRsync.sh"
 ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
+>&2 /bin/echo "${0} InstallJQ.sh"
 ${HOME}/installscripts/InstallJQ.sh ${BUILDOS}
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh ENABLEEFS:1`" = "1" ] )
@@ -203,6 +217,7 @@ fi
 ${HOME}/providerscripts/utilities/InstallMonitoringGear.sh
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Setting timezone"
 /bin/echo "${0} `/bin/date`: Setting timezone" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Set the time on the machine
@@ -225,6 +240,7 @@ fi
 
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Installing cloudhost tools"
 /bin/echo "${0} `/bin/date`: Installing Cloudhost tools" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -233,6 +249,7 @@ fi
 
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Getting infrastructure repositories from git"
 /bin/echo "${0} `/bin/date`: Getting infrastructure repositories from git" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -257,6 +274,7 @@ ${HOME}/bootstrap/GitPull.sh ${INFRASTRUCTURE_REPOSITORY_PROVIDER} ${INFRASTRUCT
 
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Setting up script that allows us to root"
 /bin/echo "${0} `/bin/date`: Setting up script that allows us to root" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -264,6 +282,7 @@ ${HOME}/bootstrap/GitPull.sh ${INFRASTRUCTURE_REPOSITORY_PROVIDER} ${INFRASTRUCT
 /bin/chmod 400 ${HOME}/.ssh/Super.sh
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Setting up datastore tools"
 /bin/echo "${0} `/bin/date`: Setting up datastore tools" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -289,6 +308,7 @@ cd ${HOME}
 
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Installing the application DB"
 /bin/echo "${0} `/bin/date`: Installing the application DB" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 #Initialise the database
@@ -308,6 +328,7 @@ then
 fi
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Configure our SSH settings"
 /bin/echo "${0} `/bin/date`: Configuring our SSH settings" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -317,6 +338,7 @@ fi
 
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Disabling password authenticator"
 /bin/echo "${0} `/bin/date`: Disabling password authentication" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -324,6 +346,7 @@ fi
 /bin/sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Changing our preferred SSH port"
 /bin/echo "${0} `/bin/date`: Changing to our preferred SSH port" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -338,6 +361,7 @@ else
 fi
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Preventing root logins"
 /bin/echo "${0} `/bin/date`: Preventing root logins" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -352,6 +376,7 @@ else
 fi
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Ensure SSH connections are long lasting"
 /bin/echo "${0} `/bin/date`: Ensuring SSH connections are long lasting" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -370,6 +395,7 @@ fi
 SERVER_USER_PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSERPASSWORD'`"
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Initialise Cron"
 /bin/echo "${0} `/bin/date`: Initialising cron" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 # Configure the crontab
@@ -389,6 +415,7 @@ ${HOME}/providerscripts/utilities/GetIP.sh
 
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Setting up firewall"
 /bin/echo "${0} `/bin/date`: Setting up firewall" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
@@ -404,6 +431,7 @@ ${HOME}/providerscripts/utilities/GetIP.sh
 ${HOME}/providerscripts/utilities/GetIP.sh
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+>&2 /bin/echo "${0} Rebooting after install"
 /bin/echo "${0} `/bin/date`: Rebooting after install" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
