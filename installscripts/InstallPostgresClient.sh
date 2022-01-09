@@ -41,8 +41,8 @@ then
    # /usr/bin/apt-get update
     #${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
     ${HOME}/installscripts/Update.sh ${BUILDOS}
-    /usr/bin/apt-get -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
-    #/usr/bin/apt-get -qq -y install postgresql-client
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
+    #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install postgresql-client
 fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
@@ -54,7 +54,7 @@ then
     #/usr/bin/apt-get update
     ${HOME}/installscripts/Update.sh ${BUILDOS}
  #   ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
-    /usr/bin/apt-get -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
-    #/usr/bin/apt-get -qq -y install postgresql-client
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
+    #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install postgresql-client
 fi
 
