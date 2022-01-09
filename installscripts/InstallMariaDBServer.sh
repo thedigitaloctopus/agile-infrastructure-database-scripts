@@ -68,7 +68,7 @@ then
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
     ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
-    /usr/bin/apt-get -qq -y install mariadb-server
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install mariadb-server
 fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
@@ -124,5 +124,5 @@ then
 
     #${HOME}/installscripts/Update.sh ${BUILDOS}
     ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
-    /usr/bin/apt-get -qq -y install mariadb-server
+    /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install mariadb-server
 fi
