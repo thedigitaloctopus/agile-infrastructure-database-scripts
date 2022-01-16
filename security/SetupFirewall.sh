@@ -21,8 +21,13 @@
 #set -x #THIS MUST NOT BE SWITCHED ON DURING NORMAL USE, SCRIPT BREAK
 #####################################################################
 
+if ( [ ! -d ${HOME}/logs/firewall ] )
+then
+    /bin/mkdir -p ${HOME}/logs/firewall
+fi
+
 #This stream redirection is required for correct function, please do not remove
-exec >${HOME}/logs/FIREWALL_CONFIGURATION.log
+exec >${HOME}/logs/firewall/FIREWALL_CONFIGURATION.log
 exec 2>&1
 
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBPORT'`"
