@@ -20,34 +20,6 @@
 ####################################################################################
 #set -x
 
-
-#if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh PRODUCTION:1`" = "1" ] )
-#then
-#    if ( [ ! -d ${HOME}/config ] )
-#    then
-#        ${HOME}/providerscripts/utilities/SetupConfigDirectories.sh
-#    fi
-#    
-#    SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSHPORT'`"
-#    ALGORITHM="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ALGORITHM'`"
-#    SERVER_USER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSER'`"
-#    ASIP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ASIP'`"
-#    /usr/bin/scp -P ${SSH_PORT} -i ${HOME}/.ssh/id_${ALGORITHM}_AGILE_DEPLOYMENT_BUILD_KEY -o ConnectTimeout=2 -o ConnectionAttempts=2 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SERVER_USER}@${ASIP}:${HOME}/config ${HOME}/config
-#    ASIPS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ASIPS'`"
-#
-#    for ip in ${ASIPS}
-#    do
-#        if ( [ "${ASIP}" != "${ip}" ] )
-#        then
-#            /usr/bin/scp -P ${SSH_PORT} -i ${HOME}/.ssh/id_${ALGORITHM}_AGILE_DEPLOYMENT_BUILD_KEY -o ConnectTimeout=2 -o ConnectionAttempts=2 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SERVER_USER}@${ip}:${HOME}/config ${HOME}/config
-#        fi
-#    done
-#        
-#    #for publicautoscalerip in `/bin/ls ${HOME}/config/autoscalerpublicip`
-#    #do
-#    exit
-#fi
-
 if ( [ "`/bin/ls ${HOME}/config 2>&1 | /bin/grep "Transport endpoint is not connected"`" != "" ] )
 then
     /bin/umount -f ${HOME}/config
@@ -59,7 +31,7 @@ if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] )
 then
     if ( [ ! -f ${HOME}/config/${SERVER_USER} ] )
     then
-        /bin/rm -r ${HOME}/config/* ${HOME}/config_cache/*
+        /bin/rm -r ${HOME}/config/*
         /bin/sleep 5
         /bin/touch ${HOME}/config/${SERVER_USER}
     fi
@@ -70,10 +42,6 @@ then
     exit
 fi
 
-if ( [ ! -d ${HOME}/config_cache ] )
-then
-    /bin/mkdir ${HOME}/config_cache
-fi
 
 BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 DATASTORE_CHOICE="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DATASTORECHOICE'`"
@@ -106,9 +74,9 @@ then
                  fi
             done
         else
-            /bin/rm -r ${HOME}/config/* ${HOME}/config_cache/* ${HOME}/config_cache/.* 2>/dev/null
+            /bin/rm -r ${HOME}/config/* 2>/dev/null
             /usr/bin/s3cmd mb s3://${configbucket}
-            /usr/bin/s3fs -o nonempty,allow_other,kernel_cache,use_path_request_style,sigv2 -o use_cache=${HOME}/config_cache -ourl=https://${endpoint} ${configbucket} ${HOME}/config
+            /usr/bin/s3fs -o nonempty,allow_other,use_path_request_style,sigv2 -ourl=https://${endpoint} ${configbucket} ${HOME}/config
         fi
     fi
 fi
@@ -117,36 +85,36 @@ if ( [ "${DATASTORE_CHOICE}" = "digitalocean" ] )
 then
     export AWSACCESSKEYID=`/bin/grep 'access_key' ~/.s3cfg | /usr/bin/awk '{print $NF}'`
     export AWSSECRETACCESSKEY=`/bin/grep 'secret_key' ~/.s3cfg  | /usr/bin/awk '{print $NF}'`
-    /bin/rm -r ${HOME}/config/* ${HOME}/config_cache/* ${HOME}/config_cache/.* 2>/dev/null
+    /bin/rm -r ${HOME}/config/* 2>/dev/null
     /usr/bin/s3cmd mb s3://${configbucket}
-    /usr/bin/s3fs -o nonempty,allow_other,kernel_cache,use_path_request_style,sigv2 -o use_cache=${HOME}/config_cache -ourl=https://${endpoint} ${configbucket} ${HOME}/config
+    /usr/bin/s3fs -o nonempty,allow_other,use_path_request_style,sigv2 -ourl=https://${endpoint} ${configbucket} ${HOME}/config
 fi
 
 if ( [ "${DATASTORE_CHOICE}" = "exoscale" ] )
 then
     export AWSACCESSKEYID=`/bin/grep 'access_key' ~/.s3cfg | /usr/bin/awk '{print $NF}'`
     export AWSSECRETACCESSKEY=`/bin/grep 'secret_key' ~/.s3cfg | /usr/bin/awk '{print $NF}'`
-    /bin/rm -r ${HOME}/config/* ${HOME}/config_cache/* ${HOME}/config_cache/.* 2>/dev/null
+    /bin/rm -r ${HOME}/config/* 2>/dev/null
     /usr/bin/s3cmd mb s3://${configbucket}
-    /usr/bin/s3fs -o nonempty,allow_other,kernel_cache,use_path_request_style,sigv2 -o use_cache=${HOME}/config_cache -ourl=https://${endpoint} ${configbucket} ${HOME}/config
+    /usr/bin/s3fs -o nonempty,allow_other,use_path_request_style,sigv2 -ourl=https://${endpoint} ${configbucket} ${HOME}/config
 fi
 
 if ( [ "${DATASTORE_CHOICE}" = "linode" ] )
 then
     export AWSACCESSKEYID=`/bin/grep 'access_key' ~/.s3cfg | /usr/bin/awk '{print $NF}'`
     export AWSSECRETACCESSKEY=`/bin/grep 'secret_key' ~/.s3cfg | /usr/bin/awk '{print $NF}'`
-    /bin/rm -r ${HOME}/config/* ${HOME}/config_cache/* ${HOME}/config_cache/.* 2>/dev/null
+    /bin/rm -r ${HOME}/config/* 2>/dev/null
     /usr/bin/s3cmd mb s3://${configbucket}
-    /usr/bin/s3fs -o nonempty,allow_other,kernel_cache,use_path_request_style -o use_cache=${HOME}/config_cache -ourl=https://${endpoint} ${configbucket} ${HOME}/config
+    /usr/bin/s3fs -o nonempty,allow_other,use_path_request_style -ourl=https://${endpoint} ${configbucket} ${HOME}/config
 fi
 
 if ( [ "${DATASTORE_CHOICE}" = "vultr" ] )
 then
     export AWSACCESSKEYID=`/bin/grep 'access_key' ~/.s3cfg | /usr/bin/awk '{print $NF}'`
     export AWSSECRETACCESSKEY=`/bin/grep 'secret_key' ~/.s3cfg | /usr/bin/awk '{print $NF}'`
-    /bin/rm -r ${HOME}/config/* ${HOME}/config_cache/* ${HOME}/config_cache/.* 2>/dev/null
+    /bin/rm -r ${HOME}/config/* 2>/dev/null
     /usr/bin/s3cmd mb s3://${configbucket}
-    /usr/bin/s3fs -o nonempty,allow_other,kernel_cache,use_path_request_style,sigv2 -o use_cache=${HOME}/config_cache -ourl=https://${endpoint} ${configbucket} ${HOME}/config
+    /usr/bin/s3fs -o nonempty,allow_other,use_path_request_style,sigv2 -ourl=https://${endpoint} ${configbucket} ${HOME}/config
 fi
 
 ${HOME}/providerscripts/utilities/SetupConfigDirectories.sh
