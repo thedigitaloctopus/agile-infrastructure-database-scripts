@@ -37,6 +37,13 @@ BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDO
 if ( [ -f ${HOME}/VULTR ] && [ ! -f ${HOME}/runtime/NETCONFIGURED ] )
 then
 
+    uuid="`/bin/cat /boot/grub/grub.cfg | /bin/grep vmlinuz | /usr/bin/head -1 | /bin/sed 's/.*UUID=//g' | /usr/bin/awk '{print $1}'`"
+    
+    if ( [ ! -L /dev/disk/byuuid/${uuid} ] )
+    then
+       /usr/bin/ln -s /dev/disk/byuuid/${uuid} /dev/vda1
+    fi
+
     if ( [ "${BUILDOS}" = "debian" ] )
     then
         if ( [ "${BUILDOSVERSION}" = "10" ] )
