@@ -92,10 +92,13 @@ WantedBy=multi-user.target" > /etc/systemd/system/rc-local.service
 /usr/bin/systemctl enable rc-local.service
 /usr/bin/systemctl start rc-local.service
 
-/usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-/bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
-#/usr/bin/apt-get update
-${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
-/usr/bin/apt-get -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
-/usr/bin/ln -s /usr/local/pgsql/bin/psql /usr/bin/psql
+if ( [ "${BUILDOS}" = "ubuntu" ] || [ "${BUILDOS}" = "debian" ] )
+then
+    /usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+    /bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+    ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
+    /usr/bin/apt-get -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
+    /usr/bin/ln -s /usr/local/pgsql/bin/psql /usr/bin/psql
+fi
+
 /bin/touch ${HOME}/runtime/POSTGRES_FROM_SOURCE
