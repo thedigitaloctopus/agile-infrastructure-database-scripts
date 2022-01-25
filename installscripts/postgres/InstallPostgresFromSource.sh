@@ -18,13 +18,18 @@
 # along with The Agile Deployment Toolkit.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################################
 ########################################################################################
-#set -x/usr/bin/apt-get install -qq -y software-properties-common
-/usr/bin/apt-get install -qq -y build-essential 
-/usr/bin/apt-get install -qq -y curl
-/usr/bin/apt-get install -qq -y zlib1g-dev
-/usr/bin/apt-get install -qq -y flex
-/usr/bin/apt-get install -qq -y bison
+export HOME=`/bin/cat /home/homedir.dat`
+BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 
+#Install needed libraries
+if ( [ "${BUILDOS}" = "ubuntu" ] || [ "${BUILDOS}" = "debian" ] )
+then
+    /usr/bin/apt-get install -qq -y build-essential 
+    /usr/bin/apt-get install -qq -y curl
+    /usr/bin/apt-get install -qq -y zlib1g-dev
+    /usr/bin/apt-get install -qq -y flex
+    /usr/bin/apt-get install -qq -y bison
+fi
 
 version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
 
