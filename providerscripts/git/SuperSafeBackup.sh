@@ -76,8 +76,8 @@ then
     read answer
 if ( "`/bin/echo ${answer} | /bin/grep 'Y'`" != "" ] )
     then
-        /usr/bin/add-apt-repository -y ppa:git-core/ppa
-	${HOME}/installscripts/Update.sh ${BUILDOS}
+       # /usr/bin/add-apt-repository -y ppa:git-core/ppa
+	#${HOME}/installscripts/Update.sh ${BUILDOS}
 	${HOME}/installscripts/InstallGit.sh ${BUILDOS}
     fi
 fi
