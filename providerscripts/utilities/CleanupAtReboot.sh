@@ -22,5 +22,10 @@
 ##################################################################################
 #set -x
 
+while ( [ "`/bin/mount | /bin/grep ${HOME}/config`" = "" ] )
+do
+    /bin/sleep 5
+done
+
 /bin/rm ${HOME}/config/databasepublicip/*
 /bin/rm ${HOME}/config/databaseip/*
