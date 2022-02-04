@@ -29,14 +29,6 @@ localip="`${HOME}/providerscripts/utilities/GetIP.sh`"
 /bin/touch /tmp/${localip}
 /bin/cp /tmp/${localip} ${HOME}/config/databaseip/${localip}
 
-for ip in "`/bin/ls ${HOME}/config/databaseip`"
-do
-    if ( [ "`/bin/echo ${ip}`" != "${localip}" ] )
-    then
-        /bin/rm ${HOME}/config/databaseip/${ip}
-    fi
-done
-
 if ( [ ! -d ${HOME}/config/databasepublicip ] )
 then
     /bin/mkdir ${HOME}/config/databasepublicip
@@ -46,10 +38,4 @@ publicip="`${HOME}/providerscripts/utilities/GetPublicIP.sh`"
 /bin/touch /tmp/${publicip}
 /bin/cp /tmp/${publicip} ${HOME}/config/databasepublicip/${publicip}
 
-for ip in "`/bin/ls ${HOME}/config/databasepublicip`"
-do
-    if ( [ "`/bin/echo ${ip}`" != "${publicip}" ] )
-    then
-        /bin/rm ${HOME}/config/databasepublicip/${ip}
-    fi
-done
+
