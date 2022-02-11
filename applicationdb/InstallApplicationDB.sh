@@ -2,8 +2,8 @@
 #################################################################################################################
 # Author: Peter Winter
 # Date  : 10/4/2016
-# Description : This scripts will actually install the application into your database. It expects some sort of
-# mysql database to be online for it to install the application code into
+# Description : This script will install the application DB for the database type that you have installed.
+# It expects a database system to be online either locally or as a managed database at a remote location. 
 #################################################################################################################
 # License Agreement:
 # This file is part of The Agile Deployment Toolkit.
@@ -23,6 +23,7 @@
 
 exec >>${HOME}/logs/DATABASESERVER_APPLICATION_INSTALLATION_BUILD.log
 exec 2>&1
+
 if ( [ "${HOME}" = "" ] )
 then
     export HOME="`/bin/cat /home/homedir.dat`"
@@ -92,11 +93,9 @@ do
     /bin/rm -r /installer/.git*
     /bin/rm -r /installer/*
     cd /installer
-   # /usr/bin/git init
 
     if ( [ "${BUILD_ARCHIVE_CHOICE}" = "baseline" ] )
     then
-       # ${HOME}/providerscripts/git/GitPull.sh ${APPLICATION_REPOSITORY_PROVIDER} ${APPLICATION_REPOSITORY_USERNAME} ${APPLICATION_REPOSITORY_PASSWORD} ${APPLICATION_REPOSITORY_OWNER} ${BASELINE_DB_REPOSITORY_NAME}
          ${HOME}/providerscripts/git/GitClone.sh ${APPLICATION_REPOSITORY_PROVIDER} ${APPLICATION_REPOSITORY_USERNAME} ${APPLICATION_REPOSITORY_PASSWORD} ${APPLICATION_REPOSITORY_OWNER} ${BASELINE_DB_REPOSITORY_NAME} .
 
         /bin/cat /installer/${BUILD_ARCHIVE_CHOICE}/application-db-?? > /installer/${BUILD_ARCHIVE_CHOICE}/application-db
@@ -112,7 +111,6 @@ do
         if ( [ "${BUILD_ARCHIVE_CHOICE}" != "virgin" ] )
         then
             DB_REPOSITORY_NAME="${WEBSITE_NAME}-db-${BUILD_ARCHIVE_CHOICE}-${BUILD_IDENTIFIER}"
-         #   ${HOME}/providerscripts/git/GitPull.sh ${APPLICATION_REPOSITORY_PROVIDER} ${APPLICATION_REPOSITORY_USERNAME} ${APPLICATION_REPOSITORY_PASSWORD} ${APPLICATION_REPOSITORY_OWNER} ${WEBSITE_SUBDOMAIN}-${DB_REPOSITORY_NAME}
              ${HOME}/providerscripts/git/GitClone.sh ${APPLICATION_REPOSITORY_PROVIDER} ${APPLICATION_REPOSITORY_USERNAME} ${APPLICATION_REPOSITORY_PASSWORD} ${APPLICATION_REPOSITORY_OWNER} ${WEBSITE_SUBDOMAIN}-${DB_REPOSITORY_NAME} .
 
             /bin/cat /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db-?? > /installer/${BUILD_ARCHIVE_CHOICE}/${WEBSITE_NAME}-db
