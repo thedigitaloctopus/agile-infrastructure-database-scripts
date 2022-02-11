@@ -2,7 +2,8 @@
 #################################################################################################################
 # Author: Peter Winter
 # Date  : 10/4/2016
-# Description : This script will build a database server
+# Description : This script is the main script for building a database server.
+# It is called remotely from the "BuildDatabase" script of the build machine. 
 #################################################################################################################
 # License Agreement:
 # This file is part of The Agile Deployment Toolkit.
@@ -290,18 +291,6 @@ ${HOME}/bootstrap/GitPull.sh ${INFRASTRUCTURE_REPOSITORY_PROVIDER} ${INFRASTRUCT
 
 cd ${HOME}
 
-#If we are using an SSH tunnel, then we need to set it up here so that when we are installing the application
-#there is a tunnel for us to communicate through to get the the datbase running as a remote service.
-#The SSH tunnel will be setup automatically every time this machine is rebooted
-#When the application is running, it communicates with the remote DB running as a service using its own SSH tunnel
-#In this case, the database server we are building here has no operational use, but, it does have the workflow
-#to install the application into the remote database and also to make periodic backups of the database and that
-#is why we have to build it. In ordinary operation of the application, this machine is not touched the webserver
-#communicates directly to the database running as a remote service.
-#if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS-secured`" = "1" ] )
-#then
-#    ${HOME}/providerscripts/utilities/SetupSSHTunnel.sh
-#fi
 
 #Stop cron from sending notification emails
 /bin/echo "MAILTO=''" > /var/spool/cron/crontabs/root
@@ -311,6 +300,7 @@ cd ${HOME}
 >&2 /bin/echo "${0} Installing the application DB"
 /bin/echo "${0} `/bin/date`: Installing the application DB" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
+
 #Initialise the database
 . ${HOME}/providerscripts/database/singledb/InstallSingleDB.sh ${DATABASE_INSTALLATION_TYPE}
 
