@@ -1,6 +1,8 @@
 #!/bin/sh
 ######################################################################################################
-# Description: If the Maria Database needs any settings specific to an application, they can set here.
+# Description: If the Maria Database needs any settings set specifically for an application, 
+# they can set here. By default it there is an example for moodle, but, it can be done for other applications
+# also if the need arises in your workflow. 
 # Author: Peter Winter
 # Date: 17/01/2017
 ######################################################################################################
