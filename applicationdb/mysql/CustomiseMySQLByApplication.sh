@@ -1,6 +1,6 @@
 #!/bin/sh
 ######################################################################################################
-# Description: If the Maria Database needs any settings specific to an application, they can set here.
+# Description: If the MySQL Database needs any settings specific to an application, they can set here.
 # There is an example here for the moodle application, but, you can use the same process to make customisations
 # for any other application type also. 
 # Author: Peter Winter
