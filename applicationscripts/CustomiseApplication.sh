@@ -30,11 +30,11 @@ if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTI
 then
    :
 fi
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:2`" = "1" ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:3`" = "1" ] )
 then
    :
 fi
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:2`" = "1" ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:4`" = "1" ] )
 then
    :
 fi
