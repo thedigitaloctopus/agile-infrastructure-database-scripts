@@ -1,6 +1,11 @@
 #!/bin/sh
 ######################################################################################################
-# Description: This will remove application branding
+# Description: When you make a backup of your database, you extract out deployment specific values
+# from your database, you can then store these specific values with generic valued placeholders in the
+# backup. When you "ApplyApplicationBranding" as you make a deployment, these generic placeholder values
+# can be replaced with deployment specific values again. This means that, for example, your codebase can
+# be deployed to different URLs which is essential, if, for example, you want to make a baseline and 
+# using one url and to deploy it to different urls as a "product" used by other developers. 
 # Author : Peter Winter
 # Date: 17/05/2017
 ######################################################################################################
