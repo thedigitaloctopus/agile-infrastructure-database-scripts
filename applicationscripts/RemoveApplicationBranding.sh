@@ -1,6 +1,6 @@
 #!/bin/sh
 ####################################################################################################
-# Description: This will remove any branding to a generic form
+# Description: This will remove any brandinging such as website url to a generic placeholder form
 # Author : Peter Winter
 # Date: 17/05/2017
 ####################################################################################################
