@@ -1,6 +1,6 @@
 #!/bin/sh
 #####################################################################################################
-# Description: This script will apply branding such as website name and so on
+# Description: This script will apply branding such as website name and so on instead of generic placeholders
 # Author : Peter Winter
 # Date: 17/05/2017
 #####################################################################################################
