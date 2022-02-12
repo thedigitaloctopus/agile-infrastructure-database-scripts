@@ -1,7 +1,11 @@
 #!/bin/sh
 ########################################################################################################
-# Description: This will apply application branding to the database data
-# Author: Peter Winter
+# Description: This will apply application branding to the database data. The way this works is that
+# when the a backup is made of the database, certain tokens specific to the active website are replaced with 
+# placeholders which are then replaced with specific values for the currently deployed website. This means,
+# for example, if the url of the website when the backup is being made, is ok1.website.com and the backup is 
+# being used to deploy to ok2.website2.com then using placeholders we can translate one dataset into another
+# meaning our backups can be used for different domains. The same is true for other placeholders as well. # Author: Peter Winter
 # Date: 17/05/2017
 ########################################################################################################
 # License Agreement:
