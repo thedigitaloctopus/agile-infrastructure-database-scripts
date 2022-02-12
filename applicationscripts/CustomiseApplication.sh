@@ -1,7 +1,9 @@
 #!/bin/sh
 ########################################################################################
-# Description: Place the scripts which customise your application here. Select based on
-# APPLICATIONIDENTIFIER for the application type you are customising for
+# Description: Place the scripts which customise your application based on application type
+# such as, for example, Joomla, Wordpres, Moodle and Drupal. We use the "APPLICATIONIDENTIFIER"
+# to tell us which CMS we are deploying so that we can make any CMS specific adjustments here
+# in a single place. 
 # Date: 18/11/2016
 # Author: Peter Winter
 ########################################################################################
@@ -23,8 +25,14 @@
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:1`" = "1" ] )
 then
     :
-    #you can add crontasks here as needed by your application, for example:
-    #/bin/echo "*/2 * * * * export HOME=${HOMEDIR} && ${HOME}/applicationscripts/demo-joomla/EmailStatusUpdates.sh" >> /var/spool/cron/crontabs/root
+fi
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:2`" = "1" ] )
+then
+   :
+fi
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:2`" = "1" ] )
+then
+   :
 fi
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATIONIDENTIFIER:2`" = "1" ] )
 then
