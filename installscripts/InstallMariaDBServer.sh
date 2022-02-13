@@ -33,7 +33,6 @@ fi
     
 BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
 
-#version="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /usr/bin/sort -V | /usr/bin/tail -1 | /bin/sed 's/release=//g'`"
 versions="`/usr/bin/wget -O - mariadb.org/download | /bin/grep -Eo 'release=[0-9]+\.[0-9]+\.[0-9]+'  | /bin/grep -v 10.7 | /usr/bin/sort -Vr | /bin/sed 's/release=//g'`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 
@@ -51,8 +50,6 @@ then
         do
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/ubuntu focal main"
-            #/usr/bin/apt-get -qq -y update
-           # ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
             ${HOME}/installscripts/Update.sh ${BUILDOS}
             if ( [ "$?" != "0" ] )
             then
@@ -63,7 +60,6 @@ then
                 break
             fi
         done
-        #/usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/ubuntu focal main"
     fi
 
     ${HOME}/installscripts/Update.sh ${BUILDOS}
@@ -84,8 +80,6 @@ then
         do
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian buster main"
-           # /usr/bin/apt-get -qq -y update
-          #  ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
             ${HOME}/installscripts/Update.sh ${BUILDOS}
             if ( [ "$?" != "0" ] )
             then
@@ -96,7 +90,6 @@ then
                 break
             fi
         done
-      #  /usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian buster main"
     fi
     
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:11`" = "1" ] )
@@ -106,7 +99,6 @@ then
         do
             version="`/bin/echo ${version} | /bin/awk -F'.' '{print $1"."$2}'`"
             /usr/bin/add-apt-repository "deb [arch=amd64,arm64,ppc64el] https://mirrors.ukfast.co.uk/sites/mariadb/repo/${version}/debian bullseye main"
-           # /usr/bin/apt-get -qq -y update
             ${HOME}/installscripts/Update.sh ${BUILDOS}
             if ( [ "$?" != "0" ] )
             then
@@ -117,12 +109,8 @@ then
                 break
             fi
         done
-        #/usr/bin/add-apt-repository "deb [arch=amd64] http://mirrors.coreix.net/mariadb/repo/${version}/debian bullseye main"
     fi
 
-   # ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
-
-    #${HOME}/installscripts/Update.sh ${BUILDOS}
     ${HOME}/installscripts/InstallRsync.sh ${BUILDOS}
     /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install mariadb-server
 fi
