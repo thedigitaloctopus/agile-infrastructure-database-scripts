@@ -35,26 +35,18 @@ BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDO
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "rc" | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
-
     /usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     /bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
-   # /usr/bin/apt-get update
-    #${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
     ${HOME}/installscripts/Update.sh ${BUILDOS}
     /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
-    #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install postgresql-client
 fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
 then
     version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "rc" | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
-
     /usr/bin/wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     /bin/echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
-    #/usr/bin/apt-get update
     ${HOME}/installscripts/Update.sh ${BUILDOS}
- #   ${HOME}/installscripts/UpdateAndUpgrade.sh ${BUILDOS}
     /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -y install postgresql-client-`/bin/echo ${version} | /usr/bin/awk -F'.' '{print $1}'`
-    #/usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install postgresql-client
 fi
 
