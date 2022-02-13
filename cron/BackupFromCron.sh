@@ -1,6 +1,8 @@
 #!/bin/sh
 ###################################################################################
-# Description: This script will perform a backup when called from cron
+# Description: This script will perform a backup of your current application database
+# and is expected to be called from cron as a cronjob. It uses a locking mechanism
+# to ensure that it doesn't get called a second time before the first time has completed. 
 # Date: 18/11/2016
 # Author : Peter Winter
 ###################################################################################
