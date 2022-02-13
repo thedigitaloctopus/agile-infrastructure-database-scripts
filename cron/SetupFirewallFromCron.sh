@@ -1,6 +1,7 @@
 #!/bin/bash
 ###############################################################################
-# Description: This script will install the firewall when called from cron
+# Description: This script will install the ufw firewall when called from cron.
+# It uses a locking mechanism to ensure that it does run multiple times concurrently. 
 # Date: 18/11/2016
 # Author : Peter Winter
 ###############################################################################
