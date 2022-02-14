@@ -52,12 +52,14 @@ flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
+    count="0"
     /bin/sed -i '/GRANT SESSION/d' ${HOME}/runtime/initialiseDB.sql
     /bin/sed -i '/DELETE FROM/d' ${HOME}/runtime/initialiseDB.sql
     /bin/sed -i '/ALTER USER/d' ${HOME}/runtime/initialiseDB.sql    
     /bin/sed -i '/CREATE USER/d' ${HOME}/runtime/initialiseDB.sql
+    
     /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
-    count="0"
+    
     while ( [ "$?" != "0" ] && [ "${count}" -lt "10" ] )
     do
         /bin/sleep 30
