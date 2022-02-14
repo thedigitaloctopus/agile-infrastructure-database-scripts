@@ -68,6 +68,7 @@ if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
 then
     /bin/sed -i '/GRANT SESSION/d' ${HOME}/runtime/initialiseDB.sql
     /bin/sed -i '/drop user/d' ${HOME}/runtime/initialiseDB.sql
+    /bin/sed -i '/CREATE USER/d' ${HOME}/runtime/initialiseDB.sql
     /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
 else
 
