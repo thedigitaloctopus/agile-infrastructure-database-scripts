@@ -52,6 +52,9 @@ flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
+    /bin/sed -i '/GRANT SESSION/d' ${HOME}/runtime/initialiseDB.sql
+    /bin/sed -i '/DELETE FROM/d' ${HOME}/runtime/initialiseDB.sql
+    /bin/sed -i '/ALTER USER/d' ${HOME}/runtime/initialiseDB.sql    
     /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
 else
     #make sure database has been started and is available - this is local instance under our full control
