@@ -57,6 +57,13 @@ then
     /bin/sed -i '/ALTER USER/d' ${HOME}/runtime/initialiseDB.sql    
     /bin/sed -i '/CREATE USER/d' ${HOME}/runtime/initialiseDB.sql
     /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
+    count="0"
+    while ( [ "$?" != "0" ] && [ "${count}" -lt "10" ] )
+    do
+        /bin/sleep 30
+        count="`/usr/bin/expr ${count} + 1`"
+        /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
+    done
 else
     #make sure database has been started and is available - this is local instance under our full control
     /usr/sbin/service mysql start
