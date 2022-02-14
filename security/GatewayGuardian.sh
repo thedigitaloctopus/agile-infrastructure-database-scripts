@@ -44,7 +44,7 @@ if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh APPLICATION:jooml
 then
     if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] )
     then
-        prefix="`${HOME}/providerscripts/utilities/ConnectToMySQLDB.sh "show tables" | /usr/bin/head -1 | /usr/bin/awk -F'_' '{print $1}'`"
+        prefix="`${HOME}/providerscripts/utilities/ConnectToMySQLDB.sh "show tables" | /usr/bin/tail -1 | /usr/bin/awk -F'_' '{print $1}'`"
         userdetails="`${HOME}/providerscripts/utilities/ConnectToMySQLDB.sh "select CONCAT_WS('::',username,email) from ${prefix}_users"`"
     fi
     
