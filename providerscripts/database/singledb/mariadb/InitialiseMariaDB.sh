@@ -70,6 +70,13 @@ then
     /bin/sed -i '/drop user/d' ${HOME}/runtime/initialiseDB.sql
     /bin/sed -i '/CREATE USER/d' ${HOME}/runtime/initialiseDB.sql
     /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
+    count="0"
+    while ( [ "$?" != "0" ] && [ "${count}" -lt "10" ] )
+    do
+        /bin/sleep 30
+        count="`/usr/bin/expr ${count} + 1`"
+        /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
+    done
 else
 
    # /usr/bin/systemctl stop mariadb
