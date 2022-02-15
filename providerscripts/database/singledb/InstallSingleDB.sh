@@ -1,6 +1,7 @@
 #!/bin/sh
 ####################################################################################
-# Description: This will install a single DB node based on the selected DB type
+# Description: This script coordinates, based on provider, the installation and initialisation
+# of the database that the application is going to be installed into. 
 # Date: 18/11/2016
 # Author: Peter Winter
 ####################################################################################
