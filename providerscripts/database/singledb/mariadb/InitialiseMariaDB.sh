@@ -1,6 +1,9 @@
 #!/bin/sh
 ############################################################################
-# Description: This script initialises the maria db instance ready for use
+# Description: This script initialises the maria db instance ready for use.
+# It can be either a local database or a remote managed database. 
+# Once this script has run, an empty database with a known name will have been
+# created. 
 # Author: Peter Winter
 # Date: 15/01/2017
 ############################################################################
@@ -80,10 +83,6 @@ then
         /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
     done
 else
-
-   # /usr/bin/systemctl stop mariadb
-   # /usr/bin/mysqld_safe --skip-grant-tables --skip-networking &
-   # /bin/sleep 20
     /usr/sbin/service mysql start
     #try with no password set
     /usr/bin/mysql -A < ${HOME}/runtime/initialiseDB.sql
@@ -115,8 +114,5 @@ then
     /bin/echo "port        = ${DB_PORT}" >> /etc/mysql/my.cnf
     /bin/echo "bind-address        = 0.0.0.0" >> /etc/mysql/my.cnf
 fi
-
-#/bin/echo "[mariadb]" >> /etc/my.cnf
-#/bin/echo "innodb_read_only_compressed=OFF" >> /etc/my.cnf
 
 /usr/sbin/service mysqld restart
