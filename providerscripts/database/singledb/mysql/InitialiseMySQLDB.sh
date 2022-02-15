@@ -1,6 +1,9 @@
 #!/bin/sh
 ############################################################################
-# Description: This script initialises the mysql db instance ready for use
+# Description: This script initialises the mysql db instance ready for use.
+# It can be either a local database or a remote managed database. 
+# Once this script has run, an empty database with a known name will have been
+# created. 
 # Author: Peter Winter
 # Date: 15/01/2017
 ############################################################################
