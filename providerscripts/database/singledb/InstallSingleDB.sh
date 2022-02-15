@@ -50,8 +50,6 @@ else
     DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
 fi
 
-DBaaS_INSTALLATION_TYPE="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DATABASEDBaaSINSTALLATIONTYPE'`"
-
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Maria`" = "1" ]  )
 then
     . ${HOME}/providerscripts/database/singledb/mariadb/InstallMariaDB.sh
