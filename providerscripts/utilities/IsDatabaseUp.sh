@@ -33,7 +33,12 @@ DB_N="`/bin/sed '1q;d' ${HOME}/credentials/shit`"
 DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
 DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
 
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Maria`" = "1" ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:Maria`" = "1" ] || [ "`/bin/echo ${DBaaS_INSTALLATION_TYPE} | /bin/grep Maria`" != "" ] )
+then
+    /usr/bin/mysql -A -u ${DB_U} -p${DB_P}  ${DB_N} --host="${HOST}" --port="${DB_PORT}" -e 'exit'
+fi
+
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEDBaaSINSTALLATIONTYPE:MySQL`" = "1" ] || [ "`/bin/echo ${DBaaS_INSTALLATION_TYPE} | /bin/grep MySQL`" != "" ] )
 then
     /usr/bin/mysql -A -u ${DB_U} -p${DB_P}  ${DB_N} --host="${HOST}" --port="${DB_PORT}" -e 'exit'
 fi
