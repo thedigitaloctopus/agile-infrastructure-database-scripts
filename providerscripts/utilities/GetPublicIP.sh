@@ -20,6 +20,6 @@
 #######################################################################################################
 #set -x
 
-IP="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
-/bin/echo ${IP}
+ip="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'MYPUBLICIP'`"
+/bin/echo ${ip}
 
