@@ -19,13 +19,6 @@
 ###################################################################################
 ###################################################################################
 #set -x
-#/usr/sbin/ufw default allow incoming
-#/usr/sbin/ufw default allow outgoing
-#/usr/sbin/ufw --force enable
-#We need to disable the firewall so that initial connections to the websever are allowed through.
-#The firewall rules will be built up and applied within the first few minutes of the websever
-#being online. If we don't disable the firewall to begin with, then, initial requests will be
-#blocked leading to timeouts for the user.
 
 BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
@@ -44,17 +37,6 @@ then
             /bin/sed -i "s/macaddress.*/macaddress: ${macaddress}/" /etc/netplan/10-enp6s0.yaml
 	    /bin/sed -i "s/addresses.*/addresses: [${IP}\/16]/" /etc/netplan/10-enp6s0.yaml
 
-           # if ( [ -f /etc/netplan/10-ens3.yaml ] )
-           # then
-           #     /bin/echo "network:
-  #version: 2
-  #renderer: networkd
-  #ethernets:
-  #  ens3:
-  #    mtu: 1450
-  #    dhcp4: yes
-  #    addresses: [${ip}/16]" > /etc/netplan/10-ens3.yaml
-   #          fi
             /usr/sbin/netplan apply
 	fi
     fi
