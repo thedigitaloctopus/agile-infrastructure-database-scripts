@@ -121,7 +121,6 @@ fi
 
 if ( [ -f ${HOME}/runtime/credentials/htpasswd ] )
 then
-    #liveusers="`/usr/bin/wc -l ${HOME}/runtime/credentials/htpasswd | /usr/bin/awk '{print $1}'`"
     credentials="`/bin/grep -v 'placeholder-for-uid-1' ${HOME}/runtime/credentials/htpasswd`"
     if ( [ "${credentials}" != "" ] )
     then
