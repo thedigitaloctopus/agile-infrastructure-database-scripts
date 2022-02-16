@@ -35,10 +35,6 @@ then
     for webserverip in `/bin/ls ${HOME}/config/webserverips`
     do
         IP_MASK="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`.%.%"
-      #  if ( [ "`/bin/ls  ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`" = "exoscale" ] )
-      #  then
-      #      ipmask="10.0.%.%"
-      #  fi 
         /usr/bin/mysql -u ${DB_U} -p${DB_P} -e "GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${IP_MASK}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;"
     done
 fi
@@ -49,12 +45,6 @@ then
     for webserverip in `/bin/ls ${HOME}/config/webserverips`
     do
         IP_MASK="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`.%.%"
-        
-      #  if ( [ "`/bin/ls  ${HOME}/.ssh/CLOUDHOST:* | /usr/bin/awk -F':' '{print $NF}'`" = "exoscale" ] )
-      #  then
-      #      ipmask="10.0.%.%"
-      #  fi 
-        
         IP_MASK="`/bin/echo ${IP_MASK} | /bin/sed 's/%/0/g'`"
 
         if ( [ "`/bin/cat ${postgres_config} | /bin/grep ${DB_N} | /bin/grep ${IP_MASK}`" = "" ] )
