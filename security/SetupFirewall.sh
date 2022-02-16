@@ -53,15 +53,6 @@ then
     /bin/sleep 5
 fi
 
-#NEW_BUILD_CLIENT_IP="`/bin/ls /tmp/BUILDCLIENTIP/* | /usr/bin/awk -F'/' '{print $NF}'`"
-#if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${NEW_BUILD_CLIENT_IP} | /bin/grep ALLOW`" = "" ] )
-#then
-#    /usr/sbin/ufw default deny incoming
-#    /usr/sbin/ufw default allow outgoing
-#    /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${NEW_BUILD_CLIENT_IP} to any port ${SSH_PORT}
-#    /bin/sleep 5
-#fi
-
 for ip in `/bin/ls ${HOME}/config/webserverips/`
 do
     /bin/sleep 5
@@ -168,15 +159,6 @@ do
         /bin/sleep 5
     fi
 done
-
-#if ( [ "`/bin/cat ${HOME}/logs/FIREWALL_CONFIGURATION.log | /bin/grep 'Chain already exists.'`" != "" ] )
-#then
-#        /sbin/iptables -F
-#    /sbin/iptables -X
-#        /sbin/iptables -Z
-#        /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw --force reset
-#    /bin/cp /dev/null ${HOME}/logs/FIREWALL_CONFIGURATION.log
-#fi
 
 /usr/sbin/ufw -f enable
 
