@@ -322,10 +322,6 @@ fi
 /bin/echo "${0} `/bin/date`: Configuring our SSH settings" >> ${HOME}/logs/DATABASE_BUILD.log
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 
-#Set the ssh port we want to use
-#/bin/sed -i "s/22/${SSH_PORT}/g" /etc/ssh/sshd_config
-#/bin/sed -i 's/^#Port/Port/' /etc/ssh/sshd_config
-
 
 /bin/echo "${0} #######################################################################################" >> ${HOME}/logs/DATABASE_BUILD.log
 >&2 /bin/echo "${0} Disabling password authenticator"
@@ -393,8 +389,6 @@ SERVER_USER_PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh '
 
 #This call is necessary as it primes the networking interface for some providers.
 ${HOME}/providerscripts/utilities/GetIP.sh
-
-#${HOME}/installscripts/Upgrade.sh ${BUILDOS}
 
 #do some finalising
 /usr/bin/touch ${HOME}/runtime/DATABASE_READY
