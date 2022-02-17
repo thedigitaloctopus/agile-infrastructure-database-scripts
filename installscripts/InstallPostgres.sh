@@ -31,6 +31,7 @@ then
     then
         /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install locales-all        
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh
+        /bin/touch /usr/local/pgsql/FROM_SOURCE
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
     then
         
@@ -51,6 +52,7 @@ then
     then
         /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install locales-all        
         ${HOME}/installscripts/postgres/InstallPostgresFromSource.sh    
+        /bin/touch /usr/local/pgsql/FROM_SOURCE
     elif ( [ "`${HOME}/providerscripts/utilities/CheckBuildStyle.sh 'POSTGRES:repo'`" = "1" ] )
     then       
         version="`/usr/bin/curl https://www.postgresql.org/ftp/source/ | /bin/grep -o ">v.*<\/a" | /bin/sed 's/^>//g' | /bin/sed 's/<.*//g' | /bin/grep -v "rc" | /bin/grep -v "alpha" | /bin/grep -v "beta" | /usr/bin/head -1 | /bin/sed 's/v//g'`"
