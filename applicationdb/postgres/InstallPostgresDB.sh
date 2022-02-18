@@ -42,6 +42,12 @@ then
         olduser="`/bin/grep 'u........u' ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql | /bin/sed 's/ /\n/g' | grep '^u........u$' | /usr/bin/head -1`"
         /bin/sed -i "s/${olduser}/${DB_U}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         export PGPASSWORD="${DB_P}"
+        
+        if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
+        then
+            /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} -c "CREATE DATABASE ${DB_N};"
+        fi
+        
         /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} ${DB_N} < ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         /bin/rm ${lockfile}
     else
