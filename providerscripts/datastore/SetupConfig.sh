@@ -36,8 +36,6 @@ then
         /bin/touch ${HOME}/config/${SERVER_USER}
         /bin/touch ${HOME}/runtime/CONFIG-PRIMED
     fi
-else
-   exit
 fi
 
 if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] &&  [ "`/bin/ls ${HOME}/config/${SERVER_USER}`" != "" ] )
