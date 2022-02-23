@@ -51,6 +51,8 @@ fi
 #These scripts run ever 10 minutes
 /bin/echo "*/10 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/EnforcePermissions.sh" >> /var/spool/cron/crontabs/root
 
+/bin/echo "*/30 * * * * sync && /bin/echo 3 > /proc/sys/vm/drop_caches" >> /var/spool/cron/crontabs/root
+
 #The scripts run at set times
 BYPASS_DB_LAYER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BYPASSDBLAYER'`"
 
