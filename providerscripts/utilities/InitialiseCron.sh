@@ -24,20 +24,21 @@
 /bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/PrimeCredentials.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/EnsureAccessForWebservers.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && /bin/chmod 700 ${HOME}/.ssh/*" >> /var/spool/cron/crontabs/root
-/bin/echo "*/1 * * * * export HOME=${HOMEDIR} && /usr/bin/find ${HOME}/runtime -name *lock* -type f -mmin +35 -delete" >> /var/spool/cron/crontabs/root
-/bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/PurgeDodgyMounts.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/datastore/SetupConfig.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/datastore/ObtainBuildClientIP.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/cron/SetupFirewallFromCron.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/providerscripts/database/singledb/ExtractIPMaskAndGrant.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && /usr/bin/find ${HOME}/runtime -name *lock* -type f -mmin +35 -delete" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/PurgeDodgyMounts.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/datastore/SetupConfig.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/datastore/ObtainBuildClientIP.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/cron/SetupFirewallFromCron.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/database/singledb/ExtractIPMaskAndGrant.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && /bin/sleep 30 && ${HOME}/providerscripts/utilities/UpdateIP.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/MonitorS3Fs.sh && ${HOME}/providerscripts/utilities/CheckS3Fs.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/MonitorS3FS.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/CheckS3FS.sh" >> /var/spool/cron/crontabs/root
 
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh GATEWAYGUARDIAN:1`" = "1" ] )
 then
-    /bin/echo "*/1 * * * * export HOME=${HOMEDIR} && ${HOME}/security/GatewayGuardian.sh" >> /var/spool/cron/crontabs/root
-    /bin/echo "#@monthly export HOME=${HOMEDIR} && ${HOME}/security/GatewayGuardian.sh 'fromcronreset'" >> /var/spool/cron/crontabs/root
+    /bin/echo "*/1 * * * * export HOME="${HOMEDIR}" && ${HOME}/security/GatewayGuardian.sh" >> /var/spool/cron/crontabs/root
+    /bin/echo "#@monthly export HOME="${HOMEDIR}" && ${HOME}/security/GatewayGuardian.sh 'fromcronreset'" >> /var/spool/cron/crontabs/root
 fi
 
 #These scripts run every 5 minutes
@@ -78,15 +79,15 @@ SERVER_TIMEZONE_CITY="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh '
 /bin/echo "@reboot export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/CleanupAtReboot.sh" >> /var/spool/cron/crontabs/root
 /bin/echo "@reboot export TZ=\":${SERVER_TIMEZONE_CONTINENT}/${SERVER_TIMEZONE_CITY}\"" >> /var/spool/cron/crontabs/root
 /bin/echo "@reboot export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/SetHostname.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/datastore/SetupConfig.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "@reboot /bin/sleep 600 && export HOME=${HOMEDIR} && ${HOME}/security/KnickersUp.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "@reboot export HOME=${HOMEDIR} && /usr/bin/find ${HOME}/runtime -name *lock* -type f -delete" >> /var/spool/cron/crontabs/root
-/bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/GetIP.sh" >> /var/spool/cron/crontabs/root
-/bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/utilities/UpdateInfrastructure.sh" >>/var/spool/cron/crontabs/root
+/bin/echo "@reboot export HOME="${HOMEDIR}" && ${HOME}/providerscripts/datastore/SetupConfig.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "@reboot /bin/sleep 600 && export HOME="${HOMEDIR}" && ${HOME}/security/KnickersUp.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "@reboot export HOME="${HOMEDIR}" && /usr/bin/find ${HOME}/runtime -name *lock* -type f -delete" >> /var/spool/cron/crontabs/root
+/bin/echo "@reboot export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/GetIP.sh" >> /var/spool/cron/crontabs/root
+/bin/echo "@reboot export HOME="${HOMEDIR}" && ${HOME}/providerscripts/utilities/UpdateInfrastructure.sh" >>/var/spool/cron/crontabs/root
 
 if ( [ -f ${HOME}/runtime/POSTGRES_FROM_SOURCE ] )
 then
-    /bin/echo "@reboot export HOME=${HOMEDIR} && ${HOME}/providerscripts/database/singledb/postgres/InitialiseDatabaseConfig.sh" >> /var/spool/cron/crontabs/root
+    /bin/echo "@reboot export HOME="${HOMEDIR}" && ${HOME}/providerscripts/database/singledb/postgres/InitialiseDatabaseConfig.sh" >> /var/spool/cron/crontabs/root
 fi
 
 
