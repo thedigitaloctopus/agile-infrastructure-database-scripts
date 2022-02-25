@@ -27,9 +27,11 @@ buildidentifier="${2}"
 
 #/usr/bin/find ${lockfile} -mmin +20 -type f -exec rm -fv {} \;
 
-if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "dbbackuplock.file"`" = "1" ] )
+if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "dbbackuplock.file"`" = "0" ] )
 then
-    /usr/bin/touch ${lockfile}
+    /usr/bin/touch ${HOME}/runtime/dbbackuplock.file
+    ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/runtime/dbbackuplock.file 
+    
     ${HOME}/providerscripts/git/Backup.sh "${period}" "${buildidentifier}"
     ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "dbbackuplock.file"
 else
