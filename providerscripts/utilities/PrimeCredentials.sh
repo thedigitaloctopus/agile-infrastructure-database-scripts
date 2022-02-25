@@ -21,14 +21,14 @@
 ###################################################################################
 #set -x
 
-if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] )
-then
+#if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] )
+#then
     if ( [ -f ${HOME}/credentials/shit ] && [ "`/bin/cat ${HOME}/config/credentials/shit`" = "" ] )
     then
-        /bin/rm ${HOME}/config/credentials/shit
+        ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "credentials/shit"
         /bin/cp ${HOME}/credentials/shit ${HOME}/config/credentials/shit
     fi
-fi
+#fi
 
 if ( [ ! -d ${HOME}/config/credentials ] )
 then
