@@ -41,7 +41,7 @@ fi
 
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBPORT'`"
 
-ips="`${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webservers/*"`"
+ips="`${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webserverips/*"`"
 
 if ( [ "${ips}" = "" ] )
 then
