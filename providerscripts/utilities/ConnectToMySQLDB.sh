@@ -20,9 +20,9 @@
 ########################################################################################
 #set -x
 
-DB_N="`/bin/sed '1q;d' ${HOME}/config/credentials/shit`"
-DB_P="`/bin/sed '2q;d' ${HOME}/config/credentials/shit`"
-DB_U="`/bin/sed '3q;d' ${HOME}/config/credentials/shit`"
+DB_N="`${HOME}/providerscripts/datastore/configwrapper/GetDBCredential.sh "credentials/shit" 1`"
+DB_P="`${HOME}/providerscripts/datastore/configwrapper/GetDBCredential.sh "credentials/shit" 2`"
+DB_U="`${HOME}/providerscripts/datastore/configwrapper/GetDBCredential.sh "credentials/shit" 3`"
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
