@@ -35,7 +35,7 @@ then
     then
         exit
     fi
-    /bin/rm ${HOME}/config/APPLICATION_INSTALLED
+    ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "APPLICATION_INSTALLED"
     /bin/rm ${HOME}/runtime/APPLICATION_INSTALLED
 fi
 
