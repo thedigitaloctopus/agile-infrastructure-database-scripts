@@ -35,12 +35,12 @@ then
     /bin/mkdir ${HOME}/config/credentials
 fi
 
-if ( [ ! -f ${HOME}/.ssh/shit ] && ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] && [ -f ${HOME}/config/credentials/shit ] ) )
+if ( [ ! -f ${HOME}/.ssh/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
 then
     /bin/cp ${HOME}/config/credentials/shit ${HOME}/.ssh/shit
 fi
 
-if ( [ -f ${HOME}/.ssh/shit ] && ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] && [ ! -f ${HOME}/config/credentials/shit ] ) )
+if ( [ -f ${HOME}/.ssh/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
 then
     /bin/cp ${HOME}/.ssh/shit ${HOME}/config/credentials/shit
 fi
