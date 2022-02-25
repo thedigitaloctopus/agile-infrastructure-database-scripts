@@ -27,7 +27,7 @@ fi
 
 localip="`${HOME}/providerscripts/utilities/GetIP.sh`"
 /bin/touch /tmp/${localip}
-/bin/cp /tmp/${localip} ${HOME}/config/databaseip/${localip}
+${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh /tmp/${localip} databaseip/${localip}
 
 if ( [ ! -d ${HOME}/config/databasepublicip ] )
 then
@@ -36,6 +36,7 @@ fi
 
 publicip="`${HOME}/providerscripts/utilities/GetPublicIP.sh`"
 /bin/touch /tmp/${publicip}
-/bin/cp /tmp/${publicip} ${HOME}/config/databasepublicip/${publicip}
+${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh /tmp/${publicip} databasepublicip/${publicip}
+
 
 
