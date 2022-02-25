@@ -20,19 +20,9 @@
 ##########################################################################################
 #set -x
 
-if ( [ ! -d ${HOME}/config/databaseip ] )
-then
-    /bin/mkdir ${HOME}/config/databaseip
-fi
-
 localip="`${HOME}/providerscripts/utilities/GetIP.sh`"
 /bin/touch /tmp/${localip}
 ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh /tmp/${localip} databaseip/${localip}
-
-if ( [ ! -d ${HOME}/config/databasepublicip ] )
-then
-    /bin/mkdir ${HOME}/config/databasepublicip
-fi
 
 publicip="`${HOME}/providerscripts/utilities/GetPublicIP.sh`"
 /bin/touch /tmp/${publicip}
