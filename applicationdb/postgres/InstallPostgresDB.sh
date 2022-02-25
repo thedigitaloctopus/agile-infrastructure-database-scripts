@@ -30,10 +30,8 @@ else
 fi
 
 if ( [ -f ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql ] )
-then
-    lockfile=${HOME}/config/dbinstalllock.file
-
-    if ( [ ! -f ${lockfile} ] )
+then    
+    if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "dbinstalllock.file"`" = "0" ] )
     then
         /usr/bin/touch ${lockfile}
         /bin/sed -i "s/XXXXXXXXXX/${DB_U}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
