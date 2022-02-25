@@ -37,7 +37,7 @@ fi
 /bin/echo "#######################################################################"
 /bin/echo ""
 
-if ( [ -f ${HOME}/config/databaseip/`${HOME}/providerscripts/utilities/GetIP.sh` ] )
+if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "databaseip/`${HOME}/providerscripts/utilities/GetIP.sh`"`" = "1" ] )
 then
     ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "databaseip/`${HOME}/providerscripts/utilities/GetIP.sh`"
 fi
