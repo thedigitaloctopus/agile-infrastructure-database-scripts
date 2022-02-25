@@ -61,5 +61,5 @@ DB1_U="`${HOME}/providerscripts/datastore/configwrapper/GetDBCredential.sh "cred
 
 if ( [ "${DB_N}" != "${DB1_N}" ] || [ "${DB_P}" != "${DB1_P}" ] ||  [ "${DB_U}" != "${DB1_U}" ] )
 then
-    /bin/cp ${HOME}/credentials/shit ${HOME}/config/credentials/shit
+    ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
 fi
