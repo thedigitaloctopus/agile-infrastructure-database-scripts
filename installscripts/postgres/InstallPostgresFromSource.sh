@@ -45,7 +45,7 @@ cd postgresql-${version}
 /usr/bin/make
 /usr/bin/make install
 /usr/sbin/useradd postgres
-DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
+DB_P="`${HOME}/providerscripts/datastore/configwrapper/GetDBCredential.sh "credentials/shit" 2`"
 /usr/sbin/usermod --password ${DB_P} postgres
 /bin/mkdir /home/postgres
 /bin/chown postgres.postgres /home/postgres
