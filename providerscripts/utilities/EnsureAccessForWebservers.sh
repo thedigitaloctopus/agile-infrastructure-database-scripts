@@ -32,7 +32,7 @@ DB_U="`/bin/sed '3q;d' ${HOME}/credentials/shit`"
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Maria`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:MySQL`" = "1" ] )
 then
-    for webserverip in `/bin/ls ${HOME}/config/webserverips`
+    for webserverip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webserverips/*"`
     do
         IP_MASK="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`.%.%"
         /usr/bin/mysql -u ${DB_U} -p${DB_P} -e "GRANT ALL PRIVILEGES ON ${DB_N}.* TO \"${DB_U}\"@\"${IP_MASK}\" IDENTIFIED BY \"${DB_P}\" WITH GRANT OPTION;"
@@ -42,7 +42,7 @@ fi
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:Postgres`" = "1" ] )
 then
     postgres_config="`/usr/bin/find / -name pg_hba.conf -print`"
-    for webserverip in `/bin/ls ${HOME}/config/webserverips`
+    for webserverip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webserverips/*"`
     do
         IP_MASK="`/bin/echo ${webserverip} | /usr/bin/cut -d "." -f -2`.%.%"
         IP_MASK="`/bin/echo ${IP_MASK} | /bin/sed 's/%/0/g'`"
