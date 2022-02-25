@@ -30,11 +30,6 @@
     fi
 #fi
 
-if ( [ ! -d ${HOME}/config/credentials ] )
-then
-    /bin/mkdir ${HOME}/config/credentials
-fi
-
 if ( [ ! -f ${HOME}/.ssh/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
 then
     ${HOME}/providerscripts/datastore/configwrapper/GetFromConfigDatastore.sh credentials/shit ${HOME}/.ssh/shit
