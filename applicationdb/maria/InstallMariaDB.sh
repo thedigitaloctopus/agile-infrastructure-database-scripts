@@ -63,9 +63,7 @@ then
     #Not sure why but sometimes installation of the application is truncated leaving only a partial set of tables installed
     #so try installing it several in the hope that one succeeds
 
-    lockfile=${HOME}/config/dbinstalllock.file
-
-    if ( [ ! -f ${lockfile} ] )
+    if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "dbinstalllock.file"`" = "0" ] )
     then
         /usr/bin/touch ${lockfile}
         if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
