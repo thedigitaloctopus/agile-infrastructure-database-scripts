@@ -40,7 +40,7 @@ else
     /bin/echo "${RND2}" >> ${HOME}/credentials/shit
 fi
 
-if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "0" ]  )
+if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ]  )
 then
     DB_N="`/bin/sed '1q;d' ${HOME}/config/credentials/shit`"
     DB_P="`/bin/sed '2q;d' ${HOME}/config/credentials/shit`"
