@@ -33,7 +33,8 @@ if ( [ -f ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql ] )
 then    
     if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "dbinstalllock.file"`" = "0" ] )
     then
-        /usr/bin/touch ${lockfile}
+        /usr/bin/touch ${HOME}/runtime/dbinstalllock.file
+        ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/runtime/dbinstalllock.file 
         /bin/sed -i "s/XXXXXXXXXX/${DB_U}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
         IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
         /bin/sed -i "s/YYYYYYYYYY/${IP_MASK}/g" ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
