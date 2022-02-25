@@ -18,7 +18,7 @@
 # along with The Agile Deployment Toolkit.  If not, see <http://www.gnu.org/licenses/>.
 ######################################################################################
 ######################################################################################
-#set -xA
+#set -x
 
 export HOME=`/bin/cat /home/homedir.dat`
 WEBSITE_URL="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'WEBSITEURL'`"
@@ -27,15 +27,17 @@ configbucket="${configbucket}-config"
 
 /usr/bin/s3cmd --force get s3://${configbucket}/$1 /tmp 
 
+file="`/bin/echo ${1} | /usr/bin/awk -F'/' '{print $NF}'`" 
+
 if ( [ "$2" = "1" ] )
 then
-    /bin/sed '1q;d' /tmp/$1
+    /bin/sed '1q;d' /tmp/${file}
 fi
 if ( [ "$2" = "2" ] )
 then
-    /bin/sed '2q;d' /tmp/$1
+    /bin/sed '2q;d' /tmp/${file}
 fi
 if ( [ "$2" = "3" ] )
 then
-    /bin/sed '3q;d' /tmp/$1
+    /bin/sed '3q;d' /tmp/${file}
 fi
