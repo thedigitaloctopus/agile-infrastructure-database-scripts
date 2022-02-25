@@ -39,7 +39,7 @@ fi
 
 if ( [ -f ${HOME}/config/databaseip/`${HOME}/providerscripts/utilities/GetIP.sh` ] )
 then
-    /bin/rm ${HOME}/config/databaseip/`${HOME}/providerscripts/utilities/GetIP.sh`
+    ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "databaseip/`${HOME}/providerscripts/utilities/GetIP.sh`"
 fi
 
 ${HOME}/providerscripts/email/SendEmail.sh "A database is being shutdown" "A database is being shutdown"
