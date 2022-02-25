@@ -35,10 +35,10 @@ SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSHPORT'`"
 
 #If the toolkit isn't fully installed, don't do anything
 
-if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" = "" ] )
-then
-    exit
-fi
+#if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" = "" ] )
+#then
+#    exit
+#fi
 
 SERVER_USER_PASSWORD="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSERPASSWORD'`"
 
@@ -53,7 +53,7 @@ then
     /bin/sleep 5
 fi
 
-for ip in `/bin/ls ${HOME}/config/webserverips/`
+for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webserverips/*"`
 do
     /bin/sleep 5
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
@@ -72,7 +72,7 @@ do
     fi
 done
 
-for ip in `/bin/ls ${HOME}/config/webserverpublicips/`
+for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webserverpublicips/*"`
 do
     /bin/sleep 5
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
@@ -90,7 +90,7 @@ do
     fi
 done
 
-for ip in `/bin/ls ${HOME}/config/databaseip/`
+for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "databaseip/*"`
 do
     /bin/sleep 5
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
@@ -107,7 +107,7 @@ do
     fi
 done
 
-for ip in `/bin/ls ${HOME}/config/databasepublicip/`
+for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "databasepublicip/*"`
 do
     /bin/sleep 5
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
@@ -126,7 +126,7 @@ done
 
 /bin/sleep 5
 
-for ip in `/bin/ls ${HOME}/config/autoscalerpublicip/`
+for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "autoscalerpublicip/*"`
 do
     /bin/sleep 5
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
@@ -143,7 +143,7 @@ do
     fi
 done
 
-for ip in `/bin/ls ${HOME}/config/autoscalerip/`
+for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "autoscalerip/*"`
 do
     /bin/sleep 5
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
