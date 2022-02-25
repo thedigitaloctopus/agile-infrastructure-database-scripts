@@ -30,7 +30,10 @@ arg3="${5}"
 SERVER_USER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SERVERUSER'`"
 SSH_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'SSHPORT'`"
 ALGORITHM="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'ALGORITHM'`"
-ips="`/bin/ls ${HOME}/config/autoscalerip`"
+
+
+ips="`${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "autoscalerip/*"`"
+
 
 if ( [ "${ips}" != "" ] )
 then
