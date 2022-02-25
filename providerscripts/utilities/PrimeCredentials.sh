@@ -23,10 +23,10 @@
 
 #if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] )
 #then
-    if ( [ -f ${HOME}/credentials/shit ] && [ "`/bin/cat ${HOME}/config/credentials/shit`" = "" ] )
+    if ( [ -f ${HOME}/credentials/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
     then
         ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "credentials/shit"
-        /bin/cp ${HOME}/credentials/shit ${HOME}/config/credentials/shit
+        ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
     fi
 #fi
 
@@ -37,12 +37,13 @@ fi
 
 if ( [ ! -f ${HOME}/.ssh/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
 then
-    /bin/cp ${HOME}/config/credentials/shit ${HOME}/.ssh/shit
+    #/bin/cp ${HOME}/config/credentials/shit ${HOME}/.ssh/shit
+    ${HOME}/providerscripts/datastore/configwrapper/GetFromConfigDatastore.sh credentials/shit
 fi
 
 if ( [ -f ${HOME}/.ssh/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
 then
-    /bin/cp ${HOME}/.ssh/shit ${HOME}/config/credentials/shit
+    ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/.ssh/shit credentials/shit
 fi
 
 ${HOME}/providerscripts/utilities/UpdateIP.sh
