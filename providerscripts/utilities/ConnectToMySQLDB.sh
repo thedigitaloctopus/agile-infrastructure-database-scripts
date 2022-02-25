@@ -28,7 +28,7 @@ if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLAT
 then
     HOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBaaSHOSTNAME'`"
 else
-    HOST="`/bin/ls ${HOME}/config/databaseip/* | /usr/bin/awk -F'/' '{print $NF}'`"
+    HOST="`${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "databaseip/*"`"
 fi
 
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBPORT'`"
