@@ -25,15 +25,13 @@
 period="${1}"
 buildidentifier="${2}"
 
-lockfile=${HOME}/config/dbbackuplock.file
+#/usr/bin/find ${lockfile} -mmin +20 -type f -exec rm -fv {} \;
 
-/usr/bin/find ${lockfile} -mmin +20 -type f -exec rm -fv {} \;
-
-if ( [ ! -f ${lockfile} ] )
+if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "dbbackuplock.file"`" = "1" ] )
 then
     /usr/bin/touch ${lockfile}
     ${HOME}/providerscripts/git/Backup.sh "${period}" "${buildidentifier}"
-    /bin/rm ${lockfile}
+    ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "dbbackuplock.file"
 else
     /bin/echo "script already running"
 fi
