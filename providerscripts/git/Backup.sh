@@ -28,7 +28,7 @@ then
     exit
 fi
 
-if ( ( [ "`/bin/mount | /bin/grep home | /bin/grep config`" = "" ] || [ ! -f ${HOME}/config/credentials/shit ] ) || [ ! -f ${HOME}/config/INSTALLEDSUCCESSFULLY ] )
+if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "0" ] || [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "INSTALLEDSUCCESSFULLY"`" = "0" ] )
 then
     exit
 fi
