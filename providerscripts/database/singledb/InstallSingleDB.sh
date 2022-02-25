@@ -30,6 +30,8 @@ then
     /bin/echo "${DBaaS_DBNAME}" >>  ${HOME}/credentials/shit
     /bin/echo "${DBaaS_PASSWORD}" >>  ${HOME}/credentials/shit
     /bin/echo "${DBaaS_USERNAME}" >>  ${HOME}/credentials/shit
+    
+    ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
 else
     RND="n`/bin/cat /dev/urandom | /usr/bin/tr -dc 'a-zA-Z0-9' | /usr/bin/fold -w 8 | /usr/bin/head -n 1 | tr '[:upper:]' '[:lower:]'`n"
     RND1="p`/bin/cat /dev/urandom | /usr/bin/tr -dc 'a-zA-Z0-9' | /usr/bin/fold -w 8 | /usr/bin/head -n 1 | tr '[:upper:]' '[:lower:]'`p"
@@ -38,6 +40,7 @@ else
     /bin/echo "${RND}" > ${HOME}/credentials/shit
     /bin/echo "${RND1}" >> ${HOME}/credentials/shit
     /bin/echo "${RND2}" >> ${HOME}/credentials/shit
+    ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
 fi
 
 if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ]  )
