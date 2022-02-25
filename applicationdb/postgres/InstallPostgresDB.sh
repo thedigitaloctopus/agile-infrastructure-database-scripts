@@ -48,7 +48,7 @@ then
         fi
         
         /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} ${DB_N} < ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
-        /bin/rm ${lockfile}
+        ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "dbinstalllock.file"
     else
         exit
     fi
