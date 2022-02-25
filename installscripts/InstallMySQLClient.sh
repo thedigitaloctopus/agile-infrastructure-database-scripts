@@ -31,8 +31,7 @@ then
 fi
 
 BUILDOSVERSION="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOSVERSION'`"
-
-DB_P="`/bin/sed '2q;d' ${HOME}/credentials/shit`"
+DB_P="`${HOME}/providerscripts/datastore/configwrapper/GetDBCredential.sh "credentials/shit" 2`"
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
