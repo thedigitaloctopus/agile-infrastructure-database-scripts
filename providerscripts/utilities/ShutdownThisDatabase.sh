@@ -23,8 +23,8 @@
 /bin/echo ""
 /bin/echo "#######################################################################"
 /bin/echo "Shutting down a database, please wait whilst I clean the place up first"
-
-if ( [ "$1" = "backup" ] && [ ! -f ${HOME}/config/dbbackuplock.file ] )
+ 
+if ( [ "$1" = "backup" ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "dbbackuplock.file"`" = "0" ] )
 then
     /bin/echo "Making a daily and an emergency shutdown backup of your database"
     BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDIDENTIFIER'`"
