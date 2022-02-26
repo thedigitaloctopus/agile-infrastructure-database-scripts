@@ -23,7 +23,7 @@
 
 #if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] )
 #then
-    if ( [ -f ${HOME}/credentials/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
+    if ( [ -f ${HOME}/credentials/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "0" ] )
     then
         ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "credentials/shit"
         ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
