@@ -33,9 +33,9 @@ then
     
     ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
 else
-    RND="n`/bin/cat /dev/urandom | /usr/bin/tr -dc 'a-zA-Z0-9' | /usr/bin/fold -w 8 | /usr/bin/head -n 1 | tr '[:upper:]' '[:lower:]'`n"
-    RND1="p`/bin/cat /dev/urandom | /usr/bin/tr -dc 'a-zA-Z0-9' | /usr/bin/fold -w 8 | /usr/bin/head -n 1 | tr '[:upper:]' '[:lower:]'`p"
-    RND2="u`/bin/cat /dev/urandom | /usr/bin/tr -dc 'a-zA-Z0-9' | /usr/bin/fold -w 8 | /usr/bin/head -n 1 | tr '[:upper:]' '[:lower:]'`u"
+    RND="n`/usr/bin/openssl rand -base64 32 | /usr/bin/tr -cd 'a-zA-Z0-9' | /usr/bin/cut -b 1-8 | /usr/bin/tr '[:upper:]' '[:lower:]'`n"
+    RND1="p`/usr/bin/openssl rand -base64 32 | /usr/bin/tr -cd 'a-zA-Z0-9' | /usr/bin/cut -b 1-8 | /usr/bin/tr '[:upper:]' '[:lower:]'`p"
+    RND2="u`/usr/bin/openssl rand -base64 32 | /usr/bin/tr -cd 'a-zA-Z0-9' | /usr/bin/cut -b 1-8 | /usr/bin/tr '[:upper:]' '[:lower:]'`u"
 
     /bin/echo "${RND}" > ${HOME}/credentials/shit
     /bin/echo "${RND1}" >> ${HOME}/credentials/shit
