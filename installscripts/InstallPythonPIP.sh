@@ -27,6 +27,7 @@ fi
 
 if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
+    /usr/bin/ap-get -o DPkg::Lock::Timeout=-1 -qq -y install libmagic-dev
     /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y -f install python3-pip
     /bin/rm /usr/bin/python
     /bin/ln -s /usr/bin/python3 /usr/bin/python
@@ -37,6 +38,7 @@ fi
 
 if ( [ "${BUILDOS}" = "debian" ] )
 then
+    /usr/bin/ap-get -o DPkg::Lock::Timeout=-1 -qq -y install libmagic-dev
     /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y -f install python3-pip
     /bin/rm /usr/bin/python
     /bin/ln -s /usr/bin/python3 /usr/bin/python
