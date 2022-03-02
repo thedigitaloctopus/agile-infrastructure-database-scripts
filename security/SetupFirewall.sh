@@ -50,77 +50,74 @@ then
     /usr/sbin/ufw default allow outgoing
     /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${BUILD_CLIENT_IP} to any port ${SSH_PORT}
     ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${BUILD_CLIENT_IP} ${SSH_PORT}
-    /bin/sleep 5
+    /bin/sleep 2
 fi
 
 for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webserverips/*"`
 do
-    /bin/sleep 5
+    /bin/sleep 2
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${SSH_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${SSH_PORT}
-
-        /bin/sleep 5
-        /bin/sleep 5
+        /bin/sleep 2
     fi
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${DB_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${DB_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
 done
 
 for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "webserverpublicips/*"`
 do
-    /bin/sleep 5
+    /bin/sleep 2
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${SSH_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${SSH_PORT}
-        /bin/sleep 5
-        /bin/sleep 5
+        /bin/sleep 2
     fi
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${DB_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${DB_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
 done
 
 for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "databaseip/*"`
 do
-    /bin/sleep 5
+    /bin/sleep 2
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${DB_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${DB_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${SSH_PORT} 
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${SSH_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
 done
 
 for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "databasepublicip/*"`
 do
-    /bin/sleep 5
+    /bin/sleep 2
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${DB_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${DB_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${SSH_PORT} 
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${SSH_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
 done
 
@@ -128,35 +125,35 @@ done
 
 for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "autoscalerpublicip/*"`
 do
-    /bin/sleep 5
+    /bin/sleep 2
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${DB_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${DB_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${SSH_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${SSH_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
 done
 
 for ip in `${HOME}/providerscripts/datastore/configwrapper/ListFromConfigDatastore.sh "autoscalerip/*"`
 do
-    /bin/sleep 5
+    /bin/sleep 2
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${DB_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${DB_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${DB_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
     if ( [ "`/bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw status | /bin/grep ${ip} | /bin/grep ${SSH_PORT} | /bin/grep ALLOW`" = "" ] )
     then
         /bin/echo ${SERVER_USER_PASSWORD} | /usr/bin/sudo -S -E /usr/sbin/ufw allow from ${ip} to any port ${SSH_PORT}
         ${HOME}/providerscripts/utilities/ConnectToAutoscaler.sh ${HOME}/providerscripts/server/UpdateNativeFirewall.sh ${ip} ${SSH_PORT}
-        /bin/sleep 5
+        /bin/sleep 2
     fi
 done
 
