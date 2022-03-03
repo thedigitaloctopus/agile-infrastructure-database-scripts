@@ -131,14 +131,12 @@ if ( [ ! -d ${HOME}/.ssh ] )
 then
     /bin/mkdir ${HOME}/.ssh
 fi
-if ( [ ! -d ${HOME}/config ] )
-then
-    /bin/mkdir ${HOME}/config
-fi
+
 if ( [ ! -d ${HOME}/providerscripts ] )
 then
     /bin/mkdir ${HOME}/providerscripts
 fi
+
 if ( [ ! -d ${HOME}/applicationscripts ] )
 then
     /bin/mkdir ${HOME}/applicationscripts
