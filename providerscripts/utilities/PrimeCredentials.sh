@@ -19,25 +19,25 @@
 # along with The Agile Deployment Toolkit.  If not, see <http://www.gnu.org/licenses/>.
 ###################################################################################
 ###################################################################################
-#set -x
+set -x
 
-#if ( [ "`/bin/mount | /bin/grep ${HOME}/config`" != "" ] )
-#then
-    if ( [ -f ${HOME}/credentials/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "0" ] )
+if ( [ -f ${HOME}/credentials/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "0" ] )
+then
+    ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "credentials/shit"
+    ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
+else
+    ${HOME}/providerscripts/datastore/configwrapper/GetFromConfigDatastore.sh "credentials/shit"
+
+    if ( [ "`/bin/cat /tmp/shit`" = "" ] )
     then
-        ${HOME}/providerscripts/datastore/configwrapper/DeleteFromConfigDatastore.sh "credentials/shit"
         ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
+        /bin/rm /tmp/shit
     fi
-#fi
+fi
 
 if ( [ ! -f ${HOME}/.ssh/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
 then
     ${HOME}/providerscripts/datastore/configwrapper/GetFromConfigDatastore.sh credentials/shit ${HOME}/.ssh/shit
-fi
-
-if ( [ -f ${HOME}/.ssh/shit ] && [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
-then
-    ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/.ssh/shit credentials/shit
 fi
 
 ${HOME}/providerscripts/utilities/UpdateIP.sh
