@@ -38,7 +38,7 @@ if ( [ "${BUILDOS}" = "ubuntu" ] )
 then
     /usr/bin/apt-get -o DPkg::Lock::Timeout=-1 -qq -y install software-properties-common dirmngr
     
-    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:20.04`" = "1" ] )
+    if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:20.04`" = "1" ] || [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh BUILDOSVERSION:22.04`" = "1" ] )
     then
         /usr/bin/apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
         for version in ${versions}
