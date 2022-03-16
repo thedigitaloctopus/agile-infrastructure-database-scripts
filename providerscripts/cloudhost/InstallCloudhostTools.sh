@@ -21,7 +21,8 @@
 #############################################################################
 
 #Configure the machine for the current provider. Each new provider that is added will need a config process like these to be added
-#here
+#here. Note, only AWS actually requires the cloudhost tools to be installed on the database machine which is why the cloudhost tools
+#are not installed for the other providers
 
 BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 
