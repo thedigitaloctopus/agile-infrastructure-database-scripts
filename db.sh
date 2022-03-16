@@ -224,7 +224,7 @@ ${HOME}/providerscripts/utilities/StoreConfigValue.sh "SERVERTIMEZONECITY" "${SE
 export TZ=":${SERVER_TIMEZONE_CONTINENT}/${SERVER_TIMEZONE_CITY}"
 
 #Some rudimentary checks to ensure that the software is installed
-if ( [ -f /usr/bin/sendemail ] && [ -f /usr/bin/curl ] && [ -f /usr/bin/sshfs ] )
+if ( [ -f /usr/bin/sendemail ] && [ -f /usr/bin/curl ] )
 then
     /bin/echo "${0} `/bin/date` : It looks like all the required software was installed correctly" >> ${HOME}/logs/MonitoringLog.dat
 else
