@@ -52,6 +52,10 @@ DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 
+if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] && [ "${CLOUDHOST}" = "aws" ] )
+then
+    /bin/sed -i "/SESSION_VARIABLES_ADMIN/d" ${HOME}/runtime/initialiseDB.sql
+fi
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
