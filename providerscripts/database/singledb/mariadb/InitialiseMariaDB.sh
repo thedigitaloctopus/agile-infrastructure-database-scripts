@@ -67,12 +67,7 @@ drop user 'mysql'@'localhost';
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 fi
 
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] && [ "${CLOUDHOST}" = "aws" ] )
-then
-    /bin/sed -i "/SESSION_VARIABLES_ADMIN/d" ${HOME}/runtime/initialiseDB.sql
-fi
-
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
 then
     count="0"
     /bin/sed -i '/GRANT SESSION/d' ${HOME}/runtime/initialiseDB.sql
