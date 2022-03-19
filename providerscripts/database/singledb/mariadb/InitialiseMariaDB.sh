@@ -74,6 +74,11 @@ then
     /bin/sed -i '/drop user/d' ${HOME}/runtime/initialiseDB.sql
     /bin/sed -i '/CREATE USER/d' ${HOME}/runtime/initialiseDB.sql
     
+    if ( [ "${CLOUDHOST}" = "aws" ] )
+    then
+        /bin/sed -i "s/mysql_native_password//g" ${HOME}/runtime/initialiseDB.sql
+    fi
+    
     /usr/bin/mysql -f -A -u ${DB_U} -p${DB_P} --host="${HOST}" --port="${DB_PORT}" < ${HOME}/runtime/initialiseDB.sql
     
     while ( [ "$?" != "0" ] && [ "${count}" -lt "10" ] )
