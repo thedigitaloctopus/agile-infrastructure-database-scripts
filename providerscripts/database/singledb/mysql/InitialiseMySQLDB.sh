@@ -34,7 +34,9 @@ fi
 IP_MASK="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'IPMASK'`"
 DB_PORT="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DBPORT'`"
 
-/bin/echo "use mysql;
+if ( ( [ "${CLOUDHOST}" = "exoscale" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ "${CLOUDHOST}" = "linode" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] && [ "${CLOUDHOST}" = "aws" ] ) )
+then
+    /bin/echo "use mysql;
 CREATE USER \"${DB_U}\"@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 CREATE USER \"${DB_U}\"@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 CREATE USER \"${DB_U}\"@'${HOST}' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
@@ -51,10 +53,6 @@ DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_P}';
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
-
-if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] && [ "${CLOUDHOST}" = "aws" ] )
-then
-    /bin/sed -i "/SESSION_VARIABLES_ADMIN/d" ${HOME}/runtime/initialiseDB.sql
 fi
 
 if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
