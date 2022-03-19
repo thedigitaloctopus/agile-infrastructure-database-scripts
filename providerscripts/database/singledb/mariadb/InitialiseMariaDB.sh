@@ -38,7 +38,7 @@ CLOUDHOST="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'CLOUDHOST'`
 BUILDOS="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUILDOS'`"
 
 #Older style user setup where necessary, might have to change this with time
-if ( ( [ "${CLOUDHOST}" = "exoscale" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ "${CLOUDHOST}" = "linode" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] && [ "${CLOUDHOST}" = "aws" ] ) )
+if ( ( [ "${CLOUDHOST}" = "exoscale" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ "${CLOUDHOST}" = "linode" ] && [ "${BUILDOS}" = "debian" ] ) || ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] && [ "${CLOUDHOST}" = "aws" ] ) )
 then
     /bin/echo "use mysql;
 update user set user=\"${DB_U}\" where user='root';
@@ -67,7 +67,7 @@ drop user 'mysql'@'localhost';
 flush privileges;" > ${HOME}/runtime/initialiseDB.sql
 fi
 
-if ( [ -f ${HOME}/.ssh/DATABASEINSTALLATIONTYPE:DBaaS ] && [ "${CLOUDHOST}" = "aws" ] )
+if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] && [ "${CLOUDHOST}" = "aws" ] )
 then
     /bin/sed -i "/SESSION_VARIABLES_ADMIN/d" ${HOME}/runtime/initialiseDB.sql
 fi
