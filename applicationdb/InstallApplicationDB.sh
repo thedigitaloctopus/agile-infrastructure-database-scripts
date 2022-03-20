@@ -39,6 +39,11 @@ then
     /bin/rm ${HOME}/runtime/APPLICATION_INSTALLED
 fi
 
+if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "credentials/shit"`" = "1" ] )
+then
+    ${HOME}/providerscripts/datastore/configwrapper/GetFromConfigDatastore.sh credentials/shit ${HOME}/credentials/shit
+fi
+
 if ( [ "`${HOME}/providerscripts/datastore/configwrapper/CheckConfigDatastore.sh "APPLICATION_INSTALLED"`" = "1" ]  || [ -f ${HOME}/runtime/APPLICATION_INSTALLED ] || [ ! -f ${HOME}/runtime/DB_INITIALISED ] )
 then
     exit
