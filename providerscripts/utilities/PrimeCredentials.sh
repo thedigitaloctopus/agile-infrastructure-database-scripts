@@ -42,7 +42,6 @@ fi
 
 ${HOME}/providerscripts/utilities/UpdateIP.sh
 
-/bin/chmod 400 ${HOME}/config/credentials/shit
 /bin/chmod 400 ${HOME}/credentials/shit
 /bin/chmod 400 ${HOME}/.ssh/shit
 
