@@ -25,4 +25,6 @@ export HOME="`/bin/cat /home/homedir.dat`"
 /bin/echo "$2" >> ${HOME}/credentials/shit
 /bin/echo "$3" >> ${HOME}/credentials/shit
 
+/bin/cp ${HOME}/credentials/shit ${HOME}/.ssh/shit
+
 ${HOME}/providerscripts/datastore/configwrapper/PutToConfigDatastore.sh ${HOME}/credentials/shit credentials/shit
