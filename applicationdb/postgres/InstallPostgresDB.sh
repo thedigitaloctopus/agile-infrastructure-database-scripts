@@ -44,7 +44,8 @@ then
         
         if ( [ "`${HOME}/providerscripts/utilities/CheckConfigValue.sh DATABASEINSTALLATIONTYPE:DBaaS`" = "1" ] )
         then
-            /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} -c "CREATE DATABASE ${DB_N};"
+           . ${HOME}/providerscripts/database/singledb/postgres/InitialisePostgresDB.sh
+           # /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} -c "CREATE DATABASE ${DB_N};"
         fi
         
         /usr/bin/psql -h ${HOST} -U ${DB_U} -p ${DB_PORT} ${DB_N} < ${HOME}/backups/installDB/${WEBSITE_NAME}DB.sql
