@@ -18,7 +18,7 @@
 # along with The Agile Deployment Toolkit.  If not, see <http://www.gnu.org/licenses/>.
 #######################################################################################
 #######################################################################################
-set -x
+#set -x
 
 datastore_provider="$1"
 file_to_put="$2"
