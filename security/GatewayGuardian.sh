@@ -115,8 +115,8 @@ if ( [ ! -f ${HOME}/runtime/credentials/htpasswd ] && [ "${1}" != "fromcronreset
 then 
     dir="`/usr/bin/pwd`"
     cd ${HOME}/runtime/credentials
-    /usr/bin/s3cmd get --force s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd 
-    /usr/bin/s3cmd get --force s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd_plaintext_history 
+    ${HOME}/providerscripts/datastore/GetFromDatastore.sh ${DATASTORE_CHOICE} gatewayguardian-${BUILD_IDENTIFIER}/htpasswd
+    ${HOME}/providerscripts/datastore/GetFromDatastore.sh ${DATASTORE_CHOICE} gatewayguardian-${BUILD_IDENTIFIER}/htpasswd_plaintext_history
     cd ${dir}
 fi
 
