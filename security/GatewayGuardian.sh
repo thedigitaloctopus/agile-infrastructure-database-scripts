@@ -154,8 +154,9 @@ fi
    
 if ( [ "`/usr/bin/find ${HOME}/runtime/credentials/htpasswd -type f -mmin -1`" != "" ] )
 then
-    /usr/bin/s3cmd del s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd
-    /usr/bin/s3cmd del s3://gatewayguardian-${BUILD_IDENTIFIER}/htpasswd_plaintext_history
+    ${HOME}/providerscripts/datastore/DeleteFromDatastore.sh ${DATASTORE_CHOICE} gatewayguardian-${BUILD_IDENTIFIER}/htpasswd
+    ${HOME}/providerscripts/datastore/DeleteFromDatastore.sh ${DATASTORE_CHOICE} gatewayguardian-${BUILD_IDENTIFIER}/htpasswd_plaintext_history
+
     /usr/bin/s3cmd put ${HOME}/runtime/credentials/htpasswd s3://gatewayguardian-${BUILD_IDENTIFIER}/
     /usr/bin/s3cmd put ${HOME}/runtime/credentials/htpasswd_plaintext_history s3://gatewayguardian-${BUILD_IDENTIFIER}/
 fi
