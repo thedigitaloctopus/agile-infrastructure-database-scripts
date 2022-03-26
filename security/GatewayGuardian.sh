@@ -25,9 +25,9 @@ BUILD_IDENTIFIER="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'BUIL
 WEBSITE_URL="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'WEBSITEURL'`"
 DATASTORE_CHOICE="`${HOME}/providerscripts/utilities/ExtractConfigValue.sh 'DATASTORECHOICE'`"
 
-if ( [ "`/usr/bin/s3cmd ls s3://gatewayguardian-${BUILD_IDENTIFIER}`" = "" ] )
+if ( [ "`${HOME}/providerscripts/datastore/ListFromDatastore.sh ${DATASTORE_CHOICE} gatewayguardian-${BUILD_IDENTIFIER}`" = "" ] )
 then
-    /usr/bin/s3cmd mb s3://gatewayguardian-${BUILD_IDENTIFIER}
+    ${HOME}/providerscripts/datastore/MountDatastore.sh "${DATASTORE_CHOICE}" gatewayguardian-${BUILD_IDENTIFIER}
 fi
 
 if ( [ "${1}" = "fromcronreset" ] )
